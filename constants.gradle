@@ -19,7 +19,6 @@ ext {
             viewmodel          : _archLifecycle.art('viewmodel'),
             reactivestreams    : _archLifecycle.art('reactivestreams'),
             common_java8       : _archLifecycle.art('common-java8'),
-            annotationProcessor: _archLifecycle.art('compiler')
     ]
 
     okHttpVer = '3.9.1'; _okHttp = new DString('com.squareup.okhttp3', okHttpVer)

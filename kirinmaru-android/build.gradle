@@ -45,6 +45,10 @@ android {
     }
 }
 
+androidExtensions {
+    experimental = true
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation jUnit
@@ -52,8 +56,18 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
+    //Android baseline libs
+    implementation supportLib.appcompat_v7
+    implementation supportLib.design
+    implementation supportLib.cardview_v7
+    implementation supportLib.recyclerview_v7
+    implementation supportLib.preference_v7
+    implementation supportLib.preference_v14
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
-    implementation supportLib.appcompat_v7
+    implementation archLifecycle.extensions
+    kapt "android.arch.lifecycle:compiler:$archLifecycleVer"
+    kapt "com.android.databinding:compiler:$build_tools_version"
+
     implementation kotlinStdLib8
 }
