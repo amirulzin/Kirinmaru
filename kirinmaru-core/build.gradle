@@ -6,22 +6,20 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 dependencies {
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'commons-io:commons-io:2.6'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation kotlinStdLib8
 
-    implementation 'org.jsoup:jsoup:1.10.3'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.7'
+    testImplementation jUnit
+    testImplementation commonsIo
 
-    implementation 'com.google.code.gson:gson:2.8.2'
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+    implementation jsoup
+    implementation rxJava
 
-//    implementation 'net.bican:jwordpress:0.7.0'
-//    implementation group: 'redstone.xmlrpc', name: 'xmlrpc', version: '1.1.1'
+    implementation gson
+    implementation retrofit2.retrofit
+    implementation retrofit2.adapterRxJava2
+    implementation retrofit2.converterGson
+    implementation okHttp.logging
 
 }

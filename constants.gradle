@@ -1,0 +1,61 @@
+ext {
+
+    kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    kotlinStdLib7 = "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    kotlinStdLib8 = "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+
+    commonsIoVer = '2.6'; commonsIo = new DString('commons-io', 'commons-io', commonsIoVer).toString()
+    gsonVer = '2.8.2'; gson = new DString('com.google.code.gson', 'gson', gsonVer).toString()
+    jsoupVer = '1.10.3'; jsoup = new DString('org.jsoup', 'jsoup', jsoupVer).toString()
+    jUnitVer = '4.12'; jUnit = new DString('junit', 'junit', jUnitVer).toString()
+    rxJavaVer = '2.1.7'; rxJava = new DString('io.reactivex.rxjava2', 'rxjava', rxJavaVer).toString()
+    rxAndroidVer = '2.1.7'; rxAndroid = new DString('io.reactivex.rxjava2', 'rxandroid', rxAndroidVer).toString()
+
+    archLifecycleVer = '1.1.0'; _archLifecycle = new DString('android.arch.lifecycle', archLifecycleVer)
+    archLifecycle = [
+            runtime            : _archLifecycle.art('runtime'), //lightweight without LiveData and ViewModel
+            extensions         : _archLifecycle.art('extensions'), //both LiveData and ViewModel
+            livedata           : _archLifecycle.art('livedata'),
+            viewmodel          : _archLifecycle.art('viewmodel'),
+            reactivestreams    : _archLifecycle.art('reactivestreams'),
+            common_java8       : _archLifecycle.art('common-java8'),
+            annotationProcessor: _archLifecycle.art('compiler')
+    ]
+
+    okHttpVer = '3.9.1'; _okHttp = new DString('com.squareup.okhttp3', okHttpVer)
+    okHttp = [
+            okHttp : _okHttp.art('this'),
+            logging: _okHttp.art('logging-interceptor')
+    ]
+
+    retrofitVer = '2.3.0'; _retrofit2 = new DString('com.squareup.retrofit2', retrofitVer)
+    retrofit2 = [
+            retrofit      : _retrofit2.art('retrofit'),
+            adapterRxJava2: _retrofit2.art('adapter-rxjava2'),
+            converterGson : _retrofit2.art('converter-gson')
+    ]
+
+    supportLibVer = "27.0.2"; _androidSupport = new DString("com.android.support", supportLibVer)
+    supportLib = [
+            appcompat_v7           : _androidSupport.art('appcompat-v7'),
+            cardview_v7            : _androidSupport.art('cardview-v7'),
+            design                 : _androidSupport.art("design"),
+            preference_v7          : _androidSupport.art('preference-v7'),
+            preference_v14         : _androidSupport.art('preference-v14'),
+            recyclerview_v7        : _androidSupport.art("recyclerview-v7"),
+            support_vector_drawable: _androidSupport.art('support-vector-drawable'),
+    ]
+}
+
+class DString {
+    String grp, art, ver
+
+    DString(grp, ver) { this.grp = grp; this.ver = ver }
+
+    DString(grp, art, ver) { this.grp = grp; this.art = art; this.ver = ver }
+
+    String art(art) { this.art = art; this.toString() }
+
+    @Override
+    String toString() { "$grp:$art:$ver" }
+}
