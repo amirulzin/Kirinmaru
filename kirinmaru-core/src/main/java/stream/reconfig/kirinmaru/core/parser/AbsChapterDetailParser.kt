@@ -1,0 +1,23 @@
+package stream.reconfig.kirinmaru.core.parser
+
+import org.jsoup.nodes.Document
+import stream.reconfig.kirinmaru.core.ChapterDetail
+import stream.reconfig.kirinmaru.core.domain.CoreChapterDetail
+import stream.reconfig.kirinmaru.core.selectBy
+
+abstract class AbsChapterDetailParser(
+    val rawText: String,
+    val nextUrl: String,
+    val prevUrl: String,
+    inline val transformer: (rawText: String?, nextUrl: String?, prevUrl: String?) -> ChapterDetail = ::CoreChapterDetail
+) : Parser<ChapterDetail> {
+
+  override fun parse(document: Document): ChapterDetail {
+    return transformer(
+        document.selectBy(rawText) { it.html() },
+        document.selectBy(nextUrl) { it.first().attr("href") },
+        document.selectBy(prevUrl) { it.first().attr("href") }
+    )
+  }
+}
+
