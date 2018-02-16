@@ -9,7 +9,7 @@ ext {
     jsoupVer = '1.10.3'; jsoup = new DString('org.jsoup', 'jsoup', jsoupVer).toString()
     jUnitVer = '4.12'; jUnit = new DString('junit', 'junit', jUnitVer).toString()
     rxJavaVer = '2.1.7'; rxJava = new DString('io.reactivex.rxjava2', 'rxjava', rxJavaVer).toString()
-    rxAndroidVer = '2.1.7'; rxAndroid = new DString('io.reactivex.rxjava2', 'rxandroid', rxAndroidVer).toString()
+    rxAndroidVer = '2.0.2'; rxAndroid = new DString('io.reactivex.rxjava2', 'rxandroid', rxAndroidVer).toString()
 
     archLifecycleVer = '1.1.0'; _archLifecycle = new DString('android.arch.lifecycle', archLifecycleVer)
     archLifecycle = [
@@ -23,7 +23,7 @@ ext {
 
     okHttpVer = '3.9.1'; _okHttp = new DString('com.squareup.okhttp3', okHttpVer)
     okHttp = [
-            okHttp : _okHttp.art('this'),
+            okHttp : _okHttp.art('okhttp'),
             logging: _okHttp.art('logging-interceptor')
     ]
 
