@@ -2,7 +2,7 @@
 
 buildscript {
     ext {
-        build_tools_version = '3.2.0-alpha02'
+        build_tools_version = '3.2.0-alpha03'
         kotlin_version = '1.2.21'
     }
     repositories {
