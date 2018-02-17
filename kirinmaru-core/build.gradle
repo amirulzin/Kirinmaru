@@ -22,4 +22,6 @@ dependencies {
     implementation retrofit2.converterGson
     implementation okHttp.logging
 
+    implementation dagger.dagger
+    kapt dagger.daggerCompiler
 }

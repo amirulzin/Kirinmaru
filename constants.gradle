@@ -13,12 +13,22 @@ ext {
 
     archLifecycleVer = '1.1.0'; _archLifecycle = new DString('android.arch.lifecycle', archLifecycleVer)
     archLifecycle = [
-            runtime            : _archLifecycle.art('runtime'), //lightweight without LiveData and ViewModel
-            extensions         : _archLifecycle.art('extensions'), //both LiveData and ViewModel
-            livedata           : _archLifecycle.art('livedata'),
-            viewmodel          : _archLifecycle.art('viewmodel'),
-            reactivestreams    : _archLifecycle.art('reactivestreams'),
-            common_java8       : _archLifecycle.art('common-java8'),
+            runtime        : _archLifecycle.art('runtime'), //lightweight without LiveData and ViewModel
+            extensions     : _archLifecycle.art('extensions'), //both LiveData and ViewModel
+            livedata       : _archLifecycle.art('livedata'),
+            viewmodel      : _archLifecycle.art('viewmodel'),
+            reactivestreams: _archLifecycle.art('reactivestreams'),
+            common_java8   : _archLifecycle.art('common-java8'),
+    ]
+
+    //DI
+    daggerVer = '2.13'; _dagger = new DString("com.google.dagger", daggerVer)
+    dagger = [
+            dagger                : _dagger.art('dagger'),
+            daggerCompiler        : _dagger.art('dagger-compiler'),
+            daggerAndroid         : _dagger.art('dagger-android'),
+            daggerAndroidSupport  : _dagger.art('dagger-android-support'),
+            daggerAndroidProcessor: _dagger.art('dagger-android-processor')
     ]
 
     okHttpVer = '3.9.1'; _okHttp = new DString('com.squareup.okhttp3', okHttpVer)

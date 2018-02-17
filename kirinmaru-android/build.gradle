@@ -69,5 +69,18 @@ dependencies {
     kapt "android.arch.lifecycle:compiler:$archLifecycleVer"
     kapt "com.android.databinding:compiler:$build_tools_version"
 
-    implementation kotlinStdLib8
+    //DI
+    implementation dagger.dagger
+    kapt dagger.daggerCompiler
+    implementation dagger.daggerAndroid
+    implementation dagger.daggerAndroidSupport
+    kapt dagger.daggerAndroidProcessor
+
+    //Network
+    implementation okHttp.okHttp
+
+    //Behaviors
+    implementation rxJava
+    implementation rxAndroid
+    implementation project(':kirinmaru-core')
 }
