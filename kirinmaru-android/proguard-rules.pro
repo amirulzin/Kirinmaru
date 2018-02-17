@@ -30,3 +30,13 @@
 -keepattributes Exceptions
 -dontwarn okio.**
 -keepattributes *Annotation*
+
+# Dagger
+-dontwarn com.google.errorprone.annotations.*
+
+# Jsoup
+-keeppackagenames org.jsoup.nodes
+
+# Proguard debugging
+-renamesourcefileattribute SourceFile
+-keepattributes SourceFile,LineNumberTable
