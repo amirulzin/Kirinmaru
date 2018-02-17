@@ -12,13 +12,14 @@ import stream.reconfig.kirinmaru.core.parser.Parser
 import stream.reconfig.kirinmaru.plugins.wordpress.WordPressApi
 import stream.reconfig.kirinmaru.remote.Providers
 import java.io.IOException
+import javax.inject.Inject
 
 /**
  * WuxiaWorld plugin
  */
-const val WUXIAWORLD_HOME = "https://www.wuxiaworld.com/"
+internal const val WUXIAWORLD_HOME = "https://www.wuxiaworld.com/"
 
-class WuxiaworldPlugin(override val client: OkHttpClient, override val cookieJar: CookieJar) : Plugin {
+class WuxiaworldPlugin @Inject constructor(override val client: OkHttpClient, override val cookieJar: CookieJar) : Plugin {
 
   internal val wpApi by lazy {
     Providers.retrofitBuilder()

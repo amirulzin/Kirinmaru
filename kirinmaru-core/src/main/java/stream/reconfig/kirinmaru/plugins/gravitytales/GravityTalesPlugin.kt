@@ -7,13 +7,14 @@ import okhttp3.CookieJar
 import okhttp3.OkHttpClient
 import stream.reconfig.kirinmaru.core.*
 import stream.reconfig.kirinmaru.remote.Providers
+import javax.inject.Inject
 
 /**
  * Gravity Tales plugin
  */
-const val GRAVITYTALES_HOME = "http://gravitytales.com/"
+internal const val GRAVITYTALES_HOME = "http://gravitytales.com/"
 
-class GravityTalesPlugin(override val client: OkHttpClient, override val cookieJar: CookieJar) : Plugin {
+class GravityTalesPlugin @Inject constructor(override val client: OkHttpClient, override val cookieJar: CookieJar) : Plugin {
 
   internal val api by lazy {
     Providers.retrofitBuilder(
