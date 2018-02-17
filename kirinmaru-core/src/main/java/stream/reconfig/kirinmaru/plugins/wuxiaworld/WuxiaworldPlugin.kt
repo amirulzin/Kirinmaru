@@ -12,7 +12,6 @@ import stream.reconfig.kirinmaru.core.parser.Parser
 import stream.reconfig.kirinmaru.plugins.wordpress.WordPressApi
 import stream.reconfig.kirinmaru.remote.Providers
 import java.io.IOException
-import java.nio.charset.StandardCharsets
 
 /**
  * WuxiaWorld plugin
@@ -31,15 +30,17 @@ class WuxiaworldPlugin(override val client: OkHttpClient, override val cookieJar
         .create(WordPressApi::class.java)
   }
 
-  private val parser by lazy { WuxiaWorldIndexParser }
-
   override fun obtainNovels(): Single<List<NovelId>> {
-    return Single.fromCallable { getBody(WUXIAWORLD_HOME) }
-        .map {
-          it.byteStream().use {
-            WuxiaWorldIndexParser.parse(Jsoup.parse(it, StandardCharsets.UTF_8.name(), WUXIAWORLD_HOME))
-          }
-        }
+    return Single.fromCallable {
+      val response = getResponse(WUXIAWORLD_HOME)
+      if (response.isSuccessful) {
+        response.body()
+            ?.byteStream()
+            ?.use { Jsoup.parse(it, "UTF-8", WUXIAWORLD_HOME) }
+            ?.let { WuxiaWorldIndexParser.parse(it) }
+            ?: throw IOException("Null body for $WUXIAWORLD_HOME")
+      } else throw IOException("Response error on Index: $WUXIAWORLD_HOME\n $response")
+    }
   }
 
   override fun obtainChapters(novel: NovelId, currentPage: Int): Single<List<ChapterId>> {
@@ -85,9 +86,8 @@ class WuxiaworldPlugin(override val client: OkHttpClient, override val cookieJar
     return this.keys.find { url.contains(it) }?.let { this[it] }
   }
 
-  private fun getBody(url: String): ResponseBody {
-    return client.newCall(Request.Builder().url(url).get().build())
-        .execute().run { if (isSuccessful) body()!! else throw IOException(message()) }
+  private fun getResponse(url: String): Response {
+    return client.newCall(Request.Builder().url(url).get().build()).execute()
   }
 
   private fun findNovelId(novel: NovelId): Single<String> {
@@ -104,14 +104,13 @@ class WuxiaworldPlugin(override val client: OkHttpClient, override val cookieJar
 
   internal object WuxiaWorldIndexParser : Parser<List<NovelId>> {
 
-    private val keys = arrayOf("Completed", "Chinese", "Korean", "Originals")
     private fun selectByKey(key: String) = "#menu-home-menu > li:has(a[href=#]:containsOwn($key)) a:not(a[href=#])"
 
     override fun parse(document: Document): List<NovelId> {
-      return keys.flatMap { key ->
-        document.select(selectByKey(key))
-            .map { toNovelId(it, key) }
-      }
+      return arrayOf("Completed", "Chinese", "Korean", "Originals")
+          .flatMap { key ->
+            document.select(selectByKey(key)).map { toNovelId(it, key) }
+          }
     }
 
     private fun toNovelId(ele: Element, key: String): WWNovelId {
