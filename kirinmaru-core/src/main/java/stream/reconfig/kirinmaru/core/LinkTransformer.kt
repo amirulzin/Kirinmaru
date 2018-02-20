@@ -4,9 +4,9 @@ import okhttp3.HttpUrl
 
 interface LinkTransformer {
   val baseUrl: HttpUrl
-  fun toAbsolute(relative: String): String {
+  fun toAbsolute(pathSegments: String): String {
     return baseUrl.newBuilder()
-        .addPathSegments(relative)
+        .addPathSegments(pathSegments)
         .build()
         .toString()
   }
