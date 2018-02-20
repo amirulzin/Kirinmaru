@@ -21,6 +21,13 @@ ext {
             common_java8   : _archLifecycle.art('common-java8'),
     ]
 
+    roomVer = '1.1.0-alpha2'; _room = new DString('android.arch.persistence.room', roomVer)
+    room = [
+            runtime : _room.art('runtime'),
+            compiler: _room.art('compiler'),
+            rxjava2: _room.art('rxjava2')
+    ]
+
     //DI
     daggerVer = '2.13'; _dagger = new DString("com.google.dagger", daggerVer)
     dagger = [
