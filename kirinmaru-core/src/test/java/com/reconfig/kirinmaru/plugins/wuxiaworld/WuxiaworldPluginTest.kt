@@ -55,6 +55,9 @@ open class WuxiaworldPluginTest {
     }
   }
 
+  val novelId = CoreNovelId("Wu Dong Qian Kun", "http://www.wuxiaworld.com/wdqk-index/", null)
+  val chapterId = CoreChapterId("wdqk-chapter-984")
+
   @Test
   fun obtainNovels() {
     plugin.obtainNovels()
@@ -72,7 +75,7 @@ open class WuxiaworldPluginTest {
   fun obtainChapters() {
     var error: NotImplementedError? = null
     try {
-      plugin.obtainChapters(CoreNovelId("Wu Dong Qian Kun", "http://www.wuxiaworld.com/wdqk-index/", null))
+      plugin.obtainChapters(novelId)
     } catch (e: NotImplementedError) {
       error = e
     }
@@ -94,7 +97,8 @@ open class WuxiaworldPluginTest {
 
   @Test
   fun obtainDetail() {
-    plugin.obtainDetail(CoreChapterId("wdqk-chapter-984"))
+
+    plugin.obtainDetail(chapterId)
         .map {
           with(it) {
             assertTrue(rawText!!.isNotBlank())
@@ -129,5 +133,14 @@ open class WuxiaworldPluginTest {
         .assertNoErrors()
         .assertComplete()
     assertTrue("Chapters is empty: ${errata.onEach { println(it) }}", errata.isEmpty())
+  }
+
+  @Test
+  fun toAbsolute() {
+    plugin.toAbsoluteUrl(novelId, chapterId)
+        .map {
+          val matcher = novelId.url + chapterId.url
+          assertTrue("absoluteUrl doesn't match. \nFound: $it\nMatcher:$matcher", it == matcher)
+        }.test().assertNoErrors().assertComplete()
   }
 }

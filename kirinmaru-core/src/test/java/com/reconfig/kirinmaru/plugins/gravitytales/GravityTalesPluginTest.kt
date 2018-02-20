@@ -6,6 +6,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import stream.reconfig.kirinmaru.core.domain.CoreChapterId
 import stream.reconfig.kirinmaru.core.domain.CoreNovelId
+import stream.reconfig.kirinmaru.plugins.gravitytales.GRAVITYTALES_HOME
 import stream.reconfig.kirinmaru.plugins.gravitytales.GravityTalesPlugin
 
 /**
@@ -13,6 +14,8 @@ import stream.reconfig.kirinmaru.plugins.gravitytales.GravityTalesPlugin
  */
 class GravityTalesPluginTest {
   val plugin = GravityTalesPlugin(TestHelper.okHttpClient(), CookieJar.NO_COOKIES)
+  val novel = CoreNovelId("Chaotic Sword God", "chaotic-sword-god", "5")
+  val chapterId = CoreChapterId("novel/chaotic-sword-god/csg-chapter-1081")
 
   @Test
   fun obtainNovels() {
@@ -28,7 +31,8 @@ class GravityTalesPluginTest {
 
   @Test
   fun obtainChapters() {
-    plugin.obtainChapters(CoreNovelId("Chaotic Sword God", "chaotic-sword-god", "5")) //as returned by obtainNovels()
+
+    plugin.obtainChapters(novel) //as returned by obtainNovels()
         .map {
           assertTrue(it.isNotEmpty())
           it.onEach {
@@ -39,7 +43,7 @@ class GravityTalesPluginTest {
 
   @Test
   fun obtainDetail() {
-    plugin.obtainDetail(CoreChapterId("novel/chaotic-sword-god/csg-chapter-1081"))
+    plugin.obtainDetail(chapterId)
         .map {
           println(it)
           with(it) {
@@ -47,6 +51,15 @@ class GravityTalesPluginTest {
             assertTrue(nextUrl!!.isNotBlank())
             assertTrue(previousUrl!!.isNotBlank())
           }
+        }.test().assertNoErrors().assertComplete()
+  }
+
+  @Test
+  fun toAbsolute() {
+    plugin.toAbsoluteUrl(novel, chapterId)
+        .map {
+          val matcher = GRAVITYTALES_HOME + chapterId.url
+          assertTrue("absoluteUrl doesn't match. \nFound: $it\nMatcher:$matcher", it == matcher)
         }.test().assertNoErrors().assertComplete()
   }
 }

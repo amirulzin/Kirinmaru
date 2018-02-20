@@ -38,4 +38,6 @@ interface Plugin {
   }
 
   fun obtainDetail(chapter: ChapterId): Single<ChapterDetail>
+
+  fun toAbsoluteUrl(novelId: NovelId, chapterId: ChapterId): Single<String>
 }

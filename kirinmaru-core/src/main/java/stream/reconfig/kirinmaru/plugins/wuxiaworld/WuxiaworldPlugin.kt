@@ -69,6 +69,10 @@ class WuxiaworldPlugin @Inject constructor(override val client: OkHttpClient, ov
         .map { it.toChapterDetail() }
   }
 
+  override fun toAbsoluteUrl(novelId: NovelId, chapterId: ChapterId): Single<String> {
+    return Single.fromCallable { HttpUrl.parse(novelId.url)!!.newBuilder().addPathSegment(chapterId.url).toString() }
+  }
+
   private fun WordPressApi.Page.toChapterId() = CoreChapterId(slug)
 
   private fun WordPressApi.Page.toChapterDetail(): CoreChapterDetail {

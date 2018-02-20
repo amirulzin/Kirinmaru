@@ -50,4 +50,8 @@ class GravityTalesPlugin @Inject constructor(override val client: OkHttpClient, 
         .mapDocument(GRAVITYTALES_HOME)
         .map { chapterDetailParser.parse(it) }
   }
+
+  override fun toAbsoluteUrl(novelId: NovelId, chapterId: ChapterId): Single<String> {
+    return Single.fromCallable { GravityTalesLinkTransformer.toAbsolute(chapterId.url) }
+  }
 }
