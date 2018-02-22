@@ -64,6 +64,9 @@ dependencies {
     testImplementation jUnit
     testImplementation 'org.robolectric:robolectric:3.6.1'
 
+    //Kotlin
+    implementation kotlinStdLib8
+
     //Android baseline libs
     implementation supportLib.appcompat_v7
     implementation supportLib.design
@@ -90,6 +93,11 @@ dependencies {
 
     //Network
     implementation okHttp.okHttp
+    implementation gson
+    implementation retrofit2.retrofit
+    implementation retrofit2.adapterRxJava2
+    implementation retrofit2.converterGson
+    implementation jsoup
 
     //Behaviors
     implementation rxJava
