@@ -28,9 +28,9 @@ internal interface GravityTalesApi {
   fun getChapterDetail(@Url url: String): Single<Response<ResponseBody>>
 
   data class GTNovelId(
-      @SerializedName("Name") override val novelTitle: String,
-      @SerializedName("Slug") override val url: String,
-      @SerializedName("Id") override val id: String?,
+      @SerializedName("Name") override val novelTitle: String = "",
+      @SerializedName("Slug") override val url: String = "",
+      @SerializedName("Id") override val id: String? = null,
       @Transient override val tags: Set<String> = emptySet()
   ) : NovelId
 

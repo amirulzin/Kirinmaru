@@ -20,11 +20,15 @@ class GravityTalesPluginTest {
   @Test
   fun obtainNovels() {
     plugin.obtainNovels()
-        .map {
-          assertTrue(it.isNotEmpty())
-          it.onEach {
-            assertTrue(it.url.isNotBlank())
-            assertTrue(it.id!!.isNotBlank())
+        .map { list ->
+          assertTrue(list.isNotEmpty())
+          list.onEach {
+            with(it) {
+              assertTrue(url.isNotBlank())
+              assertTrue(id!!.isNotBlank())
+              assertTrue(novelTitle.isNotBlank())
+              assertTrue(tags.isEmpty())
+            }
           }
         }.test().assertNoErrors().assertComplete()
   }
