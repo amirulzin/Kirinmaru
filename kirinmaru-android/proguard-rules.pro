@@ -38,6 +38,7 @@
 -keeppackagenames org.jsoup.nodes
 
 # Proguard debugging
+#-dontobfuscate
 -renamesourcefileattribute SourceFile
 -keepattributes SourceFile,LineNumberTable
 
@@ -69,3 +70,6 @@
 -keep class stream.reconfig.kirinmaru.plugins.** { *;}
 
 ##---------------End: proguard configuration for deserializable models ----------
+
+#Support lib bug
+-keep class android.support.v7.app.AppCompatViewInflater
