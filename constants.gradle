@@ -51,7 +51,7 @@ ext {
             converterGson : _retrofit2.art('converter-gson')
     ]
 
-    supportLibVer = "27.0.2"; _androidSupport = new DString("com.android.support", supportLibVer)
+    supportLibVer = "27.1.0"; _androidSupport = new DString("com.android.support", supportLibVer)
     supportLib = [
             appcompat_v7           : _androidSupport.art('appcompat-v7'),
             cardview_v7            : _androidSupport.art('cardview-v7'),
