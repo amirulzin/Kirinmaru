@@ -7,6 +7,7 @@ import dagger.multibindings.StringKey
 import stream.reconfig.kirinmaru.core.Plugin
 import stream.reconfig.kirinmaru.plugins.gravitytales.GravityTalesPlugin
 import stream.reconfig.kirinmaru.plugins.wuxiaworld.WuxiaworldPlugin
+import javax.inject.Provider
 import javax.inject.Singleton
 
 /**
@@ -26,4 +27,8 @@ interface PluginModule {
   @StringKey("WuxiaWorld")
   fun bindWuxiaWorld(wuxiaworldPlugin: WuxiaworldPlugin): Plugin
 
+  @Binds
+  fun bindPlugins(pluginsMap: Map<String, @JvmSuppressWildcards Provider<Plugin>>): PluginMap
 }
+
+typealias PluginMap = Map<String, @JvmSuppressWildcards Provider<Plugin>>
