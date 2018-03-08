@@ -1,6 +1,6 @@
-package com.reconfig.kirinmaru.plugins.gravitytales
+package stream.reconfig.kirinmaru.plugins.gravitytales
 
-import com.reconfig.kirinmaru.TestHelper
+import stream.reconfig.kirinmaru.TestHelper
 import org.jsoup.Jsoup
 import org.junit.Test
 import stream.reconfig.kirinmaru.plugins.gravitytales.GravityTalesChapterDetailParser

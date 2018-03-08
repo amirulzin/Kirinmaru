@@ -1,6 +1,6 @@
-package com.reconfig.kirinmaru.plugins.gravitytales
+package stream.reconfig.kirinmaru.plugins.gravitytales
 
-import com.reconfig.kirinmaru.TestHelper
+import stream.reconfig.kirinmaru.TestHelper
 import okhttp3.CookieJar
 import org.junit.Assert.assertTrue
 import org.junit.Test

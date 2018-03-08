@@ -1,6 +1,6 @@
-package com.reconfig.kirinmaru.plugins.wordpress
+package stream.reconfig.kirinmaru.plugins.wordpress
 
-import com.reconfig.kirinmaru.TestHelper
+import stream.reconfig.kirinmaru.TestHelper
 import okhttp3.logging.HttpLoggingInterceptor
 import org.junit.Assert.assertTrue
 import org.junit.Ignore
@@ -13,7 +13,7 @@ import stream.reconfig.kirinmaru.remote.Providers
  * Integration test for WordPress API based on the official demo site
  */
 @Ignore("Remote")
-class WordpressApiRemoteTest {
+class ordpressApiRemoteTest {
 
   val baseUrl = "https://demo.wp-api.org/"
   val api = Providers.retrofitBuilder()

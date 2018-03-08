@@ -1,4 +1,4 @@
-package com.reconfig.kirinmaru
+package stream.reconfig.kirinmaru
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
