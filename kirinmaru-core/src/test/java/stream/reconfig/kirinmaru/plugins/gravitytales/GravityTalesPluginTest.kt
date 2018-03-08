@@ -1,13 +1,11 @@
 package stream.reconfig.kirinmaru.plugins.gravitytales
 
-import stream.reconfig.kirinmaru.TestHelper
 import okhttp3.CookieJar
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import stream.reconfig.kirinmaru.TestHelper
 import stream.reconfig.kirinmaru.core.domain.CoreChapterId
 import stream.reconfig.kirinmaru.core.domain.CoreNovelId
-import stream.reconfig.kirinmaru.plugins.gravitytales.GRAVITYTALES_HOME
-import stream.reconfig.kirinmaru.plugins.gravitytales.GravityTalesPlugin
 
 /**
  * Test for GravityTales Plugin

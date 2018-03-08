@@ -1,10 +1,10 @@
 package stream.reconfig.kirinmaru.plugins.wordpress
 
-import stream.reconfig.kirinmaru.TestHelper
 import okhttp3.logging.HttpLoggingInterceptor
 import org.junit.Assert.assertTrue
 import org.junit.Ignore
 import org.junit.Test
+import stream.reconfig.kirinmaru.TestHelper
 import stream.reconfig.kirinmaru.core.flattenResponse
 import stream.reconfig.kirinmaru.plugins.wordpress.WordPressApi
 import stream.reconfig.kirinmaru.remote.Providers
