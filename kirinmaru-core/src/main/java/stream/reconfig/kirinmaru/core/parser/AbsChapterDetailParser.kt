@@ -6,10 +6,10 @@ import stream.reconfig.kirinmaru.core.domain.CoreChapterDetail
 import stream.reconfig.kirinmaru.core.selectBy
 
 abstract class AbsChapterDetailParser(
-    val rawText: String,
-    val nextUrl: String,
-    val prevUrl: String,
-    inline val transformer: (rawText: String?, nextUrl: String?, prevUrl: String?) -> ChapterDetail = ::CoreChapterDetail
+    open val rawText: String,
+    open val nextUrl: String,
+    open val prevUrl: String,
+    open inline val transformer: (rawText: String?, nextUrl: String?, prevUrl: String?) -> ChapterDetail = ::CoreChapterDetail
 ) : Parser<ChapterDetail> {
 
   override fun parse(document: Document): ChapterDetail {

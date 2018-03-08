@@ -9,8 +9,8 @@ import stream.reconfig.kirinmaru.core.selectBy
  *
  */
 abstract class AbsChapterIdParser(
-    val chapterIds: String,
-    inline val transformer: (Element) -> ChapterId
+    open val chapterIds: String,
+    open inline val transformer: (Element) -> ChapterId
 ) : Parser<List<ChapterId>> {
   override fun parse(document: Document): List<ChapterId> {
     return document.selectBy(chapterIds) {
