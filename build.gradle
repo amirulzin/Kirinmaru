@@ -2,7 +2,7 @@
 buildscript {
     ext {
         build_tools_version = '3.2.0-alpha04'
-        kotlin_version = '1.2.21'
+        kotlin_version = '1.2.30'
     }
     repositories {
         google()
@@ -31,7 +31,14 @@ task clean(type: Delete) {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.5'
+    gradleVersion = '4.6'
+}
+
+tasks.withType(JavaCompile) {
+    configure(options) {
+        compilerArgs << "-Xlint:-unchecked"
+        compilerArgs << "-Xlint:-rawtypes"
+    }
 }
 
 apply from: 'constants.gradle'
