@@ -3,6 +3,7 @@ package stream.reconfig.kirinmaru.android.util.offline
 import android.arch.lifecycle.LiveDataReactiveStreams
 import android.arch.lifecycle.Observer
 import android.support.annotation.CallSuper
+import io.reactivex.Flowable
 import io.reactivex.schedulers.Schedulers
 import stream.reconfig.kirinmaru.android.BuildConfig
 import stream.reconfig.kirinmaru.android.util.rx.addTo
@@ -15,7 +16,9 @@ import stream.reconfig.kirinmaru.android.util.rx.addTo
  *   - [L] Local type to be queried from local store e.g. `List<PersonEntity>`, `PlayerEntities`
  *   - [R] Remote type returned during forced refresh e.g. `List<PersonJson>`, `PlayersJson`
  *
- *   Requires
+ * Note: Methods of the created [ResourceContract] will be called on RxJava worker pools.
+ *
+ * Requires
  *   1. RxJava2
  *   2. Android Architecture Components `LiveData` and `ReactiveStreams`
  */
@@ -36,7 +39,7 @@ abstract class ResourceLiveData<V, L, R> : RxResourceLiveData<V>() {
           .observeOn(Schedulers.computation())
           .subscribe(
               { success -> postComplete() },
-              { error -> postError(error?.message ?: "Loading error") }
+              { error -> postError(error?.message ?: "Network error") }
           ).addTo(disposables)
     }
   }
@@ -71,7 +74,7 @@ abstract class ResourceLiveData<V, L, R> : RxResourceLiveData<V>() {
 
   protected open val localLive by lazy {
     LiveDataReactiveStreams.fromPublisher(
-        contract.local()
+        Flowable.defer { contract.local() }
             .map(contract::view)
             .doOnError {
               postError(it.message ?: "Error during local retrieval")
