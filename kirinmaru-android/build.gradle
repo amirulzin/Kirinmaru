@@ -48,6 +48,11 @@ android {
     dataBinding {
         enabled = true
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 androidExtensions {
@@ -59,11 +64,8 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
-    //testImplementation "junit:junit:$jUnitVer"
     testImplementation jUnit
     testImplementation 'org.robolectric:robolectric:3.6.1'
-
     //Kotlin
     implementation kotlinStdLib8
 
@@ -77,6 +79,7 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
     implementation archLifecycle.extensions
+    implementation archLifecycle.reactivestreams
     kapt "android.arch.lifecycle:compiler:$archLifecycleVer"
     implementation room.runtime
     implementation room.rxjava2
@@ -86,10 +89,14 @@ dependencies {
 
     //DI
     implementation dagger.dagger
-    kapt dagger.daggerCompiler
     implementation dagger.daggerAndroid
     implementation dagger.daggerAndroidSupport
+    kapt dagger.daggerCompiler
     kapt dagger.daggerAndroidProcessor
+    kaptTest dagger.daggerCompiler
+    kaptTest dagger.daggerAndroidProcessor
+    kaptAndroidTest dagger.daggerCompiler
+    kaptAndroidTest dagger.daggerAndroidProcessor
 
     //Network
     implementation okHttp.okHttp
@@ -103,4 +110,8 @@ dependencies {
     implementation rxJava
     implementation rxAndroid
     implementation project(':kirinmaru-core')
+
+    //UI
+    implementation 'com.baseconfig.pillar:materials:0.3.2'
+    implementation 'com.baseconfig.pillar:utils:0.3.2'
 }
