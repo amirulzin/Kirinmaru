@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="kirin_grey_50">#FF353535</color>
+    <color name="kirin_grey_100">#FF323232</color>
+    <color name="kirin_grey_200">#FF2D2D2D</color>
+    <color name="kirin_grey_300">#FF282828</color>
+    <color name="kirin_grey_400">#FF232323</color>
+    <color name="kirin_grey_500">#1e1e1e</color>
+    <color name="kirin_grey_600">#FF191919</color>
+    <color name="kirin_grey_700">#141414</color>
+    <color name="kirin_grey_800">#FF0F0F0F</color>
+    <color name="kirin_grey_900">#FF0A0A0A</color>
+    <color name="kirin_grey_1000">#FF050505</color>
+    <!--<color name="kirin_black">#FF000000</color>-->
+</resources>

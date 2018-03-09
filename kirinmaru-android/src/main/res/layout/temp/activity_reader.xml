@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.design.widget.CoordinatorLayout android:id="@+id/coordinatorLayout"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
+
+        <android.support.v4.widget.SwipeRefreshLayout android:id="@+id/refreshLayout"
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.v4.widget.NestedScrollView android:id="@+id/scrollView"
+                android:layout_width="match_parent" android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <LinearLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:clipToPadding="false"
+                    android:orientation="vertical">
+
+                    <FrameLayout android:id="@+id/titleContainer"
+                        android:layout_width="match_parent" android:layout_height="wrap_content">
+
+                        <android.support.v4.widget.ContentLoadingProgressBar
+                            android:id="@+id/progressBar"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
+                            android:layout_gravity="bottom" android:indeterminate="true"
+                            android:visibility="gone" tools:visibility="visible" />
+                    </FrameLayout>
+
+
+                    <android.support.v7.widget.AppCompatTextView android:id="@+id/textView"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:layout_margin="8dp" android:lineSpacingExtra="2sp"
+                        android:padding="8dp" android:textColor="@color/colorWhite"
+                        android:textIsSelectable="true" tools:text="YOLOWOLO GIVE\nME HAN SOLO" />
+
+                    <include android:id="@+id/buttonBarBottom" layout="@layout/buttonbar_reader"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:layout_margin="8dp" android:visibility="invisible"
+                        tools:visibility="visible" />
+                </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <android.support.design.widget.AppBarLayout android:id="@+id/appBar"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:background="@null" android:fitsSystemWindows="true" app:elevation="0dp">
+
+            <include android:id="@+id/buttonBarTop" layout="@layout/buttonbar_reader"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_margin="8dp" app:layout_scrollFlags="scroll|enterAlways" />
+        </android.support.design.widget.AppBarLayout>
+
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</layout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/pmc_teal_600</color>
+    <color name="colorPrimaryDark">@color/pmc_teal_800</color>
+    <color name="colorPrimaryDarkest">@color/pcc_black</color>
+    <color name="colorAccent">@color/pmc_amber_500</color>
+    <color name="colorAccentSecondary">@color/pmc_blue_500</color>
+    <color name="colorSecondary">@color/pmc_green_700</color>
+    <color name="colorFavorite">@color/pmc_pink_300</color>
+    <color name="colorFavoriteStealth">@color/kirin_grey_700</color>
+    <color name="colorWhite">@color/pmc_white</color>
+    <color name="colorControlHighlight">@color/pmc_deep_purple_A700</color>
+    <color name="colorWindowBackground">@color/kirin_grey_700</color>
+</resources>

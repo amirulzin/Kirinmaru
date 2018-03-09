@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.constraint.ConstraintLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:animateLayoutChanges="true"
+        android:background="@color/kirin_grey_500" android:elevation="2dp"
+        android:foreground="?attr/selectableItemBackground" android:orientation="vertical">
+
+        <TextView android:id="@+id/title" style="@style/AppTheme.Text" android:layout_width="0dp"
+            android:layout_height="wrap_content" android:gravity="center_vertical"
+            android:paddingEnd="8dp" android:paddingStart="16dp" android:paddingTop="8dp"
+            android:textColor="@color/text_clickable" android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/loadingView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="When I Reincarnated as Excalibur and then Killed the King as to become the World Fugitive and Finally Ruled The World on My Feet and All the Crooked Bow before My Wielder except that 3-dot just Beside This Title" />
+
+        <net.bohush.geometricprogressview.GeometricProgressView android:id="@+id/loadingView"
+            android:layout_width="16dp" android:layout_height="16dp"
+            android:layout_marginStart="8dp" android:layout_marginEnd="6dp"
+            app:gp_color="@color/colorAccentSecondary" app:gp_duration="800"
+            app:gp_figure_padding="2dp" app:gp_number_of_angles="4" app:gp_type="kite"
+            app:layout_constraintBottom_toBottomOf="@id/title"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.constraint.Guideline android:id="@+id/horizontalGuideline"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="vertical" app:layout_constraintGuide_percent=".5" />
+
+        <Button android:id="@+id/lastRead" style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp" android:layout_height="40dp"
+            android:drawableLeft="@drawable/ic_bookmark" android:drawablePadding="8dp"
+            android:gravity="left|center_vertical" android:textAllCaps="false"
+            android:textColor="@color/colorAccent" android:visibility="gone"
+            app:compoundTint="@{@color/colorFavorite}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/horizontalGuideline"
+            app:layout_constraintTop_toBottomOf="@id/title" app:layout_constraintVertical_bias="0.0"
+            tools:drawableTint="@color/colorFavorite" tools:ignore="RtlHardcoded"
+            tools:text="Chapter 21" tools:visibility="visible" />
+
+        <Button android:id="@+id/latestChapter" style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp" android:layout_height="40dp"
+            android:drawableLeft="@drawable/ic_public" android:drawablePadding="8dp"
+            android:gravity="left|center_vertical" android:textAllCaps="false"
+            android:textColor="@color/colorAccent" app:compoundTint="@{@color/colorSecondary}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/lastRead"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            tools:drawableTint="@color/colorSecondary" tools:ignore="RtlHardcoded"
+            tools:text="Chapter 112" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

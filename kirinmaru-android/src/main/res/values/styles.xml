@@ -1,0 +1,37 @@
+<resources>
+
+    <style name="AppThemeBase" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorControlHighlight</item>
+        <item name="android:windowBackground">@color/colorWindowBackground</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+    </style>
+
+    <style name="AppTheme" parent="AppThemeBase">
+        <item name="android:navigationBarColor">@color/colorWindowBackground</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+        <!--<item name="android:colorBackground">@color/kirin_grey_500</item>-->
+
+    </style>
+
+    <style name="AppTheme.WithBackground" parent="AppTheme">
+        <item name="android:windowBackground">@color/colorPrimaryDarkest</item>
+        <item name="android:navigationBarColor">@color/colorPrimaryDarkest</item>
+    </style>
+
+
+    <style name="AppTheme.Text" parent="AppTheme">
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="AppTheme.Button.Dark" parent="@style/Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:tint">@color/colorWhite</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+</resources>

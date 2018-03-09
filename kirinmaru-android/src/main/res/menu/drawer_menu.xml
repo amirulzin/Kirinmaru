@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/mainNav"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/navLibrary"
+            android:icon="@drawable/ic_collections_bookmark"
+            android:title="Library" />
+        <item
+            android:id="@+id/navCatalogues"
+            android:icon="@drawable/ic_view_list"
+            android:title="Catalogues" />
+        <item
+            android:id="@+id/navDownloads"
+            android:icon="@drawable/ic_cloud_download"
+            android:title="Downloads" />
+        <item
+            android:id="@+id/navSettings"
+            android:icon="@drawable/ic_settings"
+            android:title="Settings" />
+    </group>
+</menu>
