@@ -25,14 +25,15 @@ interface ResourceContract<out V, L, R> {
   fun remote(): Single<R>
 
   /**
+   * Transform from remote [R] type into any local [L] type.
+   * [persist] should be called after this.
+   */
+  fun transform(remote: R): L
+
+  /**
    * Persist data. Final transformations can also be done here
    */
   fun persist(data: L)
-
-  /**
-   * Transform from remote [R] type into any local [L] type
-   */
-  fun transform(remote: R): L
 
   /**
    * Transform from local queried type [L] into the view type [V]

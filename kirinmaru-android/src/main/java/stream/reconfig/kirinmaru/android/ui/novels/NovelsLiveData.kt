@@ -9,7 +9,6 @@ import stream.reconfig.kirinmaru.android.db.NovelDao
 import stream.reconfig.kirinmaru.android.prefs.FavoritePref
 import stream.reconfig.kirinmaru.android.util.offline.ResourceContract
 import stream.reconfig.kirinmaru.android.util.offline.ResourceLiveData
-import stream.reconfig.kirinmaru.android.util.validator.ThreadValidator
 import stream.reconfig.kirinmaru.android.vo.Novel
 import stream.reconfig.kirinmaru.core.NovelId
 import stream.reconfig.kirinmaru.plugins.PluginMap
@@ -44,31 +43,26 @@ class NovelsLiveData @Inject constructor(
   override fun createContract() =
       object : ResourceContract<List<NovelItem>, List<Novel>, List<NovelId>> {
         override fun local(): Flowable<List<Novel>> {
-          ThreadValidator.validateWorkerThread()
           return origin.value?.let { novelDao.novelsBy(it) }
               ?: Flowable.error(IllegalStateException("Novels: Origin not initialized"))
         }
 
         override fun remote(): Single<List<NovelId>> {
-          ThreadValidator.validateWorkerThread()
           return origin.value?.let {
             pluginMap[it]?.get()?.obtainNovels()
                 ?: Single.error(IllegalStateException("Novels: Plugin not recognized: $it"))
           } ?: Single.error(IllegalStateException("Novels: Origin not initialized"))
         }
 
-        override fun persist(data: List<Novel>) {
-          ThreadValidator.validateWorkerThread()
-          novelDao.insert(data)
-        }
-
         override fun transform(remote: List<NovelId>): List<Novel> {
-          ThreadValidator.validateWorkerThread()
           return remote.map(::toNovel)
         }
 
+        override fun persist(data: List<Novel>) {
+          novelDao.insert(data)
+        }
+
         override fun view(local: List<Novel>): List<NovelItem> {
-          ThreadValidator.validateWorkerThread()
           return local.map(::toNovelItem)
         }
       }

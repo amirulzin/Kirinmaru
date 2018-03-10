@@ -38,14 +38,14 @@ class ChaptersLiveData @Inject constructor(
           } ?: Single.error(IllegalStateException("No plugin match for ${novel.value}"))
         }
 
+        override fun transform(remote: List<ChapterId>): List<String> {
+          return remote.map { it.url }
+        }
+
         override fun persist(data: List<String>) {
           novel.value?.run {
             chapterDao.insert(data.map { Chapter(this.url, it) })
           }
-        }
-
-        override fun transform(remote: List<ChapterId>): List<String> {
-          return remote.map { it.url }
         }
 
         override fun view(local: List<String>): List<ChapterItem> {
