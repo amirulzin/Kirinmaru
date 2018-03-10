@@ -38,7 +38,10 @@ abstract class ResourceLiveData<V, L, R> : RxResourceLiveData<V>() {
           .observeOn(Schedulers.computation())
           .subscribe(
               { success -> postComplete() },
-              { error -> postError(error?.message ?: "Network error") }
+              { error ->
+                postError(error?.message ?: "Network error")
+                if (BuildConfig.DEBUG) error.printStackTrace()
+              }
           ).addTo(disposables)
     }
   }
