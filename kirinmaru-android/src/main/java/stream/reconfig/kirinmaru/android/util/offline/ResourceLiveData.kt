@@ -3,7 +3,6 @@ package stream.reconfig.kirinmaru.android.util.offline
 import android.arch.lifecycle.LiveDataReactiveStreams
 import android.arch.lifecycle.Observer
 import android.support.annotation.CallSuper
-import io.reactivex.Flowable
 import io.reactivex.schedulers.Schedulers
 import stream.reconfig.kirinmaru.android.BuildConfig
 import stream.reconfig.kirinmaru.android.util.rx.addTo
@@ -74,7 +73,7 @@ abstract class ResourceLiveData<V, L, R> : RxResourceLiveData<V>() {
 
   protected open val localLive by lazy {
     LiveDataReactiveStreams.fromPublisher(
-        Flowable.defer { contract.local() }
+        contract.local()
             .map(contract::view)
             .doOnError {
               postError(it.message ?: "Error during local retrieval")
