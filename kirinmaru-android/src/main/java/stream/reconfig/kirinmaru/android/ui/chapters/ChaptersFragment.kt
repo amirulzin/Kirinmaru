@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import stream.reconfig.kirinmaru.android.ui.common.fragment.DrawerRecyclerFragment
 import stream.reconfig.kirinmaru.android.ui.novels.NovelItem
+import stream.reconfig.kirinmaru.android.ui.taxonomy.Taxonomy
 import stream.reconfig.kirinmaru.android.util.livedata.observe
 import stream.reconfig.kirinmaru.android.util.offline.State
 import stream.reconfig.kirinmaru.android.util.recycler.ItemDecorationUtil
@@ -48,7 +49,7 @@ class ChaptersFragment : DrawerRecyclerFragment() {
         },
         onBind = { binding, list, position ->
           val item = list[position]
-          binding.title.text = item.url
+          binding.title.text = Taxonomy.View.getDisplayable(item.taxon)
           //binding.bookmark
         }
     )

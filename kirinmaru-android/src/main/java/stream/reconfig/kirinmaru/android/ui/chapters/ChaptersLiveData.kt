@@ -5,6 +5,7 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 import stream.reconfig.kirinmaru.android.db.ChapterDao
 import stream.reconfig.kirinmaru.android.ui.novels.NovelItem
+import stream.reconfig.kirinmaru.android.ui.taxonomy.Taxonomy
 import stream.reconfig.kirinmaru.android.util.offline.ResourceContract
 import stream.reconfig.kirinmaru.android.util.offline.ResourceLiveData
 import stream.reconfig.kirinmaru.android.vo.Chapter
@@ -49,7 +50,8 @@ class ChaptersLiveData @Inject constructor(
         }
 
         override fun view(local: List<String>): List<ChapterItem> {
-          return local.map { ChapterItem(it) }
+          return local.map { ChapterItem(it, Taxonomy.createTaxonomicNumber(it)) }
+              .sortedByDescending { it.taxon }
         }
       }
 }
