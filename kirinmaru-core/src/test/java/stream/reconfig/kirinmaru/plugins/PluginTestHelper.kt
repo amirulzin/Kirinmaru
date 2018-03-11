@@ -118,7 +118,7 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
           logger.log("7 unlock latch")
           latch.countDown()
         }
-        .subscribe({}, { error -> error.printStackTrace() })
+        .test().assertNoErrors().assertComplete()
     latch.await(5, TimeUnit.SECONDS)
     logger.log("8 Finished")
     logger.printlog()
@@ -130,7 +130,7 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
         .newCall(request)
         .execute()
         .apply {
-          assertTrue("Verify URL failure", isSuccessful)
+          assertTrue("Verify URL failure:\n$this", isSuccessful)
           logger.log(this)
         }
   }

@@ -11,12 +11,12 @@ interface LinkTransformer {
         .toString()
   }
 
-  fun asAbsolute(vararg unSanitizedSegments: String): String {
+  fun toSanitizedAbsolute(vararg unSanitizedSegments: String): String {
     return baseUrl.newBuilder().apply {
       unSanitizedSegments
           .map { it.trim().removePrefix("/").removeSuffix("/").trim() }
           .filter { it.isNotBlank() }
-          .forEach { addPathSegment(it) }
+          .forEach { addPathSegments(it) }
     }.build().toString()
   }
 }

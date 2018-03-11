@@ -1,5 +1,7 @@
 package stream.reconfig.kirinmaru.plugins.wuxiaworld
 
+import okhttp3.HttpUrl
+import stream.reconfig.kirinmaru.core.LinkTransformer
 import stream.reconfig.kirinmaru.core.domain.CoreChapterId
 import stream.reconfig.kirinmaru.core.domain.CoreNovelId
 import stream.reconfig.kirinmaru.core.parser.AbsChapterDetailParser
@@ -22,3 +24,7 @@ internal object WuxiaWorldChapterDetailParser : AbsChapterDetailParser(
     nextUrl = ".next a",
     prevUrl = ".prev a"
 )
+
+internal object WuxiaWorldLinkTransformer : LinkTransformer {
+  override val baseUrl = HttpUrl.parse(WUXIAWORLD_HOME)!!
+}

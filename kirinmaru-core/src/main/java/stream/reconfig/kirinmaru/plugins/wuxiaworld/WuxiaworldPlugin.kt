@@ -3,7 +3,6 @@ package stream.reconfig.kirinmaru.plugins.wuxiaworld
 import io.reactivex.Observable
 import io.reactivex.Single
 import okhttp3.CookieJar
-import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import org.jsoup.Jsoup
@@ -67,10 +66,7 @@ class WuxiaworldPlugin @Inject constructor(override val client: OkHttpClient, ov
   }
 
   override fun toAbsoluteUrl(novelId: NovelId, chapterId: ChapterId): String {
-    return HttpUrl.parse(WUXIAWORLD_HOME)!!
-        .newBuilder()
-        .addPathSegments(chapterId.url)
-        .toString()
+    return WuxiaWorldLinkTransformer.toSanitizedAbsolute(chapterId.url)
   }
 
   private fun obtainNovelsByLanguage(key: String): Single<List<NovelId>> {

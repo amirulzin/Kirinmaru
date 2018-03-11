@@ -51,6 +51,6 @@ class GravityTalesPlugin @Inject constructor(override val client: OkHttpClient, 
   }
 
   override fun toAbsoluteUrl(novelId: NovelId, chapterId: ChapterId): String {
-    return GravityTalesLinkTransformer.asAbsolute("novel", novelId.url, chapterId.url)
+    return GravityTalesLinkTransformer.toSanitizedAbsolute("novel", novelId.url, chapterId.url)
   }
 }
