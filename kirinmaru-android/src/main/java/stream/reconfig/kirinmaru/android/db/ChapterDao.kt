@@ -3,7 +3,6 @@ package stream.reconfig.kirinmaru.android.db
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Query
 import io.reactivex.Flowable
-import io.reactivex.Single
 import stream.reconfig.kirinmaru.android.vo.Chapter
 
 /**
@@ -19,5 +18,5 @@ interface ChapterDao : StandardDao<Chapter> {
   fun chapters(novelUrl: String): List<String>
 
   @Query("SELECT * FROM Chapter WHERE url = :chapterUrl")
-  fun chapterBy(chapterUrl: String): Single<Chapter>
+  fun chapterBy(chapterUrl: String): Flowable<Chapter>
 }
