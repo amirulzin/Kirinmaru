@@ -37,7 +37,7 @@ interface Plugin {
     throw NotImplementedError("Not implemented: obtainChapters(novel, currentPage)")
   }
 
-  fun obtainDetail(chapter: ChapterId): Single<ChapterDetail>
+  fun obtainDetail(novelId: NovelId, chapterId: ChapterId): Single<ChapterDetail>
 
-  fun toAbsoluteUrl(novelId: NovelId, chapterId: ChapterId): Single<String>
+  fun toAbsoluteUrl(novelId: NovelId, chapterId: ChapterId): String
 }
