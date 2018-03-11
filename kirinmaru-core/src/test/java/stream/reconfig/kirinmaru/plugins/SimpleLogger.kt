@@ -4,7 +4,7 @@ import java.lang.StringBuilder
 
 class SimpleLogger(private val logging: Boolean) {
   private val sb = StringBuilder()
-  fun log(str: String) {
+  fun log(str: Any?) {
     if (logging)
       synchronized(sb) {
         sb.appendln(str)
@@ -12,6 +12,6 @@ class SimpleLogger(private val logging: Boolean) {
   }
 
   fun printlog() {
-    println(sb.toString())
+    if (logging) println(sb.toString())
   }
 }
