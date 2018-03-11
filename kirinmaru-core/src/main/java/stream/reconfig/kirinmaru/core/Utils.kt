@@ -29,7 +29,7 @@ internal fun Single<Response<ResponseBody>>.mapDocument(baseUri: String): Single
           ?.byteStream()
           ?.use { Jsoup.parse(it, "UTF-8", baseUri) }
           ?: throw ParseException("Body is null/empty", baseUri)
-    } else throw IOException("Origin: $baseUri\nError: ${it.message()}\nBody: ${it.errorBody()}")
+    } else throw IOException("Origin: $baseUri\nError: ${it.message()}\nHeaders: ${it.headers()}\nBody: ${it.errorBody()}")
 
   }
 }
