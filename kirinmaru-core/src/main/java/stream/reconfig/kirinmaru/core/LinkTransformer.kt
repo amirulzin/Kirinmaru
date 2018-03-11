@@ -10,4 +10,13 @@ interface LinkTransformer {
         .build()
         .toString()
   }
+
+  fun asAbsolute(vararg unSanitizedSegments: String): String {
+    return baseUrl.newBuilder().apply {
+      unSanitizedSegments
+          .map { it.trim().removePrefix("/").removeSuffix("/").trim() }
+          .filter { it.isNotBlank() }
+          .forEach { addPathSegment(it) }
+    }.build().toString()
+  }
 }
