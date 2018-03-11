@@ -27,7 +27,7 @@ class GravityTalesPluginTest {
               assertTrue(novelTitle.isNotBlank())
               assertTrue(tags.isEmpty())
             }
-          }
+          }.first().let(::println)
         }.test().assertNoErrors().assertComplete()
   }
 
@@ -39,7 +39,7 @@ class GravityTalesPluginTest {
           assertTrue(it.isNotEmpty())
           it.onEach {
             assertTrue(it.url.isNotBlank())
-          }
+          }.first().let(::println)
         }.test().assertNoErrors().assertComplete()
   }
 
@@ -58,10 +58,8 @@ class GravityTalesPluginTest {
 
   @Test
   fun toAbsolute() {
-    plugin.toAbsoluteUrl(novel, chapterId)
-        .map {
-          val matcher = GRAVITYTALES_HOME + chapterId.url
-          assertTrue("absoluteUrl doesn't match. \nFound: $it\nMatcher:$matcher", it == matcher)
-        }.test().assertNoErrors().assertComplete()
+    val matcher = GRAVITYTALES_HOME + chapterId.url
+    val str = plugin.toAbsoluteUrl(novel, chapterId)
+    assertTrue("absoluteUrl doesn't match. \nFound: $str\nMatcher:$matcher", str == matcher)
   }
 }

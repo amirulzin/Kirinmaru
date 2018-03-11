@@ -66,10 +66,8 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
       chapterId: ChapterId,
       assertBlock: (String) -> Unit = { assertTrue("Malformed url: $it", HttpUrl.parse(it) != null) }
   ) {
-    plugin.toAbsoluteUrl(novelId, chapterId)
-        .map {
-          if (logging) println(it)
-          assertBlock(it)
-        }.test().assertNoErrors().assertComplete()
+    val url = plugin.toAbsoluteUrl(novelId, chapterId)
+    if (logging) println(url)
+    assertBlock(url)
   }
 }

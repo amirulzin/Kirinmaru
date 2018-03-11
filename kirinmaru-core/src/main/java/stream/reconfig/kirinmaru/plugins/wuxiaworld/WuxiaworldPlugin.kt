@@ -66,13 +66,11 @@ class WuxiaworldPlugin @Inject constructor(override val client: OkHttpClient, ov
         .map(WuxiaWorldChapterDetailParser::parse)
   }
 
-  override fun toAbsoluteUrl(novelId: NovelId, chapterId: ChapterId): Single<String> {
-    return Single.fromCallable {
-      HttpUrl.parse(WUXIAWORLD_HOME)!!
-          .newBuilder()
-          .addPathSegments(chapterId.url)
-          .toString()
-    }
+  override fun toAbsoluteUrl(novelId: NovelId, chapterId: ChapterId): String {
+    return HttpUrl.parse(WUXIAWORLD_HOME)!!
+        .newBuilder()
+        .addPathSegments(chapterId.url)
+        .toString()
   }
 
   private fun obtainNovelsByLanguage(key: String): Single<List<NovelId>> {
