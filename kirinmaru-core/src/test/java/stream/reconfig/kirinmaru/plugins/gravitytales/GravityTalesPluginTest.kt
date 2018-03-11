@@ -6,60 +6,51 @@ import org.junit.Test
 import stream.reconfig.kirinmaru.TestHelper
 import stream.reconfig.kirinmaru.core.domain.CoreChapterId
 import stream.reconfig.kirinmaru.core.domain.CoreNovelId
+import stream.reconfig.kirinmaru.plugins.PluginTestHelper
 
 /**
  * Test for GravityTales Plugin
  */
 class GravityTalesPluginTest {
+
   val plugin = GravityTalesPlugin(TestHelper.okHttpClient(), CookieJar.NO_COOKIES)
+
   val novel = CoreNovelId("Chaotic Sword God", "chaotic-sword-god", "5")
-  val chapterId = CoreChapterId("novel/chaotic-sword-god/csg-chapter-1081")
+
+  val chapterId = CoreChapterId("csg-chapter-1081")
 
   @Test
   fun obtainNovels() {
-    plugin.obtainNovels()
-        .map { list ->
-          assertTrue(list.isNotEmpty())
-          list.onEach {
-            with(it) {
-              assertTrue(url.isNotBlank())
-              assertTrue(id!!.isNotBlank())
-              assertTrue(novelTitle.isNotBlank())
-              assertTrue(tags.isEmpty())
-            }
-          }.first().let(::println)
-        }.test().assertNoErrors().assertComplete()
+    PluginTestHelper(plugin).verifyObtainNovels { list ->
+      assertTrue(list.isNotEmpty())
+      list.onEach {
+        with(it) {
+          assertTrue(url.isNotBlank())
+          assertTrue(id!!.isNotBlank())
+          assertTrue(novelTitle.isNotBlank())
+          assertTrue(tags.isEmpty())
+        }
+      }
+    }
   }
 
   @Test
   fun obtainChapters() {
-
-    plugin.obtainChapters(novel) //as returned by obtainNovels()
-        .map {
-          assertTrue(it.isNotEmpty())
-          it.onEach {
-            assertTrue(it.url.isNotBlank())
-          }.first().let(::println)
-        }.test().assertNoErrors().assertComplete()
+    PluginTestHelper(plugin).verifyObtainChapterIds(novel)
   }
 
   @Test
   fun obtainDetail() {
-    plugin.obtainDetail(chapterId)
-        .map {
-          println(it)
-          with(it) {
-            assertTrue(rawText!!.isNotBlank())
-            assertTrue(nextUrl!!.isNotBlank())
-            assertTrue(previousUrl!!.isNotBlank())
-          }
-        }.test().assertNoErrors().assertComplete()
+    PluginTestHelper(plugin).verifyObtainChapterDetail(novel, chapterId)
   }
 
   @Test
   fun toAbsolute() {
-    val matcher = GRAVITYTALES_HOME + chapterId.url
-    val str = plugin.toAbsoluteUrl(novel, chapterId)
-    assertTrue("absoluteUrl doesn't match. \nFound: $str\nMatcher:$matcher", str == matcher)
+    PluginTestHelper(plugin).verifyAbsoluteUrl(novel, chapterId)
+  }
+
+  @Test
+  fun testIntegration() {
+    PluginTestHelper(plugin).verifyIntegration()
   }
 }
