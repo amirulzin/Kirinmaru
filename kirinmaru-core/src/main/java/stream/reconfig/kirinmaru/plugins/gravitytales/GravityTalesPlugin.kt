@@ -40,18 +40,17 @@ class GravityTalesPlugin @Inject constructor(override val client: OkHttpClient, 
         .concatMapIterable { it } //so we can emit sequentially on each chapter group
         .flatMapSingle { api.getChapterId(it.chapterGroupId) }
         .concatMapIterable { flattenResponse(it, id) }
-        .map { it.copy(url = "novel/${novel.url}/${it.url}") }
         .collectInto(ArrayList<ChapterId>()) { t1, t2 -> t1.add(t2) }
         .map { it as List<ChapterId> }
   }
 
-  override fun obtainDetail(chapter: ChapterId): Single<ChapterDetail> {
-    return api.getChapterDetail(GravityTalesLinkTransformer.toAbsolute(chapter.url))
+  override fun obtainDetail(novelId: NovelId, chapterId: ChapterId): Single<ChapterDetail> {
+    return api.getChapterDetail(toAbsoluteUrl(novelId, chapterId))
         .mapDocument(GRAVITYTALES_HOME)
         .map { chapterDetailParser.parse(it) }
   }
 
   override fun toAbsoluteUrl(novelId: NovelId, chapterId: ChapterId): String {
-    return GravityTalesLinkTransformer.toAbsolute(chapterId.url)
+    return GravityTalesLinkTransformer.asAbsolute("novel", novelId.url, chapterId.url)
   }
 }

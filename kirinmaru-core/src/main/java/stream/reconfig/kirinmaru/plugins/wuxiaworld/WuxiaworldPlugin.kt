@@ -60,7 +60,7 @@ class WuxiaworldPlugin @Inject constructor(override val client: OkHttpClient, ov
         .map(WuxiaWorldChapterIdParser::parse)
   }
 
-  override fun obtainDetail(chapter: ChapterId): Single<ChapterDetail> {
+  override fun obtainDetail(novel: NovelId, chapter: ChapterId): Single<ChapterDetail> {
     return api.chapter(chapter.url)
         .map(::streamToDocument)
         .map(WuxiaWorldChapterDetailParser::parse)
