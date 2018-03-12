@@ -21,8 +21,8 @@ internal object WuxiaWorldChapterIdParser : AbsChapterIdParser(
 
 internal object WuxiaWorldChapterDetailParser : AbsChapterDetailParser(
     rawText = ".fr-view",
-    nextUrl = ".next a",
-    prevUrl = ".prev a"
+    nextUrl = ".next a[href*=/novel/]",
+    prevUrl = ".prev a[href*=/novel/]"
 )
 
 internal object WuxiaWorldLinkTransformer : LinkTransformer {
