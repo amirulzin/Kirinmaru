@@ -14,7 +14,7 @@ abstract class AbsChapterIdParser(
 ) : Parser<List<ChapterId>> {
   override fun parse(document: Document): List<ChapterId> {
     return document.selectBy(chapterIds) {
-      it.map(transformer).filter { it.url.isNotBlank() }
+      map(transformer).filter { it.url.isNotBlank() }
     } ?: emptyList<ChapterId>()
   }
 }

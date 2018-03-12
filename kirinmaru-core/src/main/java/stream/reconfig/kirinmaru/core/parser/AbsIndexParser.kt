@@ -15,7 +15,7 @@ abstract class AbsIndexParser(
 
   override fun parse(document: Document): List<NovelId> {
     return document.selectBy(selector) {
-      it.map(transformer).filter { it.novelTitle.isNotBlank() && it.url.isNotBlank() }
+      map(transformer).filter { it.novelTitle.isNotBlank() && it.url.isNotBlank() }
     } ?: emptyList()
   }
 }

@@ -15,10 +15,10 @@ import java.io.IOException
  * Jsoup Util for selecting non empty elements
  */
 @Nullable
-internal inline fun <T> Document.selectBy(selector: String, crossinline block: (Elements) -> T?): T? {
+internal inline fun <T> Document.selectBy(selector: String, crossinline block: Elements.() -> T?): T? {
   return select(selector)
       .takeIf { it.isNotEmpty() }
-      ?.let { block(it) }
+      ?.block()
 }
 
 @NotNull

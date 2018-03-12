@@ -15,9 +15,9 @@ abstract class AbsChapterDetailParser(
 
   override fun parse(document: Document): ChapterDetail {
     val result = transformer(
-        document.selectBy(rawText) { it.html() },
-        document.selectBy(nextUrl) { it.first().attr("href") },
-        document.selectBy(prevUrl) { it.first().attr("href") }
+        document.selectBy(rawText) { html() },
+        document.selectBy(nextUrl) { first()?.attr("href") },
+        document.selectBy(prevUrl) { first()?.attr("href") }
     )
     return clean?.invoke(result) ?: result
   }
