@@ -9,6 +9,7 @@
     <color name="colorFavorite">@color/pmc_pink_300</color>
     <color name="colorFavoriteStealth">@color/kirin_grey_700</color>
     <color name="colorWhite">@color/pmc_white</color>
+    <color name="colorTextPrimary">@color/pmc_white</color>
     <color name="colorControlHighlight">@color/pmc_deep_purple_A700</color>
     <color name="colorWindowBackground">@color/kirin_grey_700</color>
 </resources>
