@@ -1,7 +1,6 @@
 package stream.reconfig.kirinmaru.plugins.wuxiaworld
 
 import okhttp3.CookieJar
-import okhttp3.logging.HttpLoggingInterceptor
 import org.junit.Test
 import stream.reconfig.kirinmaru.TestHelper
 import stream.reconfig.kirinmaru.core.domain.CoreChapterId
@@ -10,7 +9,7 @@ import stream.reconfig.kirinmaru.plugins.PluginTestHelper
 
 class WuxiaworldPluginTest {
 
-  val plugin = WuxiaworldPlugin(TestHelper.okHttpClient(HttpLoggingInterceptor.Level.BASIC), CookieJar.NO_COOKIES)
+  val plugin = WuxiaworldPlugin(TestHelper.okHttpClient(), CookieJar.NO_COOKIES)
 
   val testNovel = CoreNovelId(
       novelTitle = "I Shall Seal the Heavens",
