@@ -3,6 +3,7 @@ package stream.reconfig.kirinmaru.plugins.gravitytales
 import org.jsoup.Jsoup
 import org.junit.Test
 import stream.reconfig.kirinmaru.TestHelper
+import stream.reconfig.kirinmaru.core.domain.CoreNovelId
 
 /**
  * Local test for GravityTales parser
@@ -16,7 +17,9 @@ class GravityTalesRawTest {
      */
 
     val html = TestHelper.readResource("gravity-tales-csg-619.html")
-    val result = GravityTalesChapterDetailParser.parse(Jsoup.parse(html))
+    val novelId = CoreNovelId("Chaotic Sword God", "chaotic-sword-god")
+    val result = GravityTalesChapterDetailParser(novelId)
+        .parse(Jsoup.parse(html))
     println(result.nextUrl)
     println(result.previousUrl)
     println(result.rawText)
