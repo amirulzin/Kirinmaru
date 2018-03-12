@@ -29,8 +29,8 @@ interface ChapterId {
  * @property rawText    Untouched raw HTML fragment. Include the markups.
  *                      Avoid getting too much unnecessary outer elements. Can return empty string.
  *                      Can optionally return null to signal an error to upstream (e.g. normally happen during parsing broken link).
- * @property nextUrl    Next chapter url, if available
- * @property previousUrl Previous chapter url, if available
+ * @property nextUrl    Next chapter url, if available. Must follow the same rule/format as the plugin definition of ChapterId 'url'
+ * @property previousUrl Previous chapter url, if available. Must follow the same rule/format as the plugin definition of ChapterId 'url'
  */
 interface ChapterDetail {
   val rawText: String?
