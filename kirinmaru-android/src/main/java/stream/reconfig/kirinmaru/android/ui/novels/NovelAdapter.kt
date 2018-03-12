@@ -40,7 +40,6 @@ class NovelAdapter(
   private val compositeDisposable = CompositeDisposable()
 
   fun updateData(result: List<NovelItem>) {
-    compositeDisposable.clear()
 
     val callback = object : DiffUtil.Callback() {
 
@@ -49,10 +48,10 @@ class NovelAdapter(
       override fun getNewListSize() = result.size
 
       override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-          result[oldItemPosition].url == list[newItemPosition].url
+          list[oldItemPosition].url == result[newItemPosition].url
 
       override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-          result[oldItemPosition] == list[newItemPosition]
+          list[oldItemPosition] == result[newItemPosition]
 
     }
 
