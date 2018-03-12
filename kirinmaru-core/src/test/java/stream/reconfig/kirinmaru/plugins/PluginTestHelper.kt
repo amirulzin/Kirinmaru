@@ -9,6 +9,8 @@ import stream.reconfig.kirinmaru.core.ChapterDetail
 import stream.reconfig.kirinmaru.core.ChapterId
 import stream.reconfig.kirinmaru.core.NovelId
 import stream.reconfig.kirinmaru.core.Plugin
+import stream.reconfig.kirinmaru.core.domain.CoreChapterId
+import java.util.*
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
@@ -82,7 +84,8 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
   fun verifyIntegration() {
     var novelId: NovelId? = null
     var chapterId: ChapterId? = null
-    var chapterDetail: ChapterDetail? = null
+    var firstChapterId: ChapterId? = null
+    var lastChapterId: ChapterId? = null
     val latch = CountDownLatch(1)
     plugin.obtainNovels()
         .doOnSuccess {
@@ -90,7 +93,7 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
           assertTrue("Novels is empty", it.isNotEmpty())
         }
         .flatMap {
-          plugin.obtainChapters(it.middle().also {
+          plugin.obtainChapters(it.random().also {
             logger.log("2 Novel: $it")
             novelId = it
           })
@@ -98,6 +101,8 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
         .doOnSuccess {
           logger.log("3 Chapters: ${it.size}")
           assertTrue("ChapterIds is empty", it.isNotEmpty())
+          firstChapterId = it.first()
+          lastChapterId = it.last()
         }
         .flatMap {
           plugin.obtainDetail(novelId!!, it.middle().also {
@@ -106,21 +111,31 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
           })
         }
         .doOnSuccess {
-          logger.log("5 Detail->\nNext [${it.nextUrl}]\nPrev[${it.previousUrl}]\nShort raw: ${it.rawText?.substring(0, 100)}")
+          logger.log("5 Detail->\nNext [${it.nextUrl}]\nPrev [${it.previousUrl}]\nShort raw: ${it.rawText?.substring(0, 100)}..")
           verifyChapterDetail(it)
         }
-        .map { it.also { chapterDetail = it } to plugin.toAbsoluteUrl(novelId!!, chapterId!!) }
-        .doOnSuccess { (detail, url) ->
-          logger.log("6 Curr url: $url\nNext url: ${detail.nextUrl}")
-          verifyUrlExist(url)
+        .map { it to plugin.toAbsoluteUrl(novelId!!, chapterId!!) }
+        .doOnSuccess { (detail, currentUrl) ->
+          logger.log("6 Curr url: $currentUrl")
+          verifyUrlExist(plugin.toAbsoluteUrl(novelId!!, CoreChapterId(detail.previousUrl!!)))
+          verifyUrlExist(currentUrl)
+          verifyUrlExist(plugin.toAbsoluteUrl(novelId!!, CoreChapterId(detail.nextUrl!!)))
         }
+        .flatMap {
+          plugin.obtainDetail(novelId!!, firstChapterId!!)
+              .map { logger.log("7 firstChapter: Prev [${it.previousUrl}] Next [${it.nextUrl}]") }
+        }.flatMap {
+          plugin.obtainDetail(novelId!!, lastChapterId!!)
+              .map { logger.log("7 lastChapter: Prev [${it.previousUrl}] Next [${it.nextUrl}]") }
+        }
+        .doOnError { logger.printlog() }
         .doFinally {
-          logger.log("7 unlock latch")
+          logger.log("8 unlock latch")
           latch.countDown()
         }
         .test().assertNoErrors().assertComplete()
     latch.await(5, TimeUnit.SECONDS)
-    logger.log("8 Finished")
+    logger.log("9 Finished")
     logger.printlog()
   }
 
@@ -159,5 +174,11 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
     if (isEmpty())
       throw NoSuchElementException("List is empty.")
     return this[size / 2]
+  }
+
+  private fun <T> List<T>.random(): T {
+    if (isEmpty())
+      throw NoSuchElementException("List is empty.")
+    return this[Random().nextInt(size)]
   }
 }
