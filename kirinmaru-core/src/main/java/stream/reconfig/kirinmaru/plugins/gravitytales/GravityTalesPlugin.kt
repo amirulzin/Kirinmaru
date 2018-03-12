@@ -26,8 +26,6 @@ class GravityTalesPlugin @Inject constructor(override val client: OkHttpClient, 
         .create(GravityTalesApi::class.java)
   }
 
-  internal val chapterDetailParser by lazy { GravityTalesChapterDetailParser }
-
   override fun obtainNovels(): Single<List<NovelId>> {
     return api.getNovels().map { flattenResponse(it, GRAVITYTALES_HOME) }
   }
@@ -47,7 +45,7 @@ class GravityTalesPlugin @Inject constructor(override val client: OkHttpClient, 
   override fun obtainDetail(novelId: NovelId, chapterId: ChapterId): Single<ChapterDetail> {
     return api.getChapterDetail(toAbsoluteUrl(novelId, chapterId))
         .mapDocument(GRAVITYTALES_HOME)
-        .map { chapterDetailParser.parse(it) }
+        .map { GravityTalesChapterDetailParser(novelId).parse(it) }
   }
 
   override fun toAbsoluteUrl(novelId: NovelId, chapterId: ChapterId): String {
