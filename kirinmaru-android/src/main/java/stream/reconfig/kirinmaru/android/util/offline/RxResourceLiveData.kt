@@ -12,7 +12,7 @@ abstract class RxResourceLiveData<T> : RxMediatorLiveData<T>() {
 
   abstract fun refresh()
 
-  fun postState(state: ResourceState) = resourceState.postValue(state)
+  fun postState(state: ResourceState?) = resourceState.postValue(state)
 
   fun postError(message: String = "") = resourceState.postValue(ResourceState(State.ERROR, message))
 
