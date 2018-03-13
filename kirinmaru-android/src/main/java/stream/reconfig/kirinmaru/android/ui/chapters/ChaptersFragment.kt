@@ -5,9 +5,10 @@ import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import stream.reconfig.kirinmaru.android.databinding.ItemChapterBinding
 import stream.reconfig.kirinmaru.android.ui.common.fragment.DrawerRecyclerFragment
+import stream.reconfig.kirinmaru.android.ui.navigation.FragmentNavigator
 import stream.reconfig.kirinmaru.android.ui.novels.NovelItem
-import stream.reconfig.kirinmaru.android.ui.taxonomy.Taxonomy
 import stream.reconfig.kirinmaru.android.util.livedata.observe
 import stream.reconfig.kirinmaru.android.util.offline.State
 import stream.reconfig.kirinmaru.android.util.recycler.ItemDecorationUtil
@@ -44,14 +45,8 @@ class ChaptersFragment : DrawerRecyclerFragment() {
     binding.refreshLayout.setOnRefreshListener { cvm.chapters.refresh() }
 
     val adapter = ChaptersAdapter(
-        onClickItem = {
-
-        },
-        onBind = { binding, list, position ->
-          val item = list[position]
-          binding.title.text = Taxonomy.View.getDisplayable(item.taxon)
-          //binding.bookmark
-        }
+        onClickItem = { chapterItem -> onClickItem(novelItem, chapterItem) },
+        onBind = ::onBindItem
     )
     with(binding.recyclerView) {
       addItemDecoration(ItemDecorationUtil.defaultVerticalDecor(resources))
@@ -62,6 +57,14 @@ class ChaptersFragment : DrawerRecyclerFragment() {
     view.post {
       observe(adapter)
     }
+  }
+
+  private fun onBindItem(binding: ItemChapterBinding, list: MutableList<ChapterItem>, position: Int) {
+    binding.title.text = list[position].taxonView
+  }
+
+  private fun onClickItem(novelItem: NovelItem, chapterItem: ChapterItem) {
+    activity?.let { FragmentNavigator.toReader(it, novelItem, chapterItem) }
   }
 
   private fun observe(adapter: ChaptersAdapter) {
