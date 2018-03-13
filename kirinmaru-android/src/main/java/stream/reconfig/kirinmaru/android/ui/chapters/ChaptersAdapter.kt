@@ -1,5 +1,6 @@
 package stream.reconfig.kirinmaru.android.ui.chapters
 
+import android.annotation.SuppressLint
 import android.support.v7.util.DiffUtil
 import io.reactivex.disposables.CompositeDisposable
 import stream.reconfig.kirinmaru.android.R
@@ -30,25 +31,27 @@ class ChaptersAdapter(
     bind = onBind
 ) {
 
-  private val compositeDisposable = CompositeDisposable()
+  private val disposables = CompositeDisposable()
 
+  @SuppressLint("CheckResult")
   fun updateData(result: List<ChapterItem>) {
-    compositeDisposable.clear()
-    val callback = object : DiffUtil.Callback() {
+    RxRecyclerUtil.calcAndDispatchDiff(this) {
+      object : DiffUtil.Callback() {
 
-      override fun getOldListSize() = list.size
+        override fun getOldListSize() = list.size
 
-      override fun getNewListSize() = result.size
+        override fun getNewListSize() = result.size
 
-      override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-          list[oldItemPosition].url == result[newItemPosition].url
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+            list[oldItemPosition].url == result[newItemPosition].url
 
-      override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-          list[oldItemPosition].url == result[newItemPosition].url
-    }
-    list.clear()
-    list.addAll(result)
-    RxRecyclerUtil.calcAndDispatchDiff(this, callback)
-        .addTo(compositeDisposable)
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+            list[oldItemPosition].url == result[newItemPosition].url
+      }
+    }.subscribe { _, _ ->
+          list.clear()
+          list.addAll(result)
+          disposables.clear()
+        }.addTo(disposables)
   }
 }

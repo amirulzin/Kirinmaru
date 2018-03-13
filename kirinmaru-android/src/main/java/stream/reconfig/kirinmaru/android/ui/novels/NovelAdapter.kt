@@ -1,5 +1,6 @@
 package stream.reconfig.kirinmaru.android.ui.novels
 
+import android.annotation.SuppressLint
 import android.support.v7.util.DiffUtil
 import io.reactivex.disposables.CompositeDisposable
 import stream.reconfig.kirinmaru.android.R
@@ -37,27 +38,27 @@ class NovelAdapter(
     }
 ) {
 
-  private val compositeDisposable = CompositeDisposable()
+  private val disposables = CompositeDisposable()
 
+  @SuppressLint("CheckResult")
   fun updateData(result: List<NovelItem>) {
+    RxRecyclerUtil.calcAndDispatchDiff(this) {
+      object : DiffUtil.Callback() {
 
-    val callback = object : DiffUtil.Callback() {
+        override fun getOldListSize() = list.size
 
-      override fun getOldListSize() = list.size
+        override fun getNewListSize() = result.size
 
-      override fun getNewListSize() = result.size
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+            list[oldItemPosition].url == result[newItemPosition].url
 
-      override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-          list[oldItemPosition].url == result[newItemPosition].url
-
-      override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-          list[oldItemPosition] == result[newItemPosition]
-
-    }
-
-    list.clear()
-    list.addAll(result)
-    RxRecyclerUtil.calcAndDispatchDiff(this, callback)
-        .addTo(compositeDisposable)
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+            list[oldItemPosition] == result[newItemPosition]
+      }
+    }.subscribe { _, _ ->
+          list.clear()
+          list.addAll(result)
+          disposables.clear()
+        }.addTo(disposables)
   }
 }

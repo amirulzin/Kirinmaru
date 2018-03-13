@@ -9,9 +9,9 @@ import io.reactivex.schedulers.Schedulers
 object RxRecyclerUtil {
 
   @JvmStatic
-  fun calcAndDispatchDiff(adapter: RecyclerView.Adapter<*>, callback: DiffUtil.Callback) =
-      Single.fromCallable { DiffUtil.calculateDiff(callback) }
+  fun calcAndDispatchDiff(adapter: RecyclerView.Adapter<*>, callback: () -> DiffUtil.Callback) =
+      Single.fromCallable { DiffUtil.calculateDiff(callback()) }
           .subscribeOn(Schedulers.computation())
           .observeOn(AndroidSchedulers.mainThread())
-          .subscribe { diff -> diff.dispatchUpdatesTo(adapter) }!!
+          .map { diff -> diff.dispatchUpdatesTo(adapter) }!!
 }
