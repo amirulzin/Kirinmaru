@@ -9,6 +9,8 @@ import stream.reconfig.kirinmaru.android.ui.chapters.ChapterItem
 import stream.reconfig.kirinmaru.android.ui.chapters.ChaptersFragment
 import stream.reconfig.kirinmaru.android.ui.novels.NovelItem
 import stream.reconfig.kirinmaru.android.ui.novels.NovelsFragment
+import stream.reconfig.kirinmaru.android.ui.reader.ReaderData
+import stream.reconfig.kirinmaru.android.ui.reader.ReaderFragment
 
 /**
  * Idempotent FragmentNavigator to handle lateral and vertical app navigation.
@@ -28,7 +30,9 @@ object FragmentNavigator {
 
   @JvmStatic
   fun toReader(activity: FragmentActivity, novel: NovelItem, chapter: ChapterItem) {
-
+    navigate("reader", activity, true) {
+      ReaderFragment.newInstance(ReaderData(novel, chapter))
+    }
   }
 
   @JvmStatic
