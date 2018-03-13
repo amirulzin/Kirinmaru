@@ -1,9 +1,11 @@
 package stream.reconfig.kirinmaru.android.ui.navigation
 
+import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.view.Menu
 import android.view.MenuItem
 import stream.reconfig.kirinmaru.android.R
+import stream.reconfig.kirinmaru.android.ui.chapters.ChapterItem
 import stream.reconfig.kirinmaru.android.ui.chapters.ChaptersFragment
 import stream.reconfig.kirinmaru.android.ui.novels.NovelItem
 import stream.reconfig.kirinmaru.android.ui.novels.NovelsFragment
@@ -14,19 +16,19 @@ import stream.reconfig.kirinmaru.android.ui.novels.NovelsFragment
  * No references were held in here except plain constants.
  */
 object FragmentNavigator {
+
   private const val container = R.id.drawerContentFrame
 
   @JvmStatic
   fun toChapters(activity: FragmentActivity, novel: NovelItem) {
-    val tag = "chapters"
-    val fm = activity.supportFragmentManager
-    val frag = fm.findFragmentByTag(tag) ?: ChaptersFragment.newInstance(novel)
+    navigate("chapters", activity, true) {
+      ChaptersFragment.newInstance(novel)
+    }
+  }
 
-    activity.supportFragmentManager
-        .beginTransaction()
-        .replace(container, frag, tag)
-        .addToBackStack(tag)
-        .commit()
+  @JvmStatic
+  fun toReader(activity: FragmentActivity, novel: NovelItem, chapter: ChapterItem) {
+
   }
 
   @JvmStatic
@@ -48,5 +50,20 @@ object FragmentNavigator {
         .replace(container, outFrag, tag)
         .commit()
     return true
+  }
+
+  @JvmStatic
+  private inline fun navigate(
+      tag: String,
+      activity: FragmentActivity,
+      toBackStack: Boolean,
+      crossinline creator: () -> Fragment
+  ) {
+    val fm = activity.supportFragmentManager
+    val frag = fm.findFragmentByTag(tag) ?: creator()
+    fm.beginTransaction()
+        .replace(container, frag, tag)
+        .apply { if (toBackStack) addToBackStack(tag) }
+        .commit()
   }
 }
