@@ -1,4 +1,4 @@
-package stream.reconfig.kirinmaru.android.ui.taxonomy;
+package stream.reconfig.kirinmaru.core.taxonomy;
 
 /**
  * Helper class to check changed properties and hold the final result pre-taxonomized.

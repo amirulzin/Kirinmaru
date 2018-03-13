@@ -1,8 +1,6 @@
-package stream.reconfig.kirinmaru.android.ui.taxonomy;
+package stream.reconfig.kirinmaru.core.taxonomy;
 
 import java.util.Locale;
-
-import stream.reconfig.kirinmaru.android.BuildConfig;
 
 /**
  * Taxonomy class where it will spew out numbers in form of book, chapter, part, section
@@ -32,31 +30,33 @@ public class Taxonomy {
     return createTaxon(url).toString();
   }
 
+  public static String createTaxonomicDisplay(String taxonomicNumber) {
+    return Taxonomy.View.getDisplayable(taxonomicNumber);
+  }
+
   static IndexedTaxon createTaxon(String url) {
-    String path = TaxonomyUtil.formatUrl(url);
+    String path = url;
     if (path.contains("prologue")) {
-      path = path.substring(0, path.length() - 1)
-          .concat("-chapter-0/"); //length - 1 to exclude the last '/' returned from formatted url
+      path = path.substring(0, path.length())
+          .concat("-chapter-0"); //length - 1 to exclude the last '/' returned from formatted url
     }
 
     String lastSegment = TaxonomyUtil.getLastSegment(path);
-    int segmentIndex = url.indexOf(lastSegment);
+    //
+
     try {
-      return parseSegment(lastSegment, segmentIndex);
+      return parseSegment(lastSegment + "/"); //TODO FIX THIS. Currently iteration need a dummy last char so substring can work even on single character
     } catch (IllegalStateException | IndexOutOfBoundsException e) {
-      if (BuildConfig.DEBUG) {
-        e.printStackTrace();
-        System.out.println(String.format(Locale.US, "%10s %s", "Problem", lastSegment));
-      }
+      throw new IllegalStateException(String.format(Locale.US, "%10s %s\nError: [%s]", "Problem", url, e.getMessage()), e);
     }
-    return new IndexedTaxon(); //return default 0 on failure
+    //return new IndexedTaxon(); //return default 0 on failure
   }
 
   /**
    * Essentially it will parse each segment of grouped digits
    * and set each of those to an IndexedTaxon
    */
-  private static IndexedTaxon parseSegment(String lastSegment, int segmentIndex) { //formatted: lowercase, trimmed, & ending with '/'
+  private static IndexedTaxon parseSegment(String lastSegment) { //formatted: lowercase, trimmed, & ending with '/'
     IndexedTaxon result = new IndexedTaxon();
 
     char[] chars = lastSegment.toCharArray();
@@ -89,7 +89,7 @@ public class Taxonomy {
 
           String searchSegment = lastSegment.substring(textBegin, digitBegin);
           String targetSegment = lastSegment.substring(digitBegin, i);
-          int absoluteDigitIndex = digitBegin + segmentIndex;
+          int absoluteDigitIndex = digitBegin;
 
           if (!result.isChapterSet) { // we treat anything after chapters as parts and section
 
@@ -171,7 +171,6 @@ public class Taxonomy {
   }
 
   private static boolean isChapterSegment(String input) {
-
     for (int i = 0; i < CHAPTERS_ID.length; i++) {
       if (input.contains(CHAPTERS_ID[i])) return true;
     }

@@ -1,4 +1,4 @@
-package stream.reconfig.kirinmaru.android.ui.taxonomy;
+package stream.reconfig.kirinmaru.core.taxonomy;
 
 import java.util.ArrayList;
 import java.util.List;

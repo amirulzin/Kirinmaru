@@ -1,4 +1,4 @@
-package stream.reconfig.kirinmaru.android.ui.taxonomy;
+package stream.reconfig.kirinmaru.core.taxonomy;
 
 /**
  * IndexedTaxon allows String indexes to be set and retrieved.

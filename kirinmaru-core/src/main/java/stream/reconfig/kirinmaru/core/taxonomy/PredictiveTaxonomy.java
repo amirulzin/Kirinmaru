@@ -1,8 +1,4 @@
-package stream.reconfig.kirinmaru.android.ui.taxonomy;
-
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
+package stream.reconfig.kirinmaru.core.taxonomy;
 
 /**
  * This will attempt to deduce next chapter by the given taxonomic number
@@ -27,7 +23,7 @@ public class PredictiveTaxonomy {
   private int sectionNumber = -1;
   private int bookNumber = -1;
 
-  public PredictiveTaxonomy(@NonNull String absoluteUrl) {
+  public PredictiveTaxonomy(String absoluteUrl) {
     this.absoluteUrl = absoluteUrl;
     this.taxonomicNumber = Taxonomy.createTaxonomicNumber(absoluteUrl);
 
@@ -49,7 +45,7 @@ public class PredictiveTaxonomy {
     return end;
   }
 
-  @Nullable
+  //  @Nullable
   public <T> T predictNext(CompatFunction<String, T> attemptNextUrlFunction) {
     T t = null;
     String url;
@@ -69,7 +65,7 @@ public class PredictiveTaxonomy {
     return t;
   }
 
-  @Nullable
+  //  @Nullable
   private String predict() { //ranges from 1 to 7 attempts per url
 
     if (taxon.isSectionSet) { //section
@@ -137,12 +133,12 @@ public class PredictiveTaxonomy {
   }
 
 
-  @NonNull
+  //  @NonNull
   private String createIncrementedString(int startIndex, int endIndex, int targetNumber) {
     return createIncrementedString(absoluteUrl, startIndex, endIndex, targetNumber);
   }
 
-  @NonNull
+  //  @NonNull
   private String createIncrementedString(String targetString, int startIndex, int endIndex, int targetNumber) {
     return new StringBuilder(targetString).replace(startIndex, endIndex, String.valueOf(targetNumber))
         .toString();

@@ -1,6 +1,4 @@
-package stream.reconfig.kirinmaru.android.ui.taxonomy;
-
-import java.util.Locale;
+package stream.reconfig.kirinmaru.core.taxonomy;
 
 /**
  *
@@ -51,20 +49,16 @@ public class TaxonomyUtil {
     return new String(segmentTarget);
   }
 
-  public static String formatUrl(String url) {
-    String urlTrim = url.trim().toLowerCase(Locale.US);
-    if (urlTrim.charAt(url.length() - 1) != '/') {
-      return urlTrim.concat("/");
-    }
-    return urlTrim;
-  }
-
   public static String getLastSegment(String path) {
-    int lastSlash = path.lastIndexOf("/");
-    if (lastSlash == path.length() - 1) {
-      return path.substring(path.substring(0, lastSlash).lastIndexOf("/"), path.length());
-    } else {
-      return path.substring(lastSlash, path.length());
+    String[] segments = path.split("/");
+    if (segments.length == 1) return path;
+    String out = path;
+    for (int i = segments.length - 1; i >= 0; i--) {
+      if (segments[i].length() > 0) {
+        out = segments[i];
+        break;
+      }
     }
+    return out;
   }
 }
