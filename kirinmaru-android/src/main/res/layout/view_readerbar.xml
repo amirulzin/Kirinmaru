@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/fragment_reader">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:clipChildren="true"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="48dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/readerPrevious"
+                    style="@style/AppTheme.Button.Dark"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_chevron_left"
+                    android:tint="@color/colorWhite" />
+
+                <ImageButton
+                    android:id="@+id/readerFont"
+                    style="@style/AppTheme.Button.Dark"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_font_download"
+                    android:tint="@color/colorWhite" />
+
+                <ImageButton
+                    android:id="@+id/readerBrowser"
+                    style="@style/AppTheme.Button.Dark"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_public"
+                    android:tint="@color/colorWhite" />
+
+                <Button
+                    android:id="@+id/readerFontSize"
+                    style="@style/AppTheme.Button.Dark"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_format_size"
+                    android:textAllCaps="false"
+                    android:tint="@color/colorWhite"
+                    tools:text="14" />
+
+                <ImageButton
+                    android:id="@+id/readerNext"
+                    style="@style/AppTheme.Button.Dark"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_chevron_right"
+                    android:tint="@color/colorWhite" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/AppTheme.Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
+                android:paddingTop="2dp"
+                android:textSize="12sp"
+                android:visibility="gone"
+                tools:text="Chapter 1004 - 5"
+                tools:visibility="visible" />
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+</layout>
