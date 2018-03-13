@@ -31,10 +31,18 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
                 android:background="?colorPrimary"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:titleTextColor="@color/colorWhite" />
+                app:titleTextColor="@color/colorWhite">
+
+                <Spinner
+                    android:id="@+id/toolbarSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+            </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
     </android.support.design.widget.CoordinatorLayout>
 </layout>

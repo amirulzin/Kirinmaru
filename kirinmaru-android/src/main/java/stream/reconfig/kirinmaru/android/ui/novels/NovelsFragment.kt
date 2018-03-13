@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import stream.reconfig.kirinmaru.android.R
 import stream.reconfig.kirinmaru.android.databinding.ItemNovelBinding
 import stream.reconfig.kirinmaru.android.ui.common.fragment.DrawerRecyclerFragment
 import stream.reconfig.kirinmaru.android.ui.navigation.FragmentNavigator
@@ -12,6 +15,7 @@ import stream.reconfig.kirinmaru.android.util.offline.State
 import stream.reconfig.kirinmaru.android.util.recycler.ItemDecorationUtil
 import stream.reconfig.kirinmaru.android.util.viewmodel.ViewModelFactory
 import stream.reconfig.kirinmaru.android.util.viewmodel.viewModel
+import stream.reconfig.kirinmaru.plugins.PluginMap
 import javax.inject.Inject
 
 /**
@@ -32,6 +36,9 @@ class NovelsFragment : DrawerRecyclerFragment() {
   }
 
   @Inject
+  lateinit var pluginMap: PluginMap
+
+  @Inject
   lateinit var vmf: ViewModelFactory
 
   private val nvm by lazy { viewModel(vmf, NovelsViewModel::class.java) }
@@ -40,7 +47,15 @@ class NovelsFragment : DrawerRecyclerFragment() {
     super.onActivityCreated(savedInstanceState)
 
     val origin = arguments!!.getString(FARGS_ORIGIN)!!
-    binding.toolbar.title = origin
+    binding.root.post {
+      with(binding.toolbarSpinner) {
+        visibility = View.VISIBLE
+        val list = pluginMap.keys.toList()
+        adapter = ArrayAdapter<String>(context, R.layout.item_spinner, R.id.textView, list)
+        setSelection(list.indexOf(origin))
+        onItemSelectedListener = onSpinnerItem(list)
+      }
+    }
 
     val novelAdapter = NovelAdapter(
         onClickNovel = ::onClickNovel,
@@ -61,7 +76,7 @@ class NovelsFragment : DrawerRecyclerFragment() {
 
     binding.root.post {
       nvm.novels.observe(this) {
-        it?.let { novelAdapter.updateData(it) }
+        novelAdapter.updateData(it ?: emptyList())
       }
 
       nvm.novels.resourceState.observe(this) {
@@ -78,6 +93,16 @@ class NovelsFragment : DrawerRecyclerFragment() {
             }
           }
         }
+      }
+    }
+  }
+
+  private fun onSpinnerItem(list: List<String>): AdapterView.OnItemSelectedListener {
+    return object : AdapterView.OnItemSelectedListener {
+      override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+      override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        nvm.novels.initOrigin(list[position])
       }
     }
   }
