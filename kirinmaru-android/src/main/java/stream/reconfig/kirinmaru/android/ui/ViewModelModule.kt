@@ -9,6 +9,7 @@ import stream.reconfig.kirinmaru.android.di.keys.ViewModelKey
 import stream.reconfig.kirinmaru.android.ui.chapters.ChaptersViewModel
 import stream.reconfig.kirinmaru.android.ui.main.MainViewModel
 import stream.reconfig.kirinmaru.android.ui.novels.NovelsViewModel
+import stream.reconfig.kirinmaru.android.ui.reader.ReaderViewModel
 import stream.reconfig.kirinmaru.android.util.viewmodel.ViewModelFactory
 
 @Module
@@ -30,4 +31,9 @@ interface ViewModelModule {
   @IntoMap
   @ViewModelKey(ChaptersViewModel::class)
   fun bindChapters(cvm: ChaptersViewModel): ViewModel
+
+  @Binds
+  @IntoMap
+  @ViewModelKey(ReaderViewModel::class)
+  fun bindReader(cvm: ReaderViewModel): ViewModel
 }
