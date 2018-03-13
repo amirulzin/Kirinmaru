@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import io.reactivex.Flowable
 import io.reactivex.Single
 import stream.reconfig.kirinmaru.android.db.ChapterDao
+import stream.reconfig.kirinmaru.android.prefs.CurrentReadPref
 import stream.reconfig.kirinmaru.android.ui.novels.NovelItem
 import stream.reconfig.kirinmaru.android.util.offline.ResourceContract
 import stream.reconfig.kirinmaru.android.util.offline.ResourceLiveData
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 class ChaptersLiveData @Inject constructor(
     private val pluginMap: PluginMap,
-    private val chapterDao: ChapterDao
+    private val chapterDao: ChapterDao,
+    private val currentReadPref: CurrentReadPref
 ) : ResourceLiveData<List<ChapterItem>, List<String>, List<ChapterId>>() {
 
   private val novel = MutableLiveData<NovelItem>()
@@ -49,7 +51,8 @@ class ChaptersLiveData @Inject constructor(
         }
 
         override fun view(local: List<String>): List<ChapterItem> {
-          return local.map { ChapterItem(it) }
+          val currentRead = currentReadPref.load(novel.value!!)
+          return local.map { ChapterItem(it, it == currentRead) }
               .sortedByDescending { it.taxonomicNumber }
         }
       }

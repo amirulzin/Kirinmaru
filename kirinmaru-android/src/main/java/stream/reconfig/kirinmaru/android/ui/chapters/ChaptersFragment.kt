@@ -60,7 +60,10 @@ class ChaptersFragment : DrawerRecyclerFragment() {
   }
 
   private fun onBindItem(binding: ItemChapterBinding, list: MutableList<ChapterItem>, position: Int) {
-    binding.title.text = list[position].taxonView
+    with(list[position]) {
+      binding.title.text = taxonView
+      binding.bookmark.visibility = if (currentRead) View.VISIBLE else View.GONE
+    }
   }
 
   private fun onClickItem(novelItem: NovelItem, chapterItem: ChapterItem) {

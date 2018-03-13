@@ -10,7 +10,8 @@ import stream.reconfig.kirinmaru.core.taxonomy.Taxonomy
  */
 @SuppressLint("ParcelCreator")
 data class ChapterItem(
-    override val url: String
+    override val url: String,
+    val currentRead: Boolean
 ) : ChapterId, AutoParcelable {
   val taxonomicNumber: String  by lazy {
     Taxonomy.createTaxonomicNumber(url).also {

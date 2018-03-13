@@ -11,4 +11,3 @@ class ChaptersViewModel @Inject constructor(
     application: Application,
     val chapters: ChaptersLiveData
 ) : AndroidViewModel(application)
-
