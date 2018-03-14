@@ -1,7 +1,6 @@
 package stream.reconfig.kirinmaru.android.vo
 
 import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
 import android.arch.persistence.room.TypeConverter
 import android.arch.persistence.room.TypeConverters
 import stream.reconfig.kirinmaru.core.NovelDetail
@@ -9,12 +8,12 @@ import stream.reconfig.kirinmaru.core.NovelDetail
 /**
  * Novel entity
  */
-@Entity
+@Entity(primaryKeys = ["origin", "url"])
 @TypeConverters(Novel.Converter::class)
 data class Novel(
     override val id: String?,
     override val novelTitle: String,
-    @PrimaryKey override val url: String,
+    override val url: String,
     override val tags: Set<String>,
     override val origin: String
 ) : NovelDetail {

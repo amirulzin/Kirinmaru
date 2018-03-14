@@ -9,13 +9,14 @@ import stream.reconfig.kirinmaru.core.ChapterId
 @Entity(foreignKeys = [
   (ForeignKey(
       entity = Novel::class,
-      parentColumns = ["url"],
-      childColumns = ["novelUrl"],
+      parentColumns = ["origin", "url"],
+      childColumns = ["origin", "novelUrl"],
       onDelete = ForeignKey.CASCADE,
       onUpdate = ForeignKey.CASCADE
   ))]
 )
 data class Chapter(
+    val origin: String,
     val novelUrl: String,
     @PrimaryKey override val url: String,
     override val rawText: String? = null,

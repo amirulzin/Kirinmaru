@@ -47,7 +47,7 @@ class ChaptersLiveData @Inject constructor(
 
         override fun persist(data: List<String>) {
           novel.value?.run {
-            chapterDao.insert(data.map { Chapter(this.url, it) })
+            chapterDao.insert(data.map { Chapter(origin, url, it) })
           }
         }
 

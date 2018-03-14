@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "8d0e4a33dcea075d67b3494bfea7e847",
+    "identityHash": "e7d57ea8bf2c459633c76e9fc56d6637",
     "entities": [
       {
         "tableName": "Novel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, `novelTitle` TEXT NOT NULL, `url` TEXT NOT NULL, `tags` TEXT NOT NULL, `origin` TEXT NOT NULL, PRIMARY KEY(`url`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, `novelTitle` TEXT NOT NULL, `url` TEXT NOT NULL, `tags` TEXT NOT NULL, `origin` TEXT NOT NULL, PRIMARY KEY(`origin`, `url`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -41,6 +41,7 @@
         ],
         "primaryKey": {
           "columnNames": [
+            "origin",
             "url"
           ],
           "autoGenerate": false
@@ -50,8 +51,14 @@
       },
       {
         "tableName": "Chapter",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`novelUrl` TEXT NOT NULL, `url` TEXT NOT NULL, `rawText` TEXT, `nextUrl` TEXT, `previousUrl` TEXT, PRIMARY KEY(`url`), FOREIGN KEY(`novelUrl`) REFERENCES `Novel`(`url`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`origin` TEXT NOT NULL, `novelUrl` TEXT NOT NULL, `url` TEXT NOT NULL, `rawText` TEXT, `nextUrl` TEXT, `previousUrl` TEXT, PRIMARY KEY(`url`), FOREIGN KEY(`origin`, `novelUrl`) REFERENCES `Novel`(`origin`, `url`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
+          {
+            "fieldPath": "origin",
+            "columnName": "origin",
+            "affinity": "TEXT",
+            "notNull": true
+          },
           {
             "fieldPath": "novelUrl",
             "columnName": "novelUrl",
@@ -96,9 +103,11 @@
             "onDelete": "CASCADE",
             "onUpdate": "CASCADE",
             "columns": [
+              "origin",
               "novelUrl"
             ],
             "referencedColumns": [
+              "origin",
               "url"
             ]
           }
@@ -107,7 +116,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"8d0e4a33dcea075d67b3494bfea7e847\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"e7d57ea8bf2c459633c76e9fc56d6637\")"
     ]
   }
 }

@@ -51,6 +51,7 @@ class ReaderLiveData @Inject constructor(
 
     override fun transform(remote: ChapterDetail): Chapter {
       return Chapter(
+          origin = novel().origin,
           novelUrl = novel().url,
           url = chapterId().url,
           rawText = remote.rawText,
