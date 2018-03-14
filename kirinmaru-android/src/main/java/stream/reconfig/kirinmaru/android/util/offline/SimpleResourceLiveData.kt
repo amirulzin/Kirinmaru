@@ -1,6 +1,7 @@
 package stream.reconfig.kirinmaru.android.util.offline
 
-import android.annotation.SuppressLint
+import android.support.annotation.AnyThread
+import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
 import stream.reconfig.kirinmaru.android.util.rx.addTo
 
@@ -21,7 +22,6 @@ import stream.reconfig.kirinmaru.android.util.rx.addTo
  *   1. RxJava2
  *   2. Android Architecture Components `LiveData` and `ReactiveStreams`
  */
-@Suppress("UNUSED_ANONYMOUS_PARAMETER")
 abstract class SimpleResourceLiveData<V, L, R> : RxResourceLiveData<V>() {
 
   protected abstract fun createContract(): ResourceContract<V, L, R>
@@ -30,30 +30,34 @@ abstract class SimpleResourceLiveData<V, L, R> : RxResourceLiveData<V>() {
 
   protected open fun isInitialized() = resourceState.value != null
 
-  @SuppressLint("CheckResult")
+  @AnyThread
   override fun refresh() {
     if (resourceState.value?.state != State.LOADING) {
       postLoading()
-      disposables.clear()
-      contract.remote()
-          .map(contract::transform)
-          .map(contract::persist)
-          .subscribeOn(Schedulers.io())
-          .observeOn(Schedulers.computation())
-          .subscribe(
-              { success -> postComplete() },
-              { error -> postError(error?.message ?: "Network error") }
-          ).addTo(disposables)
 
-      contract.local()
-          .map(contract::view)
-          .onBackpressureBuffer()
-          .subscribeOn(Schedulers.io())
-          .subscribe(
-              { success -> postValue(success); postComplete() },
-              { error -> postError(error?.message ?: "Network error") },
-              { postComplete() }
-          ).addTo(disposables)
+      Completable.fromCallable {
+        disposables.clear()
+
+        contract.local()
+            .map(contract::view)
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(
+                { success -> postValue(success); postCompleteLocal() },
+                { error -> postErrorLocal(error?.message ?: "Database error") },
+                { postComplete() }
+            ).addTo(disposables)
+
+        contract.remote()
+            .map(contract::transform)
+            .map(contract::persist)
+            .subscribeOn(Schedulers.io())
+            .subscribe(
+                { _ -> postCompleteRemote() },
+                { error -> postErrorRemote(error?.message ?: "Network error") }
+            ).addTo(disposables)
+      }.subscribeOn(Schedulers.computation())
+          .subscribe()
     }
   }
 }

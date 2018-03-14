@@ -3,10 +3,8 @@ package stream.reconfig.kirinmaru.android.ui.novels
 import android.arch.lifecycle.MutableLiveData
 import android.support.annotation.MainThread
 import android.support.annotation.WorkerThread
-import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
 import stream.reconfig.kirinmaru.android.db.NovelDao
 import stream.reconfig.kirinmaru.android.prefs.FavoritePref
 import stream.reconfig.kirinmaru.android.util.offline.ResourceContract
@@ -33,9 +31,7 @@ class NovelsLiveData @Inject constructor(
       origin.value = newOrigin
     } else {
       origin.value = newOrigin
-      Completable.fromCallable { refresh() }
-          .subscribeOn(Schedulers.computation())
-          .subscribe()
+      refresh()
     }
   }
 
