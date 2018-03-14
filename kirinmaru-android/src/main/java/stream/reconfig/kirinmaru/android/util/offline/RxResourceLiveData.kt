@@ -27,4 +27,20 @@ abstract class RxResourceLiveData<T> : RxMediatorLiveData<T>() {
   fun postComplete(message: String = "", type: ResourceType = ResourceType.ANY) {
     resourceState.postValue(ResourceState(State.COMPLETE, message, type))
   }
+
+  fun postCompleteLocal(message: String = "") {
+    resourceState.postValue(ResourceState(State.COMPLETE, message, ResourceType.LOCAL))
+  }
+
+  fun postCompleteRemote(message: String = "") {
+    resourceState.postValue(ResourceState(State.COMPLETE, message, ResourceType.REMOTE))
+  }
+
+  fun postErrorLocal(message: String = "") {
+    resourceState.postValue(ResourceState(State.ERROR, message, ResourceType.LOCAL))
+  }
+
+  fun postErrorRemote(message: String = "") {
+    resourceState.postValue(ResourceState(State.ERROR, message, ResourceType.REMOTE))
+  }
 }
