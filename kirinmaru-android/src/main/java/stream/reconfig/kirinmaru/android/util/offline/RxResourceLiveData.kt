@@ -12,11 +12,19 @@ abstract class RxResourceLiveData<T> : RxMediatorLiveData<T>() {
 
   abstract fun refresh()
 
-  fun postState(state: ResourceState?) = resourceState.postValue(state)
+  fun postState(state: ResourceState?) {
+    resourceState.postValue(state)
+  }
 
-  fun postError(message: String = "") = resourceState.postValue(ResourceState(State.ERROR, message))
+  fun postError(message: String = "", type: ResourceType = ResourceType.ANY) {
+    resourceState.postValue(ResourceState(State.ERROR, message, type))
+  }
 
-  fun postLoading(message: String = "") = resourceState.postValue(ResourceState(State.LOADING, message))
+  fun postLoading(message: String = "", type: ResourceType = ResourceType.ANY) {
+    resourceState.postValue(ResourceState(State.LOADING, message, type))
+  }
 
-  fun postComplete(message: String = "") = resourceState.postValue(ResourceState(State.COMPLETE, message))
+  fun postComplete(message: String = "", type: ResourceType = ResourceType.ANY) {
+    resourceState.postValue(ResourceState(State.COMPLETE, message, type))
+  }
 }
