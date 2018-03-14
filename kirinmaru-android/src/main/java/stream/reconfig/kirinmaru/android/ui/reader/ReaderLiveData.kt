@@ -49,19 +49,16 @@ class ReaderLiveData @Inject constructor(
           .doOnSuccess { logd("remote found N: [${it.nextUrl}] P: [${it.previousUrl}]") }
     }
 
-    override fun transform(remote: ChapterDetail): Chapter {
-      return Chapter(
+    override fun persist(data: ChapterDetail) {
+      val chapter = Chapter(
           origin = novel().origin,
           novelUrl = novel().url,
           url = chapterId().url,
-          rawText = remote.rawText,
-          nextUrl = remote.nextUrl,
-          previousUrl = remote.previousUrl)
-    }
-
-    override fun persist(data: Chapter) {
-      log(data, "persist")
-      chapterDao.insert(data)
+          rawText = data.rawText,
+          nextUrl = data.nextUrl,
+          previousUrl = data.previousUrl)
+      log(chapter, "persist")
+      chapterDao.insert(chapter)
     }
 
     override fun view(local: Chapter): ReaderDetail {
@@ -113,7 +110,6 @@ class ReaderLiveData @Inject constructor(
       logd("[Disposables ${disposables.size()} Cleaned")
 
       contract.remote()
-          .map(contract::transform)
           .map(contract::persist)
           .subscribeOn(Schedulers.io())
           .observeOn(Schedulers.computation())
