@@ -38,16 +38,12 @@ class ChaptersLiveData @Inject constructor(
         override fun remote(): Single<List<ChapterId>> {
           return novel.value?.let { novel ->
             pluginMap.getPlugin(novel.origin).obtainChapters(novel)
-          } ?: Single.error(IllegalStateException("Novel is null ${novel.value}"))
+          } ?: Single.error(IllegalStateException("Novel is null in chapters remote()"))
         }
 
-        override fun transform(remote: List<ChapterId>): List<String> {
-          return remote.map { it.url }
-        }
-
-        override fun persist(data: List<String>) {
+        override fun persist(data: List<ChapterId>) {
           novel.value?.run {
-            chapterDao.insert(data.map { Chapter(origin, url, it) })
+            chapterDao.insert(data.map { Chapter(origin, url, it.url) })
           }
         }
 
