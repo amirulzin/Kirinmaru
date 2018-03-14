@@ -7,19 +7,19 @@ import io.reactivex.Single
  */
 interface PluginContract {
 
-  fun obtainChapters(plugin: Plugin, novelId: NovelId, nextPage: Int): Single<List<ChapterId>> {
+  fun obtainChapters(plugin: Plugin, novelDetail: NovelDetail, nextPage: Int): Single<List<ChapterId>> {
 
     try {
-      return plugin.obtainChapters(novelId)
+      return plugin.obtainChapters(novelDetail)
     } catch (e: NotImplementedError) {
 
     }
     try {
-      return plugin.obtainChapters(novelId, nextPage)
+      return plugin.obtainChapters(novelDetail, nextPage)
     } catch (e: NotImplementedError) {
 
     }
 
-    return Single.error { NotImplementedError("Plugin can't obtain chapters list for ${novelId.novelTitle}") }
+    return Single.error { NotImplementedError("Plugin can't obtain chapters list for ${novelDetail.novelTitle}") }
   }
 }

@@ -8,7 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Url
 import stream.reconfig.kirinmaru.core.ChapterId
-import stream.reconfig.kirinmaru.core.NovelId
+import stream.reconfig.kirinmaru.core.NovelDetail
 
 /**
  * GravityTales WordPress API for Retrofit with lenient url parameters
@@ -16,7 +16,7 @@ import stream.reconfig.kirinmaru.core.NovelId
 internal interface GravityTalesApi {
 
   @GET("api/novels")
-  fun getNovels(): Single<Response<List<GTNovelId>>>
+  fun getNovels(): Single<Response<List<GTNovelDetail>>>
 
   @GET("api/novels/chaptergroups/{id}")
   fun getChapterGroups(@Path("id") novelId: String): Single<Response<List<GTChapterGroups>>>
@@ -27,12 +27,12 @@ internal interface GravityTalesApi {
   @GET
   fun getChapterDetail(@Url url: String): Single<Response<ResponseBody>>
 
-  data class GTNovelId(
+  data class GTNovelDetail(
       @SerializedName("Name") override val novelTitle: String = "",
       @SerializedName("Slug") override val url: String = "",
       @SerializedName("Id") override val id: String? = null,
       @Transient override val tags: Set<String> = emptySet()
-  ) : NovelId
+  ) : NovelDetail
 
   data class GTChapterGroups(
       val chapterGroupId: Int,

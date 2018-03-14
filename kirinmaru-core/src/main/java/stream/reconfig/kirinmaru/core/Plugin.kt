@@ -27,17 +27,17 @@ interface Plugin {
 
   val cookieJar: CookieJar
 
-  fun obtainNovels(): Single<List<NovelId>>
+  fun obtainNovels(): Single<List<NovelDetail>>
 
-  fun obtainChapters(novel: NovelId): Single<List<ChapterId>> {
-    throw NotImplementedError("Not implemented: obtainChapters(novel)")
+  fun obtainChapters(novelDetail: NovelDetail): Single<List<ChapterId>> {
+    throw NotImplementedError("Not implemented: obtainChapters(novelDetail)")
   }
 
-  fun obtainChapters(novel: NovelId, currentPage: Int): Single<List<ChapterId>> {
-    throw NotImplementedError("Not implemented: obtainChapters(novel, currentPage)")
+  fun obtainChapters(novelDetail: NovelDetail, currentPage: Int): Single<List<ChapterId>> {
+    throw NotImplementedError("Not implemented: obtainChapters(novelDetail, currentPage)")
   }
 
-  fun obtainDetail(novelId: NovelId, chapterId: ChapterId): Single<ChapterDetail>
+  fun obtainDetail(novelDetail: NovelDetail, chapterId: ChapterId): Single<ChapterDetail>
 
-  fun toAbsoluteUrl(novelId: NovelId, chapterId: ChapterId): String
+  fun toAbsoluteUrl(novelDetail: NovelDetail, chapterId: ChapterId): String
 }

@@ -7,7 +7,7 @@ import org.junit.Assert.assertTrue
 import stream.reconfig.kirinmaru.TestHelper
 import stream.reconfig.kirinmaru.core.ChapterDetail
 import stream.reconfig.kirinmaru.core.ChapterId
-import stream.reconfig.kirinmaru.core.NovelId
+import stream.reconfig.kirinmaru.core.NovelDetail
 import stream.reconfig.kirinmaru.core.Plugin
 import stream.reconfig.kirinmaru.core.domain.CoreChapterId
 import java.util.*
@@ -19,7 +19,7 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
   val logger = SimpleLogger(logging)
 
   inline fun verifyObtainNovels(
-      crossinline assertBlock: (List<NovelId>) -> Unit = {
+      crossinline assertBlock: (List<NovelDetail>) -> Unit = {
         assertTrue("NovelIds is empty", it.isNotEmpty())
         logger.log(it.size)
 
@@ -37,7 +37,7 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
   }
 
   inline fun verifyObtainChapterIds(
-      novelId: NovelId,
+      novelDetail: NovelDetail,
       crossinline assertBlock: (List<ChapterId>) -> Unit = {
         assertTrue("Chapter urls is empty", it.isNotEmpty())
         logger.log(it.size)
@@ -47,14 +47,14 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
         }
       }
   ) {
-    plugin.obtainChapters(novelId)
+    plugin.obtainChapters(novelDetail)
         .map { assertBlock(it) }
         .test().assertComplete().assertNoErrors()
     logger.printlog()
   }
 
   inline fun verifyObtainChapterDetail(
-      novel: NovelId,
+      novel: NovelDetail,
       chapter: ChapterId,
       crossinline assertBlock: (ChapterDetail) -> Unit = {
         logger.log(it)
@@ -71,18 +71,18 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
   }
 
   fun verifyAbsoluteUrl(
-      novelId: NovelId,
+      novelDetail: NovelDetail,
       chapterId: ChapterId,
       assertBlock: (String) -> Unit = { assertTrue("Malformed url: $it", HttpUrl.parse(it) != null) }
   ) {
-    val url = plugin.toAbsoluteUrl(novelId, chapterId)
+    val url = plugin.toAbsoluteUrl(novelDetail, chapterId)
     logger.log(url)
     assertBlock(url)
     logger.printlog()
   }
 
   fun verifyIntegration() {
-    var novelId: NovelId? = null
+    var novelDetail: NovelDetail? = null
     var chapterId: ChapterId? = null
     var firstChapterId: ChapterId? = null
     var lastChapterId: ChapterId? = null
@@ -95,7 +95,7 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
         .flatMap {
           plugin.obtainChapters(it.random().also {
             logger.log("2 Novel: $it")
-            novelId = it
+            novelDetail = it
           })
         }
         .doOnSuccess {
@@ -105,7 +105,7 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
           lastChapterId = it.last()
         }
         .flatMap {
-          plugin.obtainDetail(novelId!!, it.middle().also {
+          plugin.obtainDetail(novelDetail!!, it.middle().also {
             logger.log("4 ChapterId: $it")
             chapterId = it
           })
@@ -114,18 +114,18 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
           logger.log("5 Detail->\nNext [${it.nextUrl}]\nPrev [${it.previousUrl}]\nShort raw: ${it.rawText?.substring(0, 100)}..")
           verifyChapterDetail(it)
         }
-        .map { it to plugin.toAbsoluteUrl(novelId!!, chapterId!!) }
+        .map { it to plugin.toAbsoluteUrl(novelDetail!!, chapterId!!) }
         .doOnSuccess { (detail, currentUrl) ->
           logger.log("6 Curr url: $currentUrl")
-          verifyUrlExist(plugin.toAbsoluteUrl(novelId!!, CoreChapterId(detail.previousUrl!!)))
+          verifyUrlExist(plugin.toAbsoluteUrl(novelDetail!!, CoreChapterId(detail.previousUrl!!)))
           verifyUrlExist(currentUrl)
-          verifyUrlExist(plugin.toAbsoluteUrl(novelId!!, CoreChapterId(detail.nextUrl!!)))
+          verifyUrlExist(plugin.toAbsoluteUrl(novelDetail!!, CoreChapterId(detail.nextUrl!!)))
         }
         .flatMap {
-          plugin.obtainDetail(novelId!!, firstChapterId!!)
+          plugin.obtainDetail(novelDetail!!, firstChapterId!!)
               .map { logger.log("7 firstChapter: Prev [${it.previousUrl}] Next [${it.nextUrl}]") }
         }.flatMap {
-          plugin.obtainDetail(novelId!!, lastChapterId!!)
+          plugin.obtainDetail(novelDetail!!, lastChapterId!!)
               .map { logger.log("7 lastChapter: Prev [${it.previousUrl}] Next [${it.nextUrl}]") }
         }
         .doOnError { logger.printlog() }
@@ -151,7 +151,7 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
   }
 
 
-  fun verifyNovelId(novel: NovelId) {
+  fun verifyNovelId(novel: NovelDetail) {
     with(novel) {
       assertTrue("Title empty : $novel", novelTitle.isNotBlank())
       assertTrue("Url empty : $novel", url.isNotBlank())

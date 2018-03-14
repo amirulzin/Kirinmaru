@@ -3,14 +3,14 @@ package stream.reconfig.kirinmaru.plugins.wuxiaworld
 import okhttp3.HttpUrl
 import stream.reconfig.kirinmaru.core.LinkTransformer
 import stream.reconfig.kirinmaru.core.domain.CoreChapterId
-import stream.reconfig.kirinmaru.core.domain.CoreNovelId
+import stream.reconfig.kirinmaru.core.domain.CoreNovelDetail
 import stream.reconfig.kirinmaru.core.parser.AbsChapterDetailParser
 import stream.reconfig.kirinmaru.core.parser.AbsChapterIdParser
 import stream.reconfig.kirinmaru.core.parser.AbsIndexParser
 
 internal class WuxiaWorldIndexParserV2(val key: String) : AbsIndexParser(
     selector = ".media-heading a[href*=/novel/]",
-    transformer = { CoreNovelId(it.text(), it.attr("href"), null, mutableSetOf(key)) }
+    transformer = { CoreNovelDetail(it.text(), it.attr("href"), null, mutableSetOf(key)) }
 )
 
 

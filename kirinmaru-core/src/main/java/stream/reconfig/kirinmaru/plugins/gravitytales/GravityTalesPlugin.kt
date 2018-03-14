@@ -26,12 +26,12 @@ class GravityTalesPlugin @Inject constructor(override val client: OkHttpClient, 
         .create(GravityTalesApi::class.java)
   }
 
-  override fun obtainNovels(): Single<List<NovelId>> {
+  override fun obtainNovels(): Single<List<NovelDetail>> {
     return api.getNovels().map { flattenResponse(it, GRAVITYTALES_HOME) }
   }
 
-  override fun obtainChapters(novel: NovelId): Single<List<ChapterId>> {
-    val id = novel.id ?: throw NullPointerException("NullID = $novel")
+  override fun obtainChapters(novelDetail: NovelDetail): Single<List<ChapterId>> {
+    val id = novelDetail.id ?: throw NullPointerException("NullID = $novelDetail")
     return api.getChapterGroups(id)
         .map { flattenResponse(it, id) }
         .toObservable()
@@ -42,13 +42,13 @@ class GravityTalesPlugin @Inject constructor(override val client: OkHttpClient, 
         .map { it as List<ChapterId> }
   }
 
-  override fun obtainDetail(novelId: NovelId, chapterId: ChapterId): Single<ChapterDetail> {
-    return api.getChapterDetail(toAbsoluteUrl(novelId, chapterId))
+  override fun obtainDetail(novelDetail: NovelDetail, chapterId: ChapterId): Single<ChapterDetail> {
+    return api.getChapterDetail(toAbsoluteUrl(novelDetail, chapterId))
         .mapDocument(GRAVITYTALES_HOME)
-        .map { GravityTalesChapterDetailParser(novelId).parse(it) }
+        .map { GravityTalesChapterDetailParser(novelDetail).parse(it) }
   }
 
-  override fun toAbsoluteUrl(novelId: NovelId, chapterId: ChapterId): String {
-    return GravityTalesLinkTransformer.toSanitizedAbsolute("novel", novelId.url, chapterId.url)
+  override fun toAbsoluteUrl(novelDetail: NovelDetail, chapterId: ChapterId): String {
+    return GravityTalesLinkTransformer.toSanitizedAbsolute("novel", novelDetail.url, chapterId.url)
   }
 }

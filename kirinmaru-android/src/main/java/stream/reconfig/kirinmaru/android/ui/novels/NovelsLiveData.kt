@@ -11,7 +11,7 @@ import stream.reconfig.kirinmaru.android.ui.favorites.FavoritePref
 import stream.reconfig.kirinmaru.android.util.offline.ResourceContract
 import stream.reconfig.kirinmaru.android.util.offline.SimpleResourceLiveData
 import stream.reconfig.kirinmaru.android.vo.Novel
-import stream.reconfig.kirinmaru.core.NovelId
+import stream.reconfig.kirinmaru.core.NovelDetail
 import stream.reconfig.kirinmaru.plugins.PluginMap
 import stream.reconfig.kirinmaru.plugins.getPlugin
 import javax.inject.Inject
@@ -20,7 +20,7 @@ class NovelsLiveData @Inject constructor(
     private val pluginMap: PluginMap,
     private val novelDao: NovelDao,
     private val favoritePref: FavoritePref
-) : SimpleResourceLiveData<List<NovelItem>, List<Novel>, List<NovelId>>() {
+) : SimpleResourceLiveData<List<NovelItem>, List<Novel>, List<NovelDetail>>() {
 
   private val origin = MutableLiveData<String>()
 
@@ -49,16 +49,16 @@ class NovelsLiveData @Inject constructor(
   }
 
   override fun createContract() =
-      object : ResourceContract<List<NovelItem>, List<Novel>, List<NovelId>> {
+      object : ResourceContract<List<NovelItem>, List<Novel>, List<NovelDetail>> {
         override fun local(): Flowable<List<Novel>> {
           return novelDao.novelsBy(origin())
         }
 
-        override fun remote(): Single<List<NovelId>> {
+        override fun remote(): Single<List<NovelDetail>> {
           return pluginMap.getPlugin(origin()).obtainNovels()
         }
 
-        override fun transform(remote: List<NovelId>): List<Novel> {
+        override fun transform(remote: List<NovelDetail>): List<Novel> {
           return remote.map(::toNovel)
         }
 
@@ -75,11 +75,11 @@ class NovelsLiveData @Inject constructor(
 
   private fun NovelItem.toFavorite() = FavoriteNovel(origin, url)
 
-  private fun NovelId.toFavorite() = FavoriteNovel(origin(), url)
+  private fun NovelDetail.toFavorite() = FavoriteNovel(origin(), url)
 
   @WorkerThread
-  private fun toNovel(novelId: NovelId): Novel {
-    return Novel(novelId.id, novelId.novelTitle, novelId.url, novelId.tags, origin())
+  private fun toNovel(novel: NovelDetail): Novel {
+    return Novel(novel.id, novel.novelTitle, novel.url, novel.tags, origin())
   }
 
   @WorkerThread
@@ -88,10 +88,10 @@ class NovelsLiveData @Inject constructor(
   }
 
   @WorkerThread
-  private fun isFavorite(novelId: NovelId): Boolean {
+  private fun isFavorite(novelDetail: NovelDetail): Boolean {
     return when {
       favorites.isEmpty() -> false
-      favorites.contains(novelId.toFavorite()) -> true
+      favorites.contains(novelDetail.toFavorite()) -> true
       else -> false
     }
   }

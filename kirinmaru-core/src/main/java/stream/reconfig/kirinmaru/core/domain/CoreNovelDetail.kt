@@ -1,13 +1,13 @@
 package stream.reconfig.kirinmaru.core.domain
 
-import stream.reconfig.kirinmaru.core.NovelId
+import stream.reconfig.kirinmaru.core.NovelDetail
 
 /**
- * Stub NovelId class for IPC
+ * Stub NovelDetail class for IPC
  */
-data class CoreNovelId(
+data class CoreNovelDetail(
     override val novelTitle: String,
     override val url: String,
     override val id: String? = null,
     override val tags: Set<String> = emptySet()
-) : NovelId
+) : NovelDetail

@@ -2,7 +2,7 @@ package stream.reconfig.kirinmaru.android.ui.novels
 
 import android.annotation.SuppressLint
 import io.mironov.smuggler.AutoParcelable
-import stream.reconfig.kirinmaru.core.NovelId
+import stream.reconfig.kirinmaru.core.NovelDetail
 
 /**
  * UI model for Novel items
@@ -15,5 +15,5 @@ data class NovelItem(
     override val tags: Set<String>,
     val origin: String,
     var isFavorite: Boolean
-) : NovelId, AutoParcelable
+) : NovelDetail, AutoParcelable
 

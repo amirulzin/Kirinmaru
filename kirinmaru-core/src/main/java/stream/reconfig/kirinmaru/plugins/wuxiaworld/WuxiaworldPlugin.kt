@@ -9,7 +9,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import retrofit2.Response
 import stream.reconfig.kirinmaru.core.*
-import stream.reconfig.kirinmaru.core.domain.CoreNovelId
+import stream.reconfig.kirinmaru.core.domain.CoreNovelDetail
 import stream.reconfig.kirinmaru.remote.Providers
 import javax.inject.Inject
 
@@ -29,7 +29,7 @@ class WuxiaworldPlugin @Inject constructor(override val client: OkHttpClient, ov
         .create(WuxiaWorldApi::class.java)
   }
 
-  override fun obtainNovels(): Single<List<NovelId>> {
+  override fun obtainNovels(): Single<List<NovelDetail>> {
 
     val obsCompleted = Observable.fromIterable(tags)
         .flatMapSingle(::obtainNovelsByTag)
@@ -37,7 +37,7 @@ class WuxiaworldPlugin @Inject constructor(override val client: OkHttpClient, ov
         .flatMapSingle(::obtainNovelsByLanguage)
 
     return Observable.concat(obsCompleted, obsLanguage)
-        .collectInto(mutableSetOf<NovelId>()) { set, input ->
+        .collectInto(mutableSetOf<NovelDetail>()) { set, input ->
           for (novel in input) {
             set.find { cached -> cached.url == novel.url }
                 ?.let {
@@ -46,36 +46,36 @@ class WuxiaworldPlugin @Inject constructor(override val client: OkHttpClient, ov
                     addAll(novel.tags)
                     addAll(it.tags)
                   }
-                  set.add(CoreNovelId(it.novelTitle, it.url, it.id, tags))
+                  set.add(CoreNovelDetail(it.novelTitle, it.url, it.id, tags))
                 } ?: set.add(novel)
           }
         }.map { it.toList() }
   }
 
 
-  override fun obtainChapters(novel: NovelId): Single<List<ChapterId>> {
-    return api.chapters(novel.url)
+  override fun obtainChapters(novelDetail: NovelDetail): Single<List<ChapterId>> {
+    return api.chapters(novelDetail.url)
         .map(::streamToDocument)
         .map(WuxiaWorldChapterIdParser::parse)
   }
 
-  override fun obtainDetail(novel: NovelId, chapter: ChapterId): Single<ChapterDetail> {
-    return api.chapter(chapter.url)
+  override fun obtainDetail(novelDetail: NovelDetail, chapterId: ChapterId): Single<ChapterDetail> {
+    return api.chapter(chapterId.url)
         .map(::streamToDocument)
         .map(WuxiaWorldChapterDetailParser::parse)
   }
 
-  override fun toAbsoluteUrl(novelId: NovelId, chapterId: ChapterId): String {
+  override fun toAbsoluteUrl(novelDetail: NovelDetail, chapterId: ChapterId): String {
     return WuxiaWorldLinkTransformer.toSanitizedAbsolute(chapterId.url)
   }
 
-  private fun obtainNovelsByLanguage(key: String): Single<List<NovelId>> {
+  private fun obtainNovelsByLanguage(key: String): Single<List<NovelDetail>> {
     return api.novelsByLanguage(key)
         .map(::streamToDocument)
         .map(WuxiaWorldIndexParserV2(key)::parse)
   }
 
-  private fun obtainNovelsByTag(tag: String): Single<List<NovelId>> {
+  private fun obtainNovelsByTag(tag: String): Single<List<NovelDetail>> {
     return api.novelsByTag(tag)
         .map(::streamToDocument)
         .map(WuxiaWorldIndexParserV2(tag)::parse)
