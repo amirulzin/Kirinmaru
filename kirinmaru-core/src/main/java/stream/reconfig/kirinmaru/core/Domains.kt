@@ -1,15 +1,24 @@
 package stream.reconfig.kirinmaru.core
 
 /**
+ * NovelId used for as key novel identifier.
+ * It's up to the plugin how it resolves the given properties
+ * @property origin     Plugin name or its origin name.
+ * @property url        Url can be slugs (recommended), or complete link
+ */
+interface NovelId {
+  val origin: String
+  val url: String
+}
+
+/**
  * NovelDetail used for listing novels. Respect non-null values.
  * It's up to the plugin how it resolves the given properties
  * @property id         Id can be anything as long as it is unique.
- * @property url        Url can be slugs (recommended), or complete link
  * @property tags       Set of tags .e.g. Korean, Completed
  */
-interface NovelDetail {
+interface NovelDetail : NovelId {
   val novelTitle: String
-  val url: String
   val id: String?
   val tags: Set<String>
 }

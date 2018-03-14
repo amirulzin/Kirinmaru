@@ -13,10 +13,16 @@ import stream.reconfig.kirinmaru.core.domain.CoreNovelDetail
 import stream.reconfig.kirinmaru.remote.Providers
 import javax.inject.Inject
 
+internal const val WUXIAWORLD_HOME = "http://www.wuxiaworld.com/"
+
+internal const val WUXIAWORLD_ORIGIN = "WuxiaWorld"
+
 /**
  * WuxiaWorld plugin
  */
 class WuxiaworldPlugin @Inject constructor(override val client: OkHttpClient, override val cookieJar: CookieJar) : Plugin {
+
+  override val origin = WUXIAWORLD_ORIGIN
 
   private val language = listOf("Chinese", "Korean", "English")
   private val tags = listOf("Completed")
@@ -46,7 +52,7 @@ class WuxiaworldPlugin @Inject constructor(override val client: OkHttpClient, ov
                     addAll(novel.tags)
                     addAll(it.tags)
                   }
-                  set.add(CoreNovelDetail(it.novelTitle, it.url, it.id, tags))
+                  set.add(CoreNovelDetail(WUXIAWORLD_ORIGIN, it.novelTitle, it.url, it.id, tags))
                 } ?: set.add(novel)
           }
         }.map { it.toList() }

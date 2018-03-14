@@ -7,9 +7,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Url
 
-
-internal const val WUXIAWORLD_HOME = "http://www.wuxiaworld.com/"
-
 /**
  * WuxiaWorld raw HTTP calls
  */

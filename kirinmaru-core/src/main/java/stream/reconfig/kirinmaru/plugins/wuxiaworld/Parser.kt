@@ -10,7 +10,7 @@ import stream.reconfig.kirinmaru.core.parser.AbsIndexParser
 
 internal class WuxiaWorldIndexParserV2(val key: String) : AbsIndexParser(
     selector = ".media-heading a[href*=/novel/]",
-    transformer = { CoreNovelDetail(it.text(), it.attr("href"), null, mutableSetOf(key)) }
+    transformer = { CoreNovelDetail(WUXIAWORLD_ORIGIN, it.text(), it.attr("href"), null, mutableSetOf(key)) }
 )
 
 

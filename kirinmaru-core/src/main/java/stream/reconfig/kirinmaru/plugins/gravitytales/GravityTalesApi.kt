@@ -32,7 +32,10 @@ internal interface GravityTalesApi {
       @SerializedName("Slug") override val url: String = "",
       @SerializedName("Id") override val id: String? = null,
       @Transient override val tags: Set<String> = emptySet()
-  ) : NovelDetail
+  ) : NovelDetail {
+    @Transient
+    override val origin: String = GRAVITYTALES_ORIGIN
+  }
 
   data class GTChapterGroups(
       val chapterGroupId: Int,

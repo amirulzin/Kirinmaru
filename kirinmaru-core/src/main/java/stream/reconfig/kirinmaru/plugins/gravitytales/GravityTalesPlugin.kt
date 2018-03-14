@@ -9,12 +9,16 @@ import stream.reconfig.kirinmaru.core.*
 import stream.reconfig.kirinmaru.remote.Providers
 import javax.inject.Inject
 
+internal const val GRAVITYTALES_HOME = "http://gravitytales.com/"
+
+internal const val GRAVITYTALES_ORIGIN = "GravityTales"
+
 /**
  * Gravity Tales plugin
  */
-internal const val GRAVITYTALES_HOME = "http://gravitytales.com/"
-
 class GravityTalesPlugin @Inject constructor(override val client: OkHttpClient, override val cookieJar: CookieJar) : Plugin {
+
+  override val origin = GRAVITYTALES_ORIGIN
 
   internal val api by lazy {
     Providers.retrofitBuilder(

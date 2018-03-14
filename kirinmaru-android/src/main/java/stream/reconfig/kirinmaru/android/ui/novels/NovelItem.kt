@@ -13,7 +13,7 @@ data class NovelItem(
     override val novelTitle: String,
     override val url: String,
     override val tags: Set<String>,
-    val origin: String,
+    override val origin: String,
     var isFavorite: Boolean
 ) : NovelDetail, AutoParcelable
 

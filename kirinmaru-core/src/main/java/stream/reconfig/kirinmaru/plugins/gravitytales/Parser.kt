@@ -12,7 +12,7 @@ import stream.reconfig.kirinmaru.core.parser.AbsIndexParser
 
 internal object GravityTalesIndexParser : AbsIndexParser(
     selector = ".multi-column-dropdown a[href*=/novel/]",
-    transformer = { CoreNovelDetail(it.text(), it.attr("href")) }
+    transformer = { CoreNovelDetail(GRAVITYTALES_ORIGIN, it.text(), it.attr("href")) }
 )
 
 internal object GravityTalesChapterIdParser : AbsChapterIdParser(

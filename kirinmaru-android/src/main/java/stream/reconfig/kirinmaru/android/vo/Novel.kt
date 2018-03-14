@@ -16,7 +16,7 @@ data class Novel(
     override val novelTitle: String,
     @PrimaryKey override val url: String,
     override val tags: Set<String>,
-    val origin: String
+    override val origin: String
 ) : NovelDetail {
 
   internal class Converter {

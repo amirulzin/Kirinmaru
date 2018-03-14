@@ -27,6 +27,8 @@ interface Plugin {
 
   val cookieJar: CookieJar
 
+  val origin: String
+
   fun obtainNovels(): Single<List<NovelDetail>>
 
   fun obtainChapters(novelDetail: NovelDetail): Single<List<ChapterId>> {
