@@ -21,6 +21,7 @@ import stream.reconfig.kirinmaru.android.vo.Chapter
 import stream.reconfig.kirinmaru.core.ChapterDetail
 import stream.reconfig.kirinmaru.core.ChapterId
 import stream.reconfig.kirinmaru.plugins.PluginMap
+import stream.reconfig.kirinmaru.plugins.getPlugin
 import javax.inject.Inject
 
 class ReaderLiveData @Inject constructor(
@@ -43,10 +44,9 @@ class ReaderLiveData @Inject constructor(
     }
 
     override fun remote(): Single<ChapterDetail> {
-      return pluginMap[novel().origin]?.get()
-          ?.obtainDetail(novel(), chapterId())
-          ?.doOnSuccess { logd("remote found N: [${it.nextUrl}] P: [${it.previousUrl}]") }
-          ?: throw IllegalStateException("Plugin unknown for: $readerData")
+      return pluginMap.getPlugin(novel().origin)
+          .obtainDetail(novel(), chapterId())
+          .doOnSuccess { logd("remote found N: [${it.nextUrl}] P: [${it.previousUrl}]") }
     }
 
     override fun transform(remote: ChapterDetail): Chapter {

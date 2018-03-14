@@ -32,3 +32,5 @@ interface PluginModule {
 }
 
 typealias PluginMap = Map<String, @JvmSuppressWildcards Provider<Plugin>>
+
+fun PluginMap.getPlugin(origin: String): Plugin = get(origin)!!.get()

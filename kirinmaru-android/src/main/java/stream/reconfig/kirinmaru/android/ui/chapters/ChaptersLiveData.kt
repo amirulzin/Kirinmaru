@@ -11,6 +11,7 @@ import stream.reconfig.kirinmaru.android.util.offline.ResourceLiveData
 import stream.reconfig.kirinmaru.android.vo.Chapter
 import stream.reconfig.kirinmaru.core.ChapterId
 import stream.reconfig.kirinmaru.plugins.PluginMap
+import stream.reconfig.kirinmaru.plugins.getPlugin
 import javax.inject.Inject
 
 class ChaptersLiveData @Inject constructor(
@@ -36,8 +37,8 @@ class ChaptersLiveData @Inject constructor(
 
         override fun remote(): Single<List<ChapterId>> {
           return novel.value?.let { novel ->
-            pluginMap[novel.origin]?.get()?.obtainChapters(novel)
-          } ?: Single.error(IllegalStateException("No plugin match for ${novel.value}"))
+            pluginMap.getPlugin(novel.origin).obtainChapters(novel)
+          } ?: Single.error(IllegalStateException("Novel is null ${novel.value}"))
         }
 
         override fun transform(remote: List<ChapterId>): List<String> {

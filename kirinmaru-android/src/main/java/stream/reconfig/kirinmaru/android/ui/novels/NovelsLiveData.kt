@@ -12,6 +12,7 @@ import stream.reconfig.kirinmaru.android.util.offline.SimpleResourceLiveData
 import stream.reconfig.kirinmaru.android.vo.Novel
 import stream.reconfig.kirinmaru.core.NovelId
 import stream.reconfig.kirinmaru.plugins.PluginMap
+import stream.reconfig.kirinmaru.plugins.getPlugin
 import javax.inject.Inject
 
 class NovelsLiveData @Inject constructor(
@@ -53,8 +54,7 @@ class NovelsLiveData @Inject constructor(
         }
 
         override fun remote(): Single<List<NovelId>> {
-          return pluginMap[origin()]?.get()?.obtainNovels()
-              ?: Single.error(IllegalStateException("Novels: Plugin not recognized: ${origin()}"))
+          return pluginMap.getPlugin(origin()).obtainNovels()
         }
 
         override fun transform(remote: List<NovelId>): List<Novel> {
