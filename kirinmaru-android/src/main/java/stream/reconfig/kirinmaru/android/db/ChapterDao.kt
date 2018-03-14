@@ -14,9 +14,6 @@ interface ChapterDao : StandardDao<Chapter> {
   @Query("SELECT url FROM Chapter WHERE novelUrl = :novelUrl")
   fun chaptersBy(novelUrl: String): Flowable<List<String>>
 
-  @Query("SELECT url FROM Chapter WHERE novelUrl = :novelUrl")
-  fun chapters(novelUrl: String): List<String>
-
   @Query("SELECT * FROM Chapter WHERE url = :chapterUrl")
   fun chapterBy(chapterUrl: String): Flowable<Chapter>
 }
