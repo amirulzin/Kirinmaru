@@ -14,6 +14,9 @@ interface NovelDao : StandardDao<Novel> {
   @Query("SELECT * FROM Novel WHERE origin = :origin")
   fun novelsBy(origin: String): Flowable<List<Novel>>
 
+  @Query("SELECT * FROM Novel WHERE origin IN (:origins) AND url IN (:urls) ")
+  fun novelsBy(origins: Set<String>, urls: Set<String>): Flowable<List<Novel>>
+
   @Query("SELECT * FROM Novel")
   fun novels(): Single<List<Novel>>
 
