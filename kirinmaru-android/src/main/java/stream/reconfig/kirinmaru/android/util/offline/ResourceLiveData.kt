@@ -32,7 +32,6 @@ abstract class ResourceLiveData<V, L, R> : RxResourceLiveData<V>() {
     if (resourceState.value?.state != State.LOADING) {
       postLoading()
       contract.remote()
-          .map(contract::transform)
           .map(contract::persist)
           .subscribeOn(Schedulers.io())
           .observeOn(Schedulers.computation())

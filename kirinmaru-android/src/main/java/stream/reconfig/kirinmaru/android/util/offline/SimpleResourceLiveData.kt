@@ -49,7 +49,6 @@ abstract class SimpleResourceLiveData<V, L, R> : RxResourceLiveData<V>() {
             ).addTo(disposables)
 
         contract.remote()
-            .map(contract::transform)
             .map(contract::persist)
             .subscribeOn(Schedulers.io())
             .subscribe(

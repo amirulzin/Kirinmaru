@@ -58,12 +58,8 @@ class NovelsLiveData @Inject constructor(
           return pluginMap.getPlugin(origin()).obtainNovels()
         }
 
-        override fun transform(remote: List<NovelDetail>): List<Novel> {
-          return remote.map(::toNovel)
-        }
-
-        override fun persist(data: List<Novel>) {
-          novelDao.insert(data)
+        override fun persist(data: List<NovelDetail>) {
+          novelDao.insert(data.map(::toNovel))
         }
 
         override fun view(local: List<Novel>): List<NovelItem> {
