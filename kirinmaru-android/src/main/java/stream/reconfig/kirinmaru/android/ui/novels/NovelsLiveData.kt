@@ -6,7 +6,8 @@ import android.support.annotation.WorkerThread
 import io.reactivex.Flowable
 import io.reactivex.Single
 import stream.reconfig.kirinmaru.android.db.NovelDao
-import stream.reconfig.kirinmaru.android.prefs.FavoritePref
+import stream.reconfig.kirinmaru.android.ui.favorites.FavoriteNovel
+import stream.reconfig.kirinmaru.android.ui.favorites.FavoritePref
 import stream.reconfig.kirinmaru.android.util.offline.ResourceContract
 import stream.reconfig.kirinmaru.android.util.offline.SimpleResourceLiveData
 import stream.reconfig.kirinmaru.android.vo.Novel
@@ -37,9 +38,9 @@ class NovelsLiveData @Inject constructor(
   }
 
   @MainThread
-  fun toggleFavorite(novelId: NovelId, favorited: Boolean) {
-    if (favorited) favorites.add(novelId.url)
-    else favorites.remove(novelId.url)
+  fun toggleFavorite(novelItem: NovelItem, isFavorite: Boolean) {
+    if (isFavorite) favorites.add(novelItem.toFavorite())
+    else favorites.remove(novelItem.toFavorite())
   }
 
   override fun onInactive() {
@@ -72,6 +73,10 @@ class NovelsLiveData @Inject constructor(
 
   private fun origin() = origin.value!!
 
+  private fun NovelItem.toFavorite() = FavoriteNovel(origin, url)
+
+  private fun NovelId.toFavorite() = FavoriteNovel(origin(), url)
+
   @WorkerThread
   private fun toNovel(novelId: NovelId): Novel {
     return Novel(novelId.id, novelId.novelTitle, novelId.url, novelId.tags, origin())
@@ -86,7 +91,7 @@ class NovelsLiveData @Inject constructor(
   private fun isFavorite(novelId: NovelId): Boolean {
     return when {
       favorites.isEmpty() -> false
-      favorites.contains(novelId.url) -> true
+      favorites.contains(novelId.toFavorite()) -> true
       else -> false
     }
   }
