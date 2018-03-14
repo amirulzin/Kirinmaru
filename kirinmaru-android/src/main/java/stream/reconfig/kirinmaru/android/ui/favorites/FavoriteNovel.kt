@@ -1,3 +1,5 @@
 package stream.reconfig.kirinmaru.android.ui.favorites
 
-data class FavoriteNovel(val origin: String, val url: String)
+import stream.reconfig.kirinmaru.core.NovelId
+
+data class FavoriteNovel(override val origin: String, override val url: String) : NovelId
