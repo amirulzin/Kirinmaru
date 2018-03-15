@@ -9,9 +9,9 @@ import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import stream.reconfig.kirinmaru.android.db.ChapterDao
 import stream.reconfig.kirinmaru.android.logd
+import stream.reconfig.kirinmaru.android.parcel.NovelParcel
 import stream.reconfig.kirinmaru.android.prefs.CurrentReadPref
 import stream.reconfig.kirinmaru.android.ui.chapters.ChapterItem
-import stream.reconfig.kirinmaru.android.ui.novels.NovelItem
 import stream.reconfig.kirinmaru.android.util.offline.ResourceContract
 import stream.reconfig.kirinmaru.android.util.offline.RxResourceLiveData
 import stream.reconfig.kirinmaru.android.util.offline.State
@@ -33,7 +33,7 @@ class ReaderLiveData @Inject constructor(
   private val readerData = MutableLiveData<ReaderData>()
 
   private val localObserver = Observer<ReaderData> {
-    logd("[${resourceState.value}] new ReaderData -> Novel: [${it?.novelItem} Chapter: [${it?.chapterItem}]")
+    logd("[${resourceState.value}] new ReaderData -> Novel: [${it?.novelParcel} Chapter: [${it?.chapterItem}]")
     refresh()
   }
 
@@ -96,7 +96,7 @@ class ReaderLiveData @Inject constructor(
     super.onInactive()
     readerData.removeObserver(localObserver)
     readerData.value?.let {
-      currentReadPref.persist(it.novelItem, it.chapterItem.url)
+      currentReadPref.persist(it.novelParcel, it.chapterItem.url)
     }
   }
 
@@ -140,7 +140,7 @@ class ReaderLiveData @Inject constructor(
 
   private fun chapterId(): ChapterId = readerData.value!!.chapterItem
 
-  private fun novel(): NovelItem = readerData.value!!.novelItem
+  private fun novel(): NovelParcel = readerData.value!!.novelParcel
 
   private fun navigateActual(url: String) {
     logd("Nav to $url")

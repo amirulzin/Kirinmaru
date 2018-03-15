@@ -4,8 +4,8 @@ import android.arch.lifecycle.MutableLiveData
 import io.reactivex.Flowable
 import io.reactivex.Single
 import stream.reconfig.kirinmaru.android.db.ChapterDao
+import stream.reconfig.kirinmaru.android.parcel.NovelParcel
 import stream.reconfig.kirinmaru.android.prefs.CurrentReadPref
-import stream.reconfig.kirinmaru.android.ui.novels.NovelItem
 import stream.reconfig.kirinmaru.android.util.offline.ResourceContract
 import stream.reconfig.kirinmaru.android.util.offline.ResourceLiveData
 import stream.reconfig.kirinmaru.android.vo.Chapter
@@ -20,9 +20,9 @@ class ChaptersLiveData @Inject constructor(
     private val currentReadPref: CurrentReadPref
 ) : ResourceLiveData<List<ChapterItem>, List<String>, List<ChapterId>>() {
 
-  private val novel = MutableLiveData<NovelItem>()
+  private val novel = MutableLiveData<NovelParcel>()
 
-  fun initNovel(novelItem: NovelItem) {
+  fun initNovel(novelItem: NovelParcel) {
     novel.value = novelItem
   }
 

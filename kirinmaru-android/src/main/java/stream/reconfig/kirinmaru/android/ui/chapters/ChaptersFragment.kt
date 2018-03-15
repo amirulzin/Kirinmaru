@@ -6,14 +6,15 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import stream.reconfig.kirinmaru.android.databinding.ItemChapterBinding
+import stream.reconfig.kirinmaru.android.parcel.NovelParcel
 import stream.reconfig.kirinmaru.android.ui.common.fragment.DrawerRecyclerFragment
 import stream.reconfig.kirinmaru.android.ui.navigation.FragmentNavigator
-import stream.reconfig.kirinmaru.android.ui.novels.NovelItem
 import stream.reconfig.kirinmaru.android.util.livedata.observe
 import stream.reconfig.kirinmaru.android.util.offline.State
 import stream.reconfig.kirinmaru.android.util.recycler.ItemDecorationUtil
 import stream.reconfig.kirinmaru.android.util.viewmodel.ViewModelFactory
 import stream.reconfig.kirinmaru.android.util.viewmodel.viewModel
+import stream.reconfig.kirinmaru.core.NovelDetail
 import javax.inject.Inject
 
 /**
@@ -21,12 +22,12 @@ import javax.inject.Inject
  */
 class ChaptersFragment : DrawerRecyclerFragment() {
   companion object {
-    private const val FARGS_NOVEL = "novelItem"
+    private const val FARGS_NOVEL = "novelParcel"
 
     @JvmStatic
-    fun newInstance(novelItem: NovelItem): ChaptersFragment {
+    fun newInstance(novelParcel: NovelParcel): ChaptersFragment {
       return ChaptersFragment().apply {
-        arguments = Bundle().apply { putParcelable(FARGS_NOVEL, novelItem) }
+        arguments = Bundle().apply { putParcelable(FARGS_NOVEL, novelParcel) }
       }
     }
   }
@@ -38,14 +39,14 @@ class ChaptersFragment : DrawerRecyclerFragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    val novelItem: NovelItem = arguments!!.getParcelable(FARGS_NOVEL)
+    val novelParcel: NovelParcel = arguments!!.getParcelable(FARGS_NOVEL)
 
-    cvm.chapters.initNovel(novelItem)
-    binding.toolbar.title = novelItem.novelTitle
+    cvm.chapters.initNovel(novelParcel)
+    binding.toolbar.title = novelParcel.novelTitle
     binding.refreshLayout.setOnRefreshListener { cvm.chapters.refresh() }
 
     val adapter = ChaptersAdapter(
-        onClickItem = { chapterItem -> onClickItem(novelItem, chapterItem) },
+        onClickItem = { chapterItem -> onClickItem(novelParcel, chapterItem) },
         onBind = ::onBindItem
     )
     with(binding.recyclerView) {
@@ -66,7 +67,7 @@ class ChaptersFragment : DrawerRecyclerFragment() {
     }
   }
 
-  private fun onClickItem(novelItem: NovelItem, chapterItem: ChapterItem) {
+  private fun onClickItem(novelItem: NovelDetail, chapterItem: ChapterItem) {
     activity?.let { FragmentNavigator.toReader(it, novelItem, chapterItem) }
   }
 

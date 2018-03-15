@@ -5,12 +5,13 @@ import android.support.v4.app.FragmentActivity
 import android.view.Menu
 import android.view.MenuItem
 import stream.reconfig.kirinmaru.android.R
+import stream.reconfig.kirinmaru.android.parcel.toParcel
 import stream.reconfig.kirinmaru.android.ui.chapters.ChapterItem
 import stream.reconfig.kirinmaru.android.ui.chapters.ChaptersFragment
-import stream.reconfig.kirinmaru.android.ui.novels.NovelItem
 import stream.reconfig.kirinmaru.android.ui.novels.NovelsFragment
 import stream.reconfig.kirinmaru.android.ui.reader.ReaderData
 import stream.reconfig.kirinmaru.android.ui.reader.ReaderFragment
+import stream.reconfig.kirinmaru.core.NovelDetail
 
 /**
  * Idempotent FragmentNavigator to handle lateral and vertical app navigation.
@@ -22,16 +23,16 @@ object FragmentNavigator {
   private const val container = R.id.drawerContentFrame
 
   @JvmStatic
-  fun toChapters(activity: FragmentActivity, novel: NovelItem) {
+  fun toChapters(activity: FragmentActivity, novel: NovelDetail) {
     navigate("chapters", activity, true) {
-      ChaptersFragment.newInstance(novel)
+      ChaptersFragment.newInstance(novel.toParcel())
     }
   }
 
   @JvmStatic
-  fun toReader(activity: FragmentActivity, novel: NovelItem, chapter: ChapterItem) {
+  fun toReader(activity: FragmentActivity, novel: NovelDetail, chapter: ChapterItem) {
     navigate("reader", activity, true) {
-      ReaderFragment.newInstance(ReaderData(novel, chapter))
+      ReaderFragment.newInstance(ReaderData(novel.toParcel(), chapter))
     }
   }
 
