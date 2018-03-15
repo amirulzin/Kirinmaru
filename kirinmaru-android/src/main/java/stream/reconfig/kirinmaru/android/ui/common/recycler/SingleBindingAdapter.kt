@@ -30,5 +30,19 @@ open class SingleBindingAdapter<out C : Collection<*>, V : ViewDataBinding>(
     bind(holder.binding, collection, position)
     holder.binding.executePendingBindings()
   }
+
+  companion object {
+    @JvmStatic
+    inline fun <C : Collection<*>, V : ViewDataBinding> clickPredicate(
+        holder: BindingHolder<V>,
+        collection: C,
+        behavior: (pos: Int) -> Unit
+    ) {
+      val i = holder.adapterPosition
+      if (i >= 0 && i < collection.size) {
+        behavior(i)
+      }
+    }
+  }
 }
 

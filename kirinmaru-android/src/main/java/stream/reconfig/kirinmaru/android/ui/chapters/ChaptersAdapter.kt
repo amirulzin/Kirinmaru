@@ -14,18 +14,14 @@ import stream.reconfig.kirinmaru.android.util.rx.addTo
  * before they are added to maintain immutability on the list reference
  */
 class ChaptersAdapter(
-    private val list: MutableList<ChapterItem> = mutableListOf(),
     private inline val onClickItem: (ChapterItem) -> Unit,
     private inline val onBind: (binding: ItemChapterBinding, list: MutableList<ChapterItem>, position: Int) -> Unit
 ) : SingleBindingAdapter<MutableList<ChapterItem>, ItemChapterBinding>(
-    collection = list,
+    collection = mutableListOf(),
     resourceId = R.layout.item_chapter,
-    postCreate = { holder ->
+    postCreate = { holder, collection ->
       holder.binding.root.setOnClickListener {
-        val i = holder.adapterPosition
-        if (i >= 0 && i < list.size) {
-          onClickItem(list[i])
-        }
+        clickPredicate(holder, collection) { onClickItem(collection[it]) }
       }
     },
     bind = onBind
@@ -38,20 +34,20 @@ class ChaptersAdapter(
     RxRecyclerUtil.calcAndDispatchDiff(this) {
       object : DiffUtil.Callback() {
 
-        override fun getOldListSize() = list.size
+        override fun getOldListSize() = collection.size
 
         override fun getNewListSize() = result.size
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-            list[oldItemPosition].url == result[newItemPosition].url
+            collection[oldItemPosition].url == result[newItemPosition].url
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-            list[oldItemPosition].url == result[newItemPosition].url
+            collection[oldItemPosition].url == result[newItemPosition].url
       }
     }.subscribe { _, _ ->
-          list.clear()
-          list.addAll(result)
-          disposables.clear()
-        }.addTo(disposables)
+      collection.clear()
+      collection.addAll(result)
+      disposables.clear()
+    }.addTo(disposables)
   }
 }
