@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:background="@color/kirin_grey_500"
+        android:elevation="2dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/AppTheme.Text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp"
+            android:paddingEnd="8dp"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:textColor="@color/text_clickable"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/loadingView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="A Certain Story In a Galaxy Far Far Away Where Fellowships of A Magic Academy Finds a Ring and A Large Towel" />
+
+        <Button
+            android:id="@+id/lastRead"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawableLeft="@drawable/ic_bookmark"
+            android:drawablePadding="8dp"
+            android:gravity="left|center_vertical"
+            android:minHeight="40dp"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAccent"
+            android:visibility="gone"
+            tools:drawableTint="@color/colorFavorite"
+            tools:ignore="RtlHardcoded"
+            tools:text="Chapter 21"
+            tools:visibility="visible" />
+
+        <Button
+            android:id="@+id/latestChapter"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawableLeft="@drawable/ic_public"
+            android:drawablePadding="8dp"
+            android:drawableTint="@color/colorSecondary"
+            android:gravity="left|center_vertical"
+            android:minHeight="40dp"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAccent"
+            tools:drawableTint="@color/colorSecondary"
+            tools:ignore="RtlHardcoded"
+            tools:text="Chapter 112" />
+
+        <net.bohush.geometricprogressview.GeometricProgressView
+            android:id="@+id/loadingView"
+            android:layout_width="16dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            app:gp_color="@color/colorAccentSecondary"
+            app:gp_duration="800"
+            app:gp_figure_padding="2dp"
+            app:gp_number_of_angles="4"
+            app:gp_type="kite" />
+
+    </LinearLayout>
+</layout>
