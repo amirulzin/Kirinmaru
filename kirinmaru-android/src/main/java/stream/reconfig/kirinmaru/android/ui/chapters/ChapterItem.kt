@@ -2,8 +2,7 @@ package stream.reconfig.kirinmaru.android.ui.chapters
 
 import android.annotation.SuppressLint
 import io.mironov.smuggler.AutoParcelable
-import stream.reconfig.kirinmaru.core.ChapterId
-import stream.reconfig.kirinmaru.core.taxonomy.Taxonomy
+import stream.reconfig.kirinmaru.android.ui.domain.AbsChapterId
 
 /**
  * ChapterItem for views
@@ -12,12 +11,4 @@ import stream.reconfig.kirinmaru.core.taxonomy.Taxonomy
 data class ChapterItem(
     override val url: String,
     val currentRead: Boolean
-) : ChapterId, AutoParcelable {
-  val taxonomicNumber: String  by lazy {
-    Taxonomy.createTaxonomicNumber(url).also {
-      taxonView = Taxonomy.createTaxonomicDisplay(it)
-    }
-  }
-  lateinit var taxonView: String
-    private set
-}
+) : AbsChapterId(), AutoParcelable
