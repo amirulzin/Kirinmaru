@@ -17,6 +17,13 @@ data class Novel(
     override val tags: Set<String>,
     override val origin: String
 ) : NovelDetail {
+  constructor(novelDetail: NovelDetail) : this(
+      novelDetail.id,
+      novelDetail.novelTitle,
+      novelDetail.url,
+      novelDetail.tags,
+      novelDetail.origin
+  )
 
   internal class Converter {
 
