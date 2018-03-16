@@ -7,6 +7,7 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 import stream.reconfig.kirinmaru.android.di.keys.ViewModelKey
 import stream.reconfig.kirinmaru.android.ui.chapters.ChaptersViewModel
+import stream.reconfig.kirinmaru.android.ui.library.LibraryViewModel
 import stream.reconfig.kirinmaru.android.ui.main.MainViewModel
 import stream.reconfig.kirinmaru.android.ui.novels.NovelsViewModel
 import stream.reconfig.kirinmaru.android.ui.reader.ReaderViewModel
@@ -36,4 +37,9 @@ interface ViewModelModule {
   @IntoMap
   @ViewModelKey(ReaderViewModel::class)
   fun bindReader(cvm: ReaderViewModel): ViewModel
+
+  @Binds
+  @IntoMap
+  @ViewModelKey(LibraryViewModel::class)
+  fun bindLibrary(lvm: LibraryViewModel): ViewModel
 }
