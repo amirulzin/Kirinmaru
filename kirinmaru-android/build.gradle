@@ -60,7 +60,7 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testImplementation jUnit
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
     testImplementation 'org.robolectric:robolectric:3.6.1'
     //Kotlin
     implementation kotlinStdLib8
@@ -96,6 +96,7 @@ dependencies {
 
     //Network
     implementation okHttp.okHttp
+    implementation okHttp.logging
     implementation gson
     implementation retrofit2.retrofit
     implementation retrofit2.adapterRxJava2
