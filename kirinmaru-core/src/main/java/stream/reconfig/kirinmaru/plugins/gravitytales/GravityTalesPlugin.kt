@@ -7,6 +7,7 @@ import okhttp3.CookieJar
 import okhttp3.OkHttpClient
 import stream.reconfig.kirinmaru.core.*
 import stream.reconfig.kirinmaru.remote.Providers
+import java.util.*
 import javax.inject.Inject
 
 internal const val GRAVITYTALES_HOME = "http://gravitytales.com/"
@@ -31,7 +32,7 @@ class GravityTalesPlugin @Inject constructor(override val client: OkHttpClient, 
   }
 
   override fun obtainNovels(): Single<List<NovelDetail>> {
-    return api.getNovels().map { flattenResponse(it, GRAVITYTALES_HOME) }
+    return api.getNovels().map { flattenResponse(it, GRAVITYTALES_HOME).map { it.standardizeUrl() } }
   }
 
   override fun obtainChapters(novelDetail: NovelDetail): Single<List<ChapterId>> {
@@ -55,4 +56,10 @@ class GravityTalesPlugin @Inject constructor(override val client: OkHttpClient, 
   override fun toAbsoluteUrl(novelDetail: NovelDetail, chapterId: ChapterId): String {
     return GravityTalesLinkTransformer.toSanitizedAbsolute("novel", novelDetail.url, chapterId.url)
   }
+
+  /**
+   * Standardize GravityTales slugs since it sometimes return in
+   * first-letter capitalized slug. This method will return a copy.
+   */
+  private fun GravityTalesApi.GTNovelDetail.standardizeUrl() = copy(url = url.toLowerCase(Locale.US))
 }
