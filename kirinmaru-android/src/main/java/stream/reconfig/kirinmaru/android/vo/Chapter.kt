@@ -5,6 +5,7 @@ import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
 import stream.reconfig.kirinmaru.core.ChapterDetail
 import stream.reconfig.kirinmaru.core.ChapterId
+import stream.reconfig.kirinmaru.core.NovelId
 
 @Entity(foreignKeys = [
   (ForeignKey(
@@ -22,4 +23,20 @@ data class Chapter(
     override val rawText: String? = null,
     override val nextUrl: String? = null,
     override val previousUrl: String? = null
-) : ChapterId, ChapterDetail
+) : ChapterId, ChapterDetail {
+
+  constructor(novelId: NovelId, chapterId: ChapterId) : this(
+      novelId.origin,
+      novelId.url,
+      chapterId.url
+  )
+
+  constructor(novelId: NovelId, chapterId: ChapterId, chapterDetail: ChapterDetail) : this(
+      novelId.origin,
+      novelId.url,
+      chapterId.url,
+      chapterDetail.rawText,
+      chapterDetail.nextUrl,
+      chapterDetail.previousUrl
+  )
+}
