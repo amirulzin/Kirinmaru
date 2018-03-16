@@ -17,7 +17,7 @@ class GravityTalesRawTest {
      */
 
     val html = TestHelper.readResource("gravity-tales-csg-619.html")
-    val novelId = CoreNovelDetail("Chaotic Sword God", "chaotic-sword-god")
+    val novelId = CoreNovelDetail(GRAVITYTALES_ORIGIN, "Chaotic Sword God", "chaotic-sword-god")
     val result = GravityTalesChapterDetailParser(novelId)
         .parse(Jsoup.parse(html))
     println(result.nextUrl)
