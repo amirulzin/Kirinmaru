@@ -31,7 +31,7 @@ class ChaptersLiveData @Inject constructor(
 
         override fun local(): Flowable<List<String>> {
           return novel.value?.let { novel ->
-            chapterDao.chaptersBy(novel.url)
+            chapterDao.chaptersAsync(novel.origin, novel.url)
           } ?: Flowable.error(IllegalStateException("Novel null in chapters local()"))
         }
 
@@ -43,7 +43,7 @@ class ChaptersLiveData @Inject constructor(
 
         override fun persist(data: List<ChapterId>) {
           novel.value?.run {
-            chapterDao.insertLatest(data.map { Chapter(origin, url, it.url) })
+            chapterDao.insert(data.map { Chapter(origin, url, it.url) })
           }
         }
 

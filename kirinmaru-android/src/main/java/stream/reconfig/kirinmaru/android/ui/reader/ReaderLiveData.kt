@@ -39,7 +39,7 @@ class ReaderLiveData @Inject constructor(
 
   private val contract = object : ResourceContract<ReaderDetail, Chapter, ChapterDetail> {
     override fun local(): Flowable<Chapter> {
-      return chapterDao.chapterBy(chapterId().url)
+      return chapterDao.chapterAsync(chapterId().url)
           .doOnNext { logd("local get ${it.url}") }
     }
 

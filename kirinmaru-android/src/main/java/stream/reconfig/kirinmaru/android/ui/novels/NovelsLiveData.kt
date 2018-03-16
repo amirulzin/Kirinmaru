@@ -51,7 +51,7 @@ class NovelsLiveData @Inject constructor(
   override fun createContract() =
       object : ResourceContract<List<NovelItem>, List<Novel>, List<NovelDetail>> {
         override fun local(): Flowable<List<Novel>> {
-          return novelDao.novelsBy(origin())
+          return novelDao.novelsAsync(origin())
         }
 
         override fun remote(): Single<List<NovelDetail>> {

@@ -12,13 +12,16 @@ import stream.reconfig.kirinmaru.android.vo.Novel
 @Dao
 interface NovelDao : StandardDao<Novel> {
   @Query("SELECT * FROM Novel WHERE origin = :origin")
-  fun novelsBy(origin: String): Flowable<List<Novel>>
+  fun novelsAsync(origin: String): Flowable<List<Novel>>
 
   @Query("SELECT * FROM Novel WHERE origin IN (:origins) AND url IN (:urls) ")
-  fun novelsBy(origins: Set<String>, urls: Set<String>): Flowable<List<Novel>>
+  fun novelsAsync(origins: Set<String>, urls: Set<String>): Flowable<List<Novel>>
+
+  @Query("SELECT * FROM Novel WHERE origin IN (:origins) AND url IN (:urls) ")
+  fun novels(origins: Set<String>, urls: Set<String>): List<Novel>
 
   @Query("SELECT * FROM Novel")
-  fun novels(): Single<List<Novel>>
+  fun allNovelsAsync(): Single<List<Novel>>
 
   @Query("DELETE FROM Novel")
   fun deleteAll()

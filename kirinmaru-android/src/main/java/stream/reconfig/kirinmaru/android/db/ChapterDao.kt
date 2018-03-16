@@ -15,10 +15,16 @@ import stream.reconfig.kirinmaru.core.ChapterId
 interface ChapterDao : StandardDao<Chapter> {
 
   @Query("SELECT url FROM Chapter WHERE novelUrl = :novelUrl")
-  fun chaptersBy(novelUrl: String): Flowable<List<String>>
+  fun chaptersAsync(novelUrl: String): Flowable<List<String>>
+
+  @Query("SELECT url FROM Chapter WHERE origin = :origin AND novelUrl = :novelUrl")
+  fun chaptersAsync(origin: String, novelUrl: String): Flowable<List<String>>
+
+  @Query("SELECT url FROM Chapter WHERE origin = :origin AND novelUrl = :novelUrl")
+  fun chapters(origin: String, novelUrl: String): List<String>
 
   @Query("SELECT * FROM Chapter WHERE url = :chapterUrl")
-  fun chapterBy(chapterUrl: String): Flowable<Chapter>
+  fun chapterAsync(chapterUrl: String): Flowable<Chapter>
 
   /**
    * Used during [ChapterId] insertion. Conflicts are ignored since there's no
