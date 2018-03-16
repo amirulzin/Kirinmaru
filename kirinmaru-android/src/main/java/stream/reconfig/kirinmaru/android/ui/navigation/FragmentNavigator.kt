@@ -7,6 +7,7 @@ import android.view.MenuItem
 import stream.reconfig.kirinmaru.android.R
 import stream.reconfig.kirinmaru.android.parcel.toParcel
 import stream.reconfig.kirinmaru.android.ui.chapters.ChaptersFragment
+import stream.reconfig.kirinmaru.android.ui.library.LibraryFragment
 import stream.reconfig.kirinmaru.android.ui.novels.NovelsFragment
 import stream.reconfig.kirinmaru.android.ui.reader.ReaderData
 import stream.reconfig.kirinmaru.android.ui.reader.ReaderFragment
@@ -46,6 +47,7 @@ object FragmentNavigator {
     val frag = fm.findFragmentByTag(tag)
 
     val outFrag = frag ?: when (item.itemId) {
+      R.id.navLibrary -> LibraryFragment.newInstance()
       R.id.navCatalogues -> NovelsFragment.newInstance(firstOrigin)
       R.id.navSettings -> return true
       else -> throw NotImplementedError("Menu id case not implemented")
