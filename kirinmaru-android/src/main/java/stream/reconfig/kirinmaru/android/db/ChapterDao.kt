@@ -1,35 +1,25 @@
 package stream.reconfig.kirinmaru.android.db
 
 import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
+import android.arch.persistence.room.Transaction
 import io.reactivex.Flowable
 import stream.reconfig.kirinmaru.android.vo.Chapter
-import stream.reconfig.kirinmaru.core.ChapterId
 
 /**
  * Chapter DAO. New inserts will simply replace old ones
  */
 @Dao
-interface ChapterDao : StandardDao<Chapter> {
+abstract class ChapterDao : UpsertDao<Chapter>() {
 
-  @Query("SELECT url FROM Chapter WHERE novelUrl = :novelUrl")
-  fun chaptersAsync(novelUrl: String): Flowable<List<String>>
-
+  @Transaction
   @Query("SELECT url FROM Chapter WHERE origin = :origin AND novelUrl = :novelUrl")
-  fun chaptersAsync(origin: String, novelUrl: String): Flowable<List<String>>
+  abstract fun chapters(origin: String, novelUrl: String): List<String>
 
-  @Query("SELECT url FROM Chapter WHERE origin = :origin AND novelUrl = :novelUrl")
-  fun chapters(origin: String, novelUrl: String): List<String>
+  @Query("SELECT url FROM Chapter WHERE origin = (:origin) AND novelUrl = (:novelUrl)")
+  abstract fun chaptersAsync(origin: String, novelUrl: String): Flowable<List<String>>
 
   @Query("SELECT * FROM Chapter WHERE url = :chapterUrl")
-  fun chapterAsync(chapterUrl: String): Flowable<Chapter>
+  abstract fun chapterAsync(chapterUrl: String): Flowable<Chapter>
 
-  /**
-   * Used during [ChapterId] insertion. Conflicts are ignored since there's no
-   * need to override chapters with downloaded rawText
-   */
-  @Insert(onConflict = OnConflictStrategy.IGNORE)
-  fun insertLatest(data: List<Chapter>): List<Long>
 }
