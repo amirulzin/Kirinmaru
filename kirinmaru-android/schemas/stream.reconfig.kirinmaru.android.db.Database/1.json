@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "e7d57ea8bf2c459633c76e9fc56d6637",
+    "identityHash": "4d5a33ec06e05b9d85b6bfa9583b46f7",
     "entities": [
       {
         "tableName": "Novel",
@@ -96,7 +96,17 @@
           ],
           "autoGenerate": false
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_Chapter_origin_url",
+            "unique": false,
+            "columnNames": [
+              "origin",
+              "url"
+            ],
+            "createSql": "CREATE  INDEX `index_Chapter_origin_url` ON `${TABLE_NAME}` (`origin`, `url`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "Novel",
@@ -116,7 +126,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"e7d57ea8bf2c459633c76e9fc56d6637\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"4d5a33ec06e05b9d85b6bfa9583b46f7\")"
     ]
   }
 }
