@@ -5,15 +5,17 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import stream.reconfig.kirinmaru.android.di.qualifiers.ApplicationContext
+import stream.reconfig.kirinmaru.android.di.scopes.ApplicationScope
 
 /**
  *
  */
 @Module
 class DatabaseModule {
+  @ApplicationScope
   @Provides
   fun provideDatabase(@ApplicationContext application: Context): Database {
-    return Room.databaseBuilder(application, Database::class.java, "sqlite_db")
+    return Room.databaseBuilder(application, Database::class.java, "sqlite.db")
         .build()
   }
 
