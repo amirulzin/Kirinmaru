@@ -71,10 +71,9 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
 
     rvm.reader.observe(this) {
       it?.let {
+        updateReaderBar(it)
         if (it.hasText())
           binding.rawText.setText(it.text, TextView.BufferType.SPANNABLE)
-        setReaderBarNavigation(it, binding.buttonBarTop!!)
-        setReaderBarNavigation(it, binding.buttonBarBottom!!)
       } ?: when (rvm.reader.resourceState.value?.state) {
         ERROR -> binding.rawText.text = "Chapter can't be retrieved. Try refreshing"
         else -> binding.rawText.text = ""
@@ -101,6 +100,7 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
     bindReaderBar(binding.buttonBarBottom!!)
   }
 
+
   private fun bindReaderBar(binding: ViewReaderbarBinding) {
     rvm.readerSetting.observeNonNull(this) { readerSetting ->
       logd("READER SETTING LOADED")
@@ -116,6 +116,18 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
         }
       }
     }
+  }
+
+  private fun updateReaderBar(it: ReaderDetail) {
+    setReaderBarTitle(it.taxon, binding.buttonBarTop!!)
+    setReaderBarTitle(it.taxon, binding.buttonBarBottom!!)
+    setReaderBarNavigation(it, binding.buttonBarTop!!)
+    setReaderBarNavigation(it, binding.buttonBarBottom!!)
+  }
+
+
+  private fun setReaderBarTitle(title: String, binding: ViewReaderbarBinding) {
+    binding.title.text = title
   }
 
   private fun setReaderBarNavigation(readerDetail: ReaderDetail, binding: ViewReaderbarBinding) {

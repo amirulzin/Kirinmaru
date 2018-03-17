@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.support.annotation.MainThread
+import android.support.annotation.WorkerThread
 import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -20,6 +21,7 @@ import stream.reconfig.kirinmaru.android.util.textview.HtmlTextUtil
 import stream.reconfig.kirinmaru.android.vo.Chapter
 import stream.reconfig.kirinmaru.core.ChapterDetail
 import stream.reconfig.kirinmaru.core.ChapterId
+import stream.reconfig.kirinmaru.core.taxonomy.Taxonomy
 import stream.reconfig.kirinmaru.plugins.PluginMap
 import stream.reconfig.kirinmaru.plugins.getPlugin
 import javax.inject.Inject
@@ -150,7 +152,14 @@ class ReaderLiveData @Inject constructor(
     } ?: throw IllegalStateException("Novel must be set before any operation")
   }
 
-  private fun Chapter.toReaderDetail() = ReaderDetail(rawText?.let(HtmlTextUtil::toHtmlSpannable), url, previousUrl, nextUrl)
+  @WorkerThread
+  private fun Chapter.toReaderDetail() = ReaderDetail(
+      text = rawText?.let(HtmlTextUtil::toHtmlSpannable),
+      url = url,
+      previousUrl = previousUrl,
+      nextUrl = nextUrl,
+      taxon = Taxonomy.createTaxonomicDisplay(Taxonomy.createTaxonomicNumber(url))
+  )
 
   private fun log(chapter: Chapter?, ops: String = "") {
     logd("State: $ops [${resourceState.value}]" +
