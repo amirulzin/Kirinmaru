@@ -102,7 +102,11 @@ class NovelsFragment : DrawerRecyclerFragment() {
       override fun onNothingSelected(parent: AdapterView<*>?) {}
 
       override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        nvm.novels.initOrigin(list[position])
+        val newOrigin = list[position]
+        nvm.novels.initOrigin(newOrigin)
+        arguments = Bundle().apply {
+          putString(FARGS_ORIGIN, newOrigin)
+        }
       }
     }
   }
