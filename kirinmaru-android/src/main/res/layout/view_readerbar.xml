@@ -88,7 +88,7 @@
                 android:paddingStart="16dp"
                 android:paddingTop="2dp"
                 android:textSize="12sp"
-                android:visibility="gone"
+                android:visibility="visible"
                 tools:text="Chapter 1004 - 5"
                 tools:visibility="visible" />
         </LinearLayout>
