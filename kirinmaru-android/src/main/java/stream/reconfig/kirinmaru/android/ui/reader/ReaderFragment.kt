@@ -27,10 +27,10 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
   companion object {
     private const val FARGS_READER = "readerData"
     @JvmStatic
-    fun newInstance(readerData: ReaderData): ReaderFragment {
+    fun newInstance(readerParcel: ReaderParcel): ReaderFragment {
       return ReaderFragment().apply {
         arguments = Bundle().apply {
-          putParcelable(FARGS_READER, readerData)
+          putParcelable(FARGS_READER, readerParcel)
         }
       }
     }
@@ -45,8 +45,8 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    val readerData: ReaderData = arguments!!.getParcelable(FARGS_READER)!!
-    rvm.reader.initReaderData(readerData)
+    val readerParcel: ReaderParcel = arguments!!.getParcelable(FARGS_READER)!!
+    rvm.reader.initReaderData(readerParcel)
 
     binding.refreshLayout.setColorSchemeColors(
         ContextCompat.getColor(context!!, R.color.colorAccent),
@@ -57,9 +57,9 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
     // Apparently it is not inflating properly unless some calls set it to 'dirty'.
     // Currently unable to reproduce this bug in silo.
     // TODO: Fix SwipeRefreshLayout inflation bug (remove the block when fixed)
-    binding.refreshLayout.post {
-      binding.refreshLayout.isRefreshing = true
-    }
+//    binding.refreshLayout.post {
+//      binding.refreshLayout.isRefreshing = true
+//    }
 
     binding.refreshLayout.setOnRefreshListener {
       rvm.reader.refresh()

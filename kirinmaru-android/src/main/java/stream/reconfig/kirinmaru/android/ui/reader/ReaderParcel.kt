@@ -6,7 +6,7 @@ import stream.reconfig.kirinmaru.android.parcel.ChapterIdParcel
 import stream.reconfig.kirinmaru.android.parcel.NovelParcel
 
 @SuppressLint("ParcelCreator")
-data class ReaderData(
+data class ReaderParcel(
     val novelParcel: NovelParcel,
     val chapterParcel: ChapterIdParcel
 ) : AutoParcelable

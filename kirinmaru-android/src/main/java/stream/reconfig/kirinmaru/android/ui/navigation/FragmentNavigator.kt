@@ -9,8 +9,8 @@ import stream.reconfig.kirinmaru.android.parcel.toParcel
 import stream.reconfig.kirinmaru.android.ui.chapters.ChaptersFragment
 import stream.reconfig.kirinmaru.android.ui.library.LibraryFragment
 import stream.reconfig.kirinmaru.android.ui.novels.NovelsFragment
-import stream.reconfig.kirinmaru.android.ui.reader.ReaderData
 import stream.reconfig.kirinmaru.android.ui.reader.ReaderFragment
+import stream.reconfig.kirinmaru.android.ui.reader.ReaderParcel
 import stream.reconfig.kirinmaru.core.ChapterId
 import stream.reconfig.kirinmaru.core.NovelDetail
 
@@ -33,7 +33,7 @@ object FragmentNavigator {
   @JvmStatic
   fun toReader(activity: FragmentActivity, novel: NovelDetail, chapter: ChapterId) {
     navigate("reader", activity, true) {
-      ReaderFragment.newInstance(ReaderData(novel.toParcel(), chapter.toParcel()))
+      ReaderFragment.newInstance(ReaderParcel(novel.toParcel(), chapter.toParcel()))
     }
   }
 

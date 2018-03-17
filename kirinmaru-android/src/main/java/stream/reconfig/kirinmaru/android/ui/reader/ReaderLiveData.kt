@@ -30,10 +30,10 @@ class ReaderLiveData @Inject constructor(
     private val currentReadPref: CurrentReadPref
 ) : RxResourceLiveData<ReaderDetail>() {
 
-  private val readerData = MutableLiveData<ReaderData>()
+  private val readerData = MutableLiveData<ReaderParcel>()
 
-  private val localObserver = Observer<ReaderData> {
-    logd("[${resourceState.value}] new ReaderData -> Novel: [${it?.novelParcel} Chapter: [${it?.chapterParcel}]")
+  private val localObserver = Observer<ReaderParcel> {
+    logd("[${resourceState.value}] new ReaderParcel -> Novel: [${it?.novelParcel} Chapter: [${it?.chapterParcel}]")
     refresh()
   }
 
@@ -68,7 +68,7 @@ class ReaderLiveData @Inject constructor(
   }
 
   @MainThread
-  fun initReaderData(data: ReaderData) {
+  fun initReaderData(data: ReaderParcel) {
     readerData.value = data
   }
 
