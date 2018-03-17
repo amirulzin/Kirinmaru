@@ -58,7 +58,7 @@ class ReaderLiveData @Inject constructor(
           nextUrl = data.nextUrl,
           previousUrl = data.previousUrl)
       log(chapter, "persist")
-      chapterDao.insert(chapter)
+      chapterDao.upsert(chapter)
     }
 
     override fun view(local: Chapter): ReaderDetail {
