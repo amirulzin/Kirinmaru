@@ -28,7 +28,6 @@ class ChaptersLiveData @Inject constructor(
 
   override fun createContract() =
       object : ResourceContract<List<ChapterItem>, List<String>, List<ChapterId>> {
-
         override fun local(): Flowable<List<String>> {
           return novel.value?.let { novel ->
             chapterDao.chaptersAsync(novel.origin, novel.url)
@@ -42,8 +41,8 @@ class ChaptersLiveData @Inject constructor(
         }
 
         override fun persist(data: List<ChapterId>) {
-          novel.value?.run {
-            chapterDao.insert(data.map { Chapter(origin, url, it.url) })
+          novel.value?.let { novel ->
+            chapterDao.upsert(data.map { Chapter(novel.origin, novel.url, it.url) })
           }
         }
 
