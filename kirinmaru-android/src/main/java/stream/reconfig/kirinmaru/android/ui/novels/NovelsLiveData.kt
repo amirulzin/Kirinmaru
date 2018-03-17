@@ -59,7 +59,7 @@ class NovelsLiveData @Inject constructor(
         }
 
         override fun persist(data: List<NovelDetail>) {
-          novelDao.insert(data.map(::toNovel))
+          novelDao.upsert(data.map(::toNovel))
         }
 
         override fun view(local: List<Novel>): List<NovelItem> {
