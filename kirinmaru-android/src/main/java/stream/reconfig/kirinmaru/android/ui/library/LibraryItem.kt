@@ -3,7 +3,12 @@ package stream.reconfig.kirinmaru.android.ui.library
 import stream.reconfig.kirinmaru.android.ui.domain.AbsChapterId
 import stream.reconfig.kirinmaru.core.NovelDetail
 
-data class LibraryItem(val novel: Novel, val latest: Chapter?, val currentRead: Chapter?) {
+data class LibraryItem(
+    val novel: Novel,
+    val latest: Chapter?,
+    val currentRead: Chapter?,
+    var isLoading: Boolean = false
+) {
 
   data class Chapter(override val url: String) : AbsChapterId()
 

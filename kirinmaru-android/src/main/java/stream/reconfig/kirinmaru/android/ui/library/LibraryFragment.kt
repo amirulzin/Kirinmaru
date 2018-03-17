@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import stream.reconfig.kirinmaru.android.logd
 import stream.reconfig.kirinmaru.android.ui.common.fragment.DrawerRecyclerFragment
 import stream.reconfig.kirinmaru.android.ui.navigation.FragmentNavigator
-import stream.reconfig.kirinmaru.android.util.livedata.observeNonNull
+import stream.reconfig.kirinmaru.android.util.livedata.observe
 import stream.reconfig.kirinmaru.android.util.offline.State
 import stream.reconfig.kirinmaru.android.util.recycler.ItemDecorationUtil
 import stream.reconfig.kirinmaru.android.util.viewmodel.ViewModelFactory
@@ -41,9 +40,13 @@ class LibraryFragment : DrawerRecyclerFragment() {
         onBind = { binding, collection, position ->
           with(collection[position]) {
             binding.title.text = novel.novelTitle
-            binding.latestChapter.text = latest?.taxonView
-            binding.lastRead.text = currentRead?.taxonView
-            binding.loadingView.visibility = View.GONE
+            binding.latestChapter.run {
+              text = latest?.taxonView.also { visibility = if (it == null) View.GONE else View.VISIBLE }
+            }
+            binding.lastRead.run {
+              text = currentRead?.taxonView.also { visibility = if (it == null) View.GONE else View.VISIBLE }
+            }
+            binding.loadingView.visibility = if (isLoading) View.VISIBLE else View.GONE
           }
         }
     )
@@ -57,15 +60,15 @@ class LibraryFragment : DrawerRecyclerFragment() {
     binding.refreshLayout.setOnRefreshListener { lvm.library.refresh() }
 
     binding.root.post {
-      lvm.library.resourceState.observeNonNull(this) {
-        logd("State Received: $it")
-        binding.refreshLayout.isRefreshing = it.state == State.LOADING
-        if (it.state == State.ERROR) showSnackBar(it.message)
+      lvm.library.resourceState.observe(this) {
+        it?.let {
+          binding.refreshLayout.isRefreshing = it.state == State.LOADING
+          if (it.state == State.ERROR) showSnackBar(it.message)
+        }
       }
 
-      lvm.library.observeNonNull(this) {
-        logd("Library Received: $it")
-        adapter.update(it)
+      lvm.library.observe(this) {
+        it?.let { adapter.update(it) }
       }
     }
   }
