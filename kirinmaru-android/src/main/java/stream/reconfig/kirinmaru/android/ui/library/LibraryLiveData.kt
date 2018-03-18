@@ -16,6 +16,7 @@ import stream.reconfig.kirinmaru.core.ChapterId
 import stream.reconfig.kirinmaru.core.NovelDetail
 import stream.reconfig.kirinmaru.plugins.PluginMap
 import stream.reconfig.kirinmaru.plugins.getPlugin
+import java.util.*
 import javax.inject.Inject
 
 class LibraryLiveData @Inject constructor(
@@ -46,8 +47,12 @@ class LibraryLiveData @Inject constructor(
             postCompleteLocal()
           }
           .toFlowable()
+          .onBackpressureBuffer()
           .concatMapIterable { it }
-          .flatMapSingle(::remote)
+          .parallel(favorites.size)
+          .runOn(Schedulers.io())
+          .flatMap(::remote)
+          .sequential()
           .collectInto(mutableListOf<LibraryItem>()) { list, item -> list.add(item) }
           .doOnSuccess {
             postValue(it)
@@ -73,17 +78,21 @@ class LibraryLiveData @Inject constructor(
         .collectInto(mutableListOf<LibraryItem>()) { list, item -> list.add(item) }
   }
 
-  private fun remote(libraryItem: LibraryItem): Single<LibraryItem> {
+  private fun remote(libraryItem: LibraryItem): Flowable<LibraryItem> {
+    val randomInt = Random().nextInt(42)
     return pluginMap.getPlugin(libraryItem.novel.origin)
         .obtainChapters(libraryItem.novel)
         .doOnError {
           postErrorRemote(it.message ?: "Remote error for: ${libraryItem.novel.novelTitle}")
         }
         .doOnSuccess { postCompleteRemote() }
-        .map { it.map { Chapter(libraryItem.novel, it) } }
+        .map {
+          it.map { Chapter(libraryItem.novel, it) }
+        }
         .doOnSuccess { chapterDao.upsert(it) }
         .map { toLibraryItem(libraryItem.novel, it, isLoading = false) }
         .onErrorReturn { libraryItem.copy(isLoading = false) }
+        .toFlowable()
   }
 
   private fun splitForQuery(storedFavorites: Set<FavoriteNovel>): Pair<Set<String>, Set<String>> {
