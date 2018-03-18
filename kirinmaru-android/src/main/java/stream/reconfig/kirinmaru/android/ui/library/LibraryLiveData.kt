@@ -128,7 +128,7 @@ class LibraryLiveData @Inject constructor(
         isLoading = isLoading,
         isUpdated = when {
           isLoading -> false
-          !isLoading && latestChapter != null && newLatestChapter != null -> latestChapter.url == newLatestChapter.url
+          !isLoading && latestChapter != null && newLatestChapter != null -> latestChapter.url != newLatestChapter.url
           else -> false
         }
     )
