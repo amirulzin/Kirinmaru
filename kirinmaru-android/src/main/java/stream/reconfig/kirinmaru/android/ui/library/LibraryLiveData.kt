@@ -16,7 +16,6 @@ import stream.reconfig.kirinmaru.core.ChapterId
 import stream.reconfig.kirinmaru.core.NovelDetail
 import stream.reconfig.kirinmaru.plugins.PluginMap
 import stream.reconfig.kirinmaru.plugins.getPlugin
-import java.util.*
 import javax.inject.Inject
 
 class LibraryLiveData @Inject constructor(
@@ -88,7 +87,6 @@ class LibraryLiveData @Inject constructor(
   }
 
   private fun remote(libraryItem: LibraryItem): Flowable<LibraryItem> {
-    val randomInt = Random().nextInt(42)
     return pluginMap.getPlugin(libraryItem.novel.origin)
         .obtainChapters(libraryItem.novel)
         .doOnError {
