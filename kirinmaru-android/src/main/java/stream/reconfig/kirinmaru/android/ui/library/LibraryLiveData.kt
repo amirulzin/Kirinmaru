@@ -108,7 +108,11 @@ class LibraryLiveData @Inject constructor(
         latest = newLatestChapter ?: latestChapter,
         currentRead = currentReadPref.load(novel)?.toChapter().also { it?.taxonomicNumber },
         isLoading = isLoading,
-        isUpdated = newLatestChapter != latestChapter
+        isUpdated = when {
+          isLoading -> false
+          !isLoading && latestChapter != null && newLatestChapter != null -> latestChapter.url == newLatestChapter.url
+          else -> false
+        }
     )
   }
 
