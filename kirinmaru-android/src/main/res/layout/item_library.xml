@@ -18,9 +18,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:paddingEnd="8dp"
             android:paddingStart="16dp"
             android:paddingTop="8dp"
+            android:paddingEnd="8dp"
             android:textColor="@color/text_clickable"
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -32,8 +32,8 @@
             android:id="@+id/loadingView"
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:layout_marginEnd="6dp"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="6dp"
             app:gp_color="@color/colorAccentSecondary"
             app:gp_duration="800"
             app:gp_figure_padding="2dp"
@@ -53,6 +53,7 @@
         <Button
             android:id="@+id/lastRead"
             style="@style/Widget.AppCompat.Button.Borderless"
+            compoundTint="@{@color/colorFavorite}"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:drawableLeft="@drawable/ic_bookmark"
@@ -75,6 +76,7 @@
         <Button
             android:id="@+id/latestChapter"
             style="@style/Widget.AppCompat.Button.Borderless"
+            compoundTint="@{@color/colorSecondary}"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:drawableLeft="@drawable/ic_public"
@@ -89,6 +91,5 @@
             tools:drawableTint="@color/colorSecondary"
             tools:ignore="RtlHardcoded"
             tools:text="Chapter 112" />
-
     </android.support.constraint.ConstraintLayout>
 </layout>
