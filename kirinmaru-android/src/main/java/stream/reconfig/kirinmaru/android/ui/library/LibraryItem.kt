@@ -7,7 +7,8 @@ data class LibraryItem(
     val novel: Novel,
     val latest: Chapter?,
     val currentRead: Chapter?,
-    var isLoading: Boolean = false
+    var isLoading: Boolean = false,
+    var isUpdated: Boolean = false
 ) {
 
   data class Chapter(override val url: String) : AbsChapterId()
