@@ -2,8 +2,12 @@ package stream.reconfig.kirinmaru.android.ui.library
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import android.widget.TextView
+import stream.reconfig.kirinmaru.android.R
+import stream.reconfig.kirinmaru.android.logd
 import stream.reconfig.kirinmaru.android.ui.common.fragment.DrawerRecyclerFragment
 import stream.reconfig.kirinmaru.android.ui.navigation.FragmentNavigator
 import stream.reconfig.kirinmaru.android.util.livedata.observe
@@ -22,6 +26,8 @@ class LibraryFragment : DrawerRecyclerFragment() {
   lateinit var vmf: ViewModelFactory
 
   private val lvm by lazy { viewModel(vmf, LibraryViewModel::class.java) }
+
+  private val updatedColor by lazy { ContextCompat.getColor(context!!, R.color.colorAccentSecondary) }
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
@@ -47,6 +53,9 @@ class LibraryFragment : DrawerRecyclerFragment() {
               text = currentRead?.taxonView.also { visibility = if (it == null) View.GONE else View.VISIBLE }
             }
             binding.loadingView.visibility = if (isLoading) View.VISIBLE else View.GONE
+            logd("Updated : $isUpdated for ${novel.url}")
+            if (isUpdated)
+              setUpdatedColor(binding.latestChapter)
           }
         }
     )
@@ -71,6 +80,10 @@ class LibraryFragment : DrawerRecyclerFragment() {
         it?.let { adapter.update(it) }
       }
     }
+  }
+
+  private fun setUpdatedColor(textView: TextView) {
+    textView.setTextColor(updatedColor)
   }
 
   private fun showSnackBar(message: String) {
