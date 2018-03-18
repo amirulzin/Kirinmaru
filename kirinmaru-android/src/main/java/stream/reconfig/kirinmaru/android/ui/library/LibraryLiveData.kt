@@ -67,6 +67,15 @@ class LibraryLiveData @Inject constructor(
     }
   }
 
+  /**
+   * Sort before any actual posting done
+   */
+  override fun postValue(value: List<LibraryItem>?) {
+    super.postValue(value?.let {
+      it.sortedBy { it.novel.novelTitle }
+    })
+  }
+
   private fun local(): Single<MutableList<LibraryItem>> {
     return Flowable.fromCallable { favorites }
         .onBackpressureBuffer()
