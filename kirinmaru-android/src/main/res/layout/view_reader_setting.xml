@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="setting"
+            type="stream.reconfig.kirinmaru.android.ui.reader.ReaderSetting" />
+    </data>
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -92,8 +99,9 @@
 
         <View
             android:id="@+id/textColorButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lineSpacing"
             tools:background="@color/colorAccent" />
@@ -108,8 +116,10 @@
 
         <View
             android:id="@+id/backgroundColorButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@{setting.backgroundColor}"
+            app:layout_constraintBottom_toBottomOf="@id/backgroundColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textColor"
             tools:background="@color/colorAccent" />
@@ -118,6 +128,7 @@
             android:id="@+id/isGlobal"
             android:layout_width="48dp"
             android:layout_height="40dp"
+            android:checked="@{!setting.isGlobal}"
             android:gravity="center"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -134,7 +145,7 @@
             app:layout_constraintTop_toBottomOf="@id/backgroundColor" />
 
         <TextView
-            android:id="@+id/perNovel"
+            android:id="@+id/novel"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:gravity="center"
@@ -142,5 +153,30 @@
             app:layout_constraintLeft_toRightOf="@id/isGlobal"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/backgroundColor" />
+
+        <Button
+            android:id="@+id/settingsApply"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAccentSecondary"
+            android:text="APPLY"
+            android:textColor="@color/colorTextPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/isGlobal" />
+
+        <Button
+            android:id="@+id/settingsCancel"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/colorAccentError"
+            android:text="CANCEL"
+            android:textColor="@color/colorTextPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/settingsApply"
+            app:layout_constraintTop_toBottomOf="@id/isGlobal" />
     </android.support.constraint.ConstraintLayout>
 </layout>
