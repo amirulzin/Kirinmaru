@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minWidth="320dp"
+        android:minHeight="320dp"
+        android:padding="8dp"
+        tools:layout_width="320dp">
+
+        <TextView
+            android:id="@+id/fontName"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:text="Font"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/fontSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:minWidth="120dp"
+            app:layout_constraintBottom_toBottomOf="@id/fontName"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintLeft_toLeftOf="@id/fontName"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/fontName"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/fontSize"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:text="Size"
+            app:layout_constraintTop_toBottomOf="@+id/fontName" />
+
+
+        <include
+            android:id="@+id/pickerFontSize"
+            layout="@layout/view_number_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fontName" />
+
+
+        <TextView
+            android:id="@+id/letterSpacing"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:text="Letter spacing"
+            app:layout_constraintTop_toBottomOf="@id/fontSize" />
+
+        <include
+            android:id="@+id/pickerLetterSpacing"
+            layout="@layout/view_number_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fontSize" />
+
+        <TextView
+            android:id="@+id/lineSpacing"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:text="Line spacing"
+            app:layout_constraintTop_toBottomOf="@id/letterSpacing" />
+
+        <include
+            android:id="@+id/pickerLineSpacing"
+            layout="@layout/view_number_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/letterSpacing" />
+
+        <TextView
+            android:id="@+id/textColor"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:text="Text color"
+            app:layout_constraintTop_toBottomOf="@id/lineSpacing" />
+
+        <View
+            android:id="@+id/textColorButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lineSpacing"
+            tools:background="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/backgroundColor"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:text="Background color"
+            app:layout_constraintTop_toBottomOf="@id/textColor" />
+
+        <View
+            android:id="@+id/backgroundColorButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textColor"
+            tools:background="@color/colorAccent" />
+
+        <Switch
+            android:id="@+id/isGlobal"
+            android:layout_width="48dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/backgroundColor" />
+
+        <TextView
+            android:id="@+id/global"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="Global"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/isGlobal"
+            app:layout_constraintTop_toBottomOf="@id/backgroundColor" />
+
+        <TextView
+            android:id="@+id/perNovel"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="Novel"
+            app:layout_constraintLeft_toRightOf="@id/isGlobal"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/backgroundColor" />
+    </android.support.constraint.ConstraintLayout>
+</layout>
