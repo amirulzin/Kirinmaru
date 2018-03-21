@@ -9,5 +9,6 @@ data class ReaderSetting(
     val lineSpacingExtra: Int = 0,
     val fontName: String = "DEFAULT",
     val fontColor: Int = R.color.colorTextPrimary,
-    val backgroundColor: Int = R.color.colorWindowBackground
+    val backgroundColor: Int = R.color.colorWindowBackground,
+    val isGlobal: Boolean = true
 )
