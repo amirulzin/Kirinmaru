@@ -1,7 +1,17 @@
 package stream.reconfig.kirinmaru.android.ui.numberpicker
 
-data class NumberPicker(var number: Int) {
+import android.databinding.BaseObservable
+import android.databinding.Bindable
+
+data class NumberPicker(@Bindable var number: Int) : BaseObservable() {
   fun text() = number.toString()
-  fun increment() = number++
-  fun decrement() = number--
+  fun increment() {
+    number++
+    notifyChange()
+  }
+
+  fun decrement() {
+    number--
+    notifyChange()
+  }
 }
