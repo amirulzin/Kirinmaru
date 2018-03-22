@@ -2,7 +2,6 @@ package stream.reconfig.kirinmaru.android.assets
 
 import android.content.Context
 import android.graphics.Typeface
-import io.reactivex.Single
 import stream.reconfig.kirinmaru.android.di.qualifiers.ApplicationContext
 import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
@@ -13,13 +12,17 @@ import javax.inject.Inject
  * Intended to be used as a single instance per application
  */
 class Fonts @Inject constructor(@ApplicationContext private val application: Context) {
+  companion object {
+    const val DEFAULT_TYPEFACE_NAME = "Roboto"
+  }
 
-  private val list by lazy { application.assets.list("fonts") }
-  private val map by lazy { ConcurrentHashMap<String, Typeface>(8, 1f) }
+  val list by lazy { application.assets.list("fonts").filter { it.isNotBlank() }.toList() }
 
-  fun asyncList() = Single.just(list)!!
+  val map by lazy { ConcurrentHashMap<String, Typeface>(8, 1f) }
 
   fun toTypeface(fontPath: String = ""): Typeface =
-      if (fontPath.isEmpty() || map[fontPath] == null) Typeface.DEFAULT
-      else map[fontPath]!!
+      if (fontPath == DEFAULT_TYPEFACE_NAME || fontPath.isEmpty() || map[fontPath] == null)
+        Typeface.DEFAULT
+      else
+        map[fontPath]!!
 }
