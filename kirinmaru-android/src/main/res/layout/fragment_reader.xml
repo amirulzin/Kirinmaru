@@ -50,11 +50,11 @@
         </android.support.v4.widget.SwipeRefreshLayout>
 
         <android.support.design.widget.AppBarLayout
-            android:elevation="0dp"
             android:id="@+id/appBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
+            android:elevation="0dp"
             android:orientation="vertical">
 
             <include
@@ -67,21 +67,22 @@
                 app:layout_scrollFlags="scroll|enterAlways" />
         </android.support.design.widget.AppBarLayout>
 
-        <FrameLayout
+        <android.support.v7.widget.CardView
             android:id="@+id/readerSettingParent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorWindowBackground"
-            android:elevation="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             app:behavior_hideable="true"
+            app:cardBackgroundColor="@color/colorPopup"
+            app:cardElevation="8dp"
             app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
             <include
                 android:id="@+id/readerSetting"
                 layout="@layout/view_reader_setting"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorWindowBackground" />
-        </FrameLayout>
+                android:layout_height="wrap_content" />
+        </android.support.v7.widget.CardView>
     </android.support.design.widget.CoordinatorLayout>
 </layout>
