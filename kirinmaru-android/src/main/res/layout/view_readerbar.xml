@@ -35,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:src="@drawable/ic_chevron_left"
-                    android:tint="@color/colorWhite" />
+                    android:tint="@color/button_tint" />
 
                 <ImageButton
                     android:id="@+id/readerFont"
@@ -55,16 +55,15 @@
                     android:src="@drawable/ic_public"
                     android:tint="@color/colorWhite" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/readerFontSize"
                     style="@style/AppTheme.Button.Dark"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_format_size"
+                    android:src="@drawable/ic_extension"
                     android:textAllCaps="false"
-                    android:tint="@color/colorWhite"
-                    tools:text="14" />
+                    android:tint="@color/colorWhite" />
 
                 <ImageButton
                     android:id="@+id/readerNext"
@@ -73,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:src="@drawable/ic_chevron_right"
-                    android:tint="@color/colorWhite" />
+                    android:tint="@color/button_tint" />
             </LinearLayout>
 
             <TextView
@@ -83,10 +82,10 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimaryDark"
                 android:gravity="center"
-                android:paddingBottom="2dp"
-                android:paddingEnd="16dp"
                 android:paddingStart="16dp"
                 android:paddingTop="2dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="2dp"
                 android:textSize="12sp"
                 android:visibility="visible"
                 tools:text="Chapter 1004 - 5"
