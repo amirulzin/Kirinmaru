@@ -48,7 +48,7 @@ class LibraryLiveData @Inject constructor(
           .toFlowable()
           .onBackpressureBuffer()
           .concatMapIterable { it }
-          .parallel(favorites.size)
+          .parallel(if (favorites.size > 0) favorites.size else 1)
           .runOn(Schedulers.io())
           .flatMap(::remote)
           .sequential()
