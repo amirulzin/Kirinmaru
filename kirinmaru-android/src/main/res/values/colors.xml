@@ -13,4 +13,5 @@
     <color name="colorTextPrimary">@color/pmc_white</color>
     <color name="colorControlHighlight">@color/pmc_deep_purple_A700</color>
     <color name="colorWindowBackground">@color/kirin_grey_700</color>
+    <color name="colorPopup">@color/pmc_blue_grey_900</color>
 </resources>
