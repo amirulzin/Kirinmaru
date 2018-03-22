@@ -66,5 +66,21 @@
                 app:layout_scrollFlags="scroll|enterAlways" />
         </android.support.design.widget.AppBarLayout>
 
+        <FrameLayout
+            android:id="@+id/readerSettingParent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWindowBackground"
+            android:elevation="8dp"
+            app:behavior_hideable="true"
+            app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
+            <include
+                android:id="@+id/readerSetting"
+                layout="@layout/view_reader_setting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWindowBackground" />
+        </FrameLayout>
     </android.support.design.widget.CoordinatorLayout>
 </layout>
