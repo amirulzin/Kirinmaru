@@ -13,16 +13,29 @@ import javax.inject.Inject
  */
 class Fonts @Inject constructor(@ApplicationContext private val application: Context) {
   companion object {
-    const val DEFAULT_TYPEFACE_NAME = "Roboto"
+    const val DEFAULT_TYPEFACE_NAME = "Default (Roboto)"
+    private const val FONT_FOLDER = "fonts"
   }
 
-  val list by lazy { application.assets.list("fonts").filter { it.isNotBlank() }.toList() }
+  val list by lazy {
+    application.assets.list(FONT_FOLDER)
+        .filter { it.isNotBlank() }
+        .toMutableList()
+        .apply { add(DEFAULT_TYPEFACE_NAME) }
+        .sorted()
+  }
 
-  val map by lazy { ConcurrentHashMap<String, Typeface>(8, 1f) }
+  private val map by lazy { ConcurrentHashMap<String, Typeface>(8, 1f) }
 
-  fun toTypeface(fontPath: String = ""): Typeface =
-      if (fontPath == DEFAULT_TYPEFACE_NAME || fontPath.isEmpty() || map[fontPath] == null)
-        Typeface.DEFAULT
-      else
-        map[fontPath]!!
+  fun toTypeface(fontPath: String = ""): Typeface {
+    var typeface = Typeface.DEFAULT
+    if (fontPath == DEFAULT_TYPEFACE_NAME || fontPath.isEmpty())
+      return typeface
+
+    if (map[fontPath] == null) {
+      map[fontPath] = Typeface.createFromAsset(application.assets, "$FONT_FOLDER/$fontPath")
+      typeface = map[fontPath]
+    }
+    return typeface
+  }
 }
