@@ -104,7 +104,6 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
         }
         coordinatorLayout.setBackgroundColor(readerSetting.backgroundColor)
       }
-      showSnackbar("New reader setting applied")
     }
 
     bindReaderBar(binding.buttonBarTop)
