@@ -112,4 +112,5 @@ dependencies {
     implementation 'com.baseconfig.pillar:materials:0.3.2'
     implementation 'com.baseconfig.pillar:utils:0.3.2'
     implementation 'net.bohush.geometricprogressview:geometricprogressview:1.1.1'
+    implementation 'com.jaredrummler:colorpicker:1.0.2'
 }
