@@ -39,9 +39,9 @@ data class ReaderSettingHelper(
         }
       }
 
-      pickerFontSize.picker = NumberPicker(readerSetting.fontSizeSp)
-      pickerLetterSpacing.picker = NumberPicker(readerSetting.letterSpacingSp)
-      pickerLineSpacing.picker = NumberPicker(readerSetting.lineSpacingExtra)
+      pickerFontSize!!.picker = NumberPicker(readerSetting.fontSizeSp)
+      pickerLetterSpacing!!.picker = NumberPicker(readerSetting.letterSpacingSp)
+      pickerLineSpacing!!.picker = NumberPicker(readerSetting.lineSpacingExtra)
 
       backgroundColorButton.setOnClickListener { launchColorPicker(backgroundColorId()) }
 
@@ -80,9 +80,9 @@ data class ReaderSettingHelper(
   }
 
   private fun retrieveResult() = result.copy(
-      fontSizeSp = binding.pickerFontSize.picker!!.number,
-      letterSpacingSp = binding.pickerLetterSpacing.picker!!.number,
-      lineSpacingExtra = binding.pickerLineSpacing.picker!!.number
+      fontSizeSp = binding.pickerFontSize!!.picker!!.number,
+      letterSpacingSp = binding.pickerLetterSpacing!!.picker!!.number,
+      lineSpacingExtra = binding.pickerLineSpacing!!.picker!!.number
   ).apply {
     logd("Apply Result: $this")
   }

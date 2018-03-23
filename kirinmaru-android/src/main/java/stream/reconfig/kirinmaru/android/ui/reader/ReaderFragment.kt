@@ -108,8 +108,8 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
       }
     }
 
-    bindReaderBar(binding.buttonBarTop)
-    bindReaderBar(binding.buttonBarBottom)
+    bindReaderBar(binding.buttonBarTop!!)
+    bindReaderBar(binding.buttonBarBottom!!)
     hideFontMenu()
   }
 
@@ -125,10 +125,10 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
   }
 
   private fun updateReaderBar(it: ReaderDetail) {
-    setReaderBarTitle(it.taxon, binding.buttonBarTop)
-    setReaderBarTitle(it.taxon, binding.buttonBarBottom)
-    setReaderBarNavigation(it, binding.buttonBarTop)
-    setReaderBarNavigation(it, binding.buttonBarBottom)
+    setReaderBarTitle(it.taxon, binding.buttonBarTop!!)
+    setReaderBarTitle(it.taxon, binding.buttonBarBottom!!)
+    setReaderBarNavigation(it, binding.buttonBarTop!!)
+    setReaderBarNavigation(it, binding.buttonBarBottom!!)
   }
 
 
@@ -152,7 +152,7 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
   private fun createFontView(readerSetting: ReaderSetting) {
     ReaderSettingHelper(
         fragmentManager = activity!!.fragmentManager,
-        binding = binding.readerSetting,
+        binding = binding.readerSetting!!,
         readerSetting = readerSetting,
         fonts = fonts.list,
         listener = object : ReaderSettingHelper.Listener {
@@ -169,12 +169,12 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
   }
 
   private fun handleBottomBarVisibility(verticalOffset: Int, appBarLayout: AppBarLayout) {
-    val visibility = binding.buttonBarBottom.container.visibility
+    val visibility = binding.buttonBarBottom!!.container.visibility
     if (visibility == View.VISIBLE && verticalOffset == 0)
-      binding.buttonBarBottom.container.visibility = View.INVISIBLE
+      binding.buttonBarBottom!!.container.visibility = View.INVISIBLE
     else if (visibility == View.INVISIBLE
         && appBarLayout.height + verticalOffset == 0
-        && rvm.reader.value?.hasText() != null) binding.buttonBarBottom.container.visibility = View.VISIBLE
+        && rvm.reader.value?.hasText() != null) binding.buttonBarBottom!!.container.visibility = View.VISIBLE
   }
 
   private fun showSnackbar(message: String) {
