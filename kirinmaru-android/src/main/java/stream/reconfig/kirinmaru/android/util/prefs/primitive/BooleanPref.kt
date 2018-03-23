@@ -6,10 +6,14 @@ import stream.reconfig.kirinmaru.android.util.prefs.PrefModel
 /**
  *
  */
-open class BooleanPref(private val key: String, private val default: Boolean, prefs: SharedPreferences) : PrefModel<Boolean>(
-    key,
-    default,
-    { _, _ -> getBoolean(key, default) },
-    { _, _ -> putBoolean(key, default) },
-    prefs
+open class BooleanPref(
+    key: String,
+    default: Boolean,
+    prefs: SharedPreferences
+) : PrefModel<Boolean>(
+    key = key,
+    default = default,
+    retrieve = { _, _ -> getBoolean(key, default) },
+    store = { _, data -> putBoolean(key, data) },
+    prefs = prefs
 )
