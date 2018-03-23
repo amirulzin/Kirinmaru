@@ -50,7 +50,7 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     val readerParcel: ReaderParcel = arguments!!.getParcelable(FARGS_READER)!!
-    rvm.reader.initReaderData(readerParcel)
+    rvm.initReader(readerParcel)
     binding.refreshLayout.setColorSchemeColors(
         ContextCompat.getColor(context!!, R.color.colorAccent),
         ContextCompat.getColor(context!!, R.color.colorPrimary)

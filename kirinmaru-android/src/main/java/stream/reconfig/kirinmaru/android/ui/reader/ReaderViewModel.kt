@@ -14,10 +14,12 @@ class ReaderViewModel @Inject constructor(
     private val readerPref: ReaderPref
 ) : AndroidViewModel(application) {
 
+  private lateinit var readerParcel: ReaderParcel
+
   val readerSetting = object : RxMediatorLiveData<ReaderSetting>() {
     override fun onActive() {
       super.onActive()
-      Single.fromCallable { readerPref.load() }
+      Single.fromCallable { readerPref.load(readerParcel.novelParcel) }
           .map(::postValue)
           .subscribeOn(Schedulers.io())
           .subscribe()
@@ -26,7 +28,12 @@ class ReaderViewModel @Inject constructor(
 
     override fun onInactive() {
       super.onInactive()
-      value?.let { readerPref.persist(it) }
+      value?.let { readerPref.persist(readerParcel.novelParcel, it) }
     }
+  }
+
+  fun initReader(readerParcel: ReaderParcel) {
+    this.readerParcel = readerParcel
+    reader.initReaderData(readerParcel)
   }
 }
