@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:title="Settings">
+
+    <PreferenceCategory android:title="Advanced">
+        <Preference
+            android:key="key_reset_database"
+            android:summary="Use this if there's any problem with the database or to clear old cached data. User settings like favorites are not affected"
+            android:title="Reset Database" />
+    </PreferenceCategory>
+
+    <Preference
+        android:key="key_version"
+        android:title="Version"
+        tools:summary="0.1.0" />
+</PreferenceScreen>
