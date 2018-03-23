@@ -45,6 +45,8 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
 
   private val rvm by lazy { viewModel(vmf, ReaderViewModel::class.java) }
 
+  private val bottomSheetBehavior by lazy { BottomSheetBehavior.from(binding.readerSettingParent) }
+
   override val layoutId = R.layout.fragment_reader
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -138,8 +140,6 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
     binding.readerNext.isEnabled = readerDetail.canNavigateNext()
     binding.readerPrevious.isEnabled = readerDetail.canNavigatePrevious()
   }
-
-  private val bottomSheetBehavior by lazy { BottomSheetBehavior.from(binding.readerSettingParent) }
 
   private fun showFontMenu() {
     bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
