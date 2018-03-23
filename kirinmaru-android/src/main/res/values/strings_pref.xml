@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="category_advanced_title">Advanced</string>
+
+    <string name="first_nav_key">key_first_nav</string>
+    <string name="first_nav_summary">If checked, the app will navigate to Library on start up. If unchecked, Catalogues will be launched instead</string>
+    <string name="first_nav_title">Start with Library </string>
+
+    <string name="reset_database_key">key_reset_database</string>
+    <string name="reset_database_title">Reset Database</string>
+    <string name="reset_database_summary">"Use this if there's any problem with the database or to clear old cached data. User settings like favorites are not affected"</string>
+
+    <string name="version_key">key_version</string>
+    <string name="version_title">Version</string>
+
+</resources>
