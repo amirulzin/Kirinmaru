@@ -7,7 +7,6 @@ import stream.reconfig.kirinmaru.android.R
 import stream.reconfig.kirinmaru.android.assets.Fonts
 
 data class ReaderSetting(
-    val settingKey: String,
     val fontSizeSp: Int,
     val letterSpacingSp: Int,
     val lineSpacingExtra: Int,
@@ -17,11 +16,8 @@ data class ReaderSetting(
     val isGlobal: Boolean
 ) {
   companion object {
-    const val KEY_GLOBAL = "global"
-
     @JvmStatic
     fun default(context: Context) = ReaderSetting(
-        settingKey = KEY_GLOBAL,
         fontSizeSp = 16,
         letterSpacingSp = 0,
         lineSpacingExtra = 0,
