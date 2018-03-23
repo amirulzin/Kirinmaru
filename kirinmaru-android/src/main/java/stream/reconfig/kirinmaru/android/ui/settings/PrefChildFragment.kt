@@ -1,7 +1,6 @@
 package stream.reconfig.kirinmaru.android.ui.settings
 
 import android.os.Bundle
-import android.support.v7.preference.PreferenceFragmentCompat
 import android.view.View
 import android.widget.Toast
 import io.reactivex.Completable
@@ -10,9 +9,10 @@ import io.reactivex.schedulers.Schedulers
 import stream.reconfig.kirinmaru.android.BuildConfig
 import stream.reconfig.kirinmaru.android.R
 import stream.reconfig.kirinmaru.android.db.Database
+import stream.reconfig.kirinmaru.android.util.preference.DaggerPreferenceFragmentCompat
 import javax.inject.Inject
 
-class PrefChildFragment : PreferenceFragmentCompat() {
+class PrefChildFragment : DaggerPreferenceFragmentCompat() {
   companion object {
     @JvmStatic
     fun newInstance() = PrefChildFragment()
