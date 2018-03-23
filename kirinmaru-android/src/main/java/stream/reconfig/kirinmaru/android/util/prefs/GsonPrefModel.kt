@@ -2,7 +2,6 @@ package stream.reconfig.kirinmaru.android.util.prefs
 
 import android.content.SharedPreferences
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 
 /**
@@ -17,7 +16,7 @@ open class GsonPrefModel<T>(
     default: T,
     gson: Gson,
     prefs: SharedPreferences,
-    type: Lazy<Type> = lazy { typeToken<T>() }
+    type: Lazy<Type>
 ) : PrefModel<T>(
     key = key,
     default = default,
@@ -26,12 +25,7 @@ open class GsonPrefModel<T>(
     },
     store = { key, data -> putString(key, gson.toJson(data)) },
     prefs = prefs
-) {
-  companion object {
-    @JvmStatic
-    private fun <T> typeToken() = object : TypeToken<T>() {}.type
-  }
-}
+)
 
 
 
