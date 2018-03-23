@@ -4,7 +4,6 @@
     android:title="Settings">
 
     <CheckBoxPreference
-        android:defaultValue="false"
         android:key="@string/first_nav_key"
         android:summary="@string/first_nav_summary"
         android:title="@string/first_nav_title" />
