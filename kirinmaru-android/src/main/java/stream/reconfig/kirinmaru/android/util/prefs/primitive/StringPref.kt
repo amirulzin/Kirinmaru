@@ -6,10 +6,14 @@ import stream.reconfig.kirinmaru.android.util.prefs.PrefModel
 /**
  *
  */
-open class StringPref(key: String, default: String, prefs: SharedPreferences) : PrefModel<String>(
-    key,
-    default,
-    { _, _ -> getString(key, default) },
-    { _, _ -> putString(key, default) },
-    prefs
+open class StringPref(
+    key: String,
+    default: String,
+    prefs: SharedPreferences
+) : PrefModel<String>(
+    key = key,
+    default = default,
+    retrieve = { _, _ -> getString(key, default) },
+    store = { _, data -> putString(key, data) },
+    prefs = prefs
 )

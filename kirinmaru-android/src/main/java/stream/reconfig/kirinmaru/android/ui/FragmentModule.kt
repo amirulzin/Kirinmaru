@@ -6,6 +6,8 @@ import stream.reconfig.kirinmaru.android.ui.chapters.ChaptersFragment
 import stream.reconfig.kirinmaru.android.ui.library.LibraryFragment
 import stream.reconfig.kirinmaru.android.ui.novels.NovelsFragment
 import stream.reconfig.kirinmaru.android.ui.reader.ReaderFragment
+import stream.reconfig.kirinmaru.android.ui.settings.PrefChildFragment
+import stream.reconfig.kirinmaru.android.ui.settings.SettingsFragment
 
 /**
  *
@@ -24,4 +26,10 @@ interface FragmentModule {
 
   @ContributesAndroidInjector
   fun contributeLibraryFragment(): LibraryFragment
+
+  @ContributesAndroidInjector
+  fun contributeSettingsFragment(): SettingsFragment
+
+  @ContributesAndroidInjector
+  fun contributePrefChildFragment(): PrefChildFragment
 }

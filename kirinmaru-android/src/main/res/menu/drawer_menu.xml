@@ -7,18 +7,18 @@
         <item
             android:id="@+id/navLibrary"
             android:icon="@drawable/ic_collections_bookmark"
-            android:title="Library" />
+            android:title="@string/nav_library" />
         <item
             android:id="@+id/navCatalogues"
             android:icon="@drawable/ic_view_list"
-            android:title="Catalogues" />
+            android:title="@string/nav_catalogues" />
         <item
             android:id="@+id/navDownloads"
             android:icon="@drawable/ic_cloud_download"
-            android:title="Downloads" />
+            android:title="@string/nav_downloads" />
         <item
             android:id="@+id/navSettings"
             android:icon="@drawable/ic_settings"
-            android:title="Settings" />
+            android:title="@string/nav_settings" />
     </group>
 </menu>

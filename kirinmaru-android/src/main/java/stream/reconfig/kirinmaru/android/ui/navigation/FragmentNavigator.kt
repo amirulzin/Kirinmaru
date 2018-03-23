@@ -11,6 +11,7 @@ import stream.reconfig.kirinmaru.android.ui.library.LibraryFragment
 import stream.reconfig.kirinmaru.android.ui.novels.NovelsFragment
 import stream.reconfig.kirinmaru.android.ui.reader.ReaderFragment
 import stream.reconfig.kirinmaru.android.ui.reader.ReaderParcel
+import stream.reconfig.kirinmaru.android.ui.settings.SettingsFragment
 import stream.reconfig.kirinmaru.core.ChapterId
 import stream.reconfig.kirinmaru.core.NovelDetail
 
@@ -49,7 +50,8 @@ object FragmentNavigator {
     val outFrag = frag ?: when (item.itemId) {
       R.id.navLibrary -> LibraryFragment.newInstance()
       R.id.navCatalogues -> NovelsFragment.newInstance(firstOrigin)
-      R.id.navSettings -> return true
+      R.id.navDownloads -> return true
+      R.id.navSettings -> SettingsFragment.newInstance()
       else -> throw NotImplementedError("Menu id case not implemented")
     }
 
