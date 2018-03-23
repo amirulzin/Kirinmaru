@@ -36,7 +36,7 @@ interface ViewModelModule {
   @Binds
   @IntoMap
   @ViewModelKey(ReaderViewModel::class)
-  fun bindReader(cvm: ReaderViewModel): ViewModel
+  fun bindReader(rvm: ReaderViewModel): ViewModel
 
   @Binds
   @IntoMap
