@@ -7,6 +7,8 @@ import dagger.Module
 import dagger.Provides
 import stream.reconfig.kirinmaru.android.di.scopes.ApplicationScope
 
+internal const val SHARED_PREF_NAME = "shared_prefs"
+
 /**
  *
  */
@@ -16,6 +18,6 @@ class PrefModule {
   @ApplicationScope
   @Provides
   fun sharedPreferences(application: Application): SharedPreferences {
-    return application.getSharedPreferences("shared_prefs", MODE_PRIVATE)
+    return application.getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE)
   }
 }
