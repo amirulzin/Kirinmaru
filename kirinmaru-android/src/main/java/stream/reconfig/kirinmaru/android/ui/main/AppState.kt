@@ -13,8 +13,9 @@ class AppState @Inject constructor(
 ) {
 
   val isFirstLoad by lazy {
-    firstLoadPref.load(true)
-        .apply { if (!this) firstLoadPref.persist(true) }
+    with(firstLoadPref) {
+      load(true).apply { if (this) persist(false) }
+    }
   }
 
   val firstNav by lazy { firstNavPref.load() }
