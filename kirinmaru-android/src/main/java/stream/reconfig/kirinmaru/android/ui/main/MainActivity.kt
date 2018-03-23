@@ -6,7 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import stream.reconfig.kirinmaru.android.ui.common.activity.DrawerBindingActivity
 import stream.reconfig.kirinmaru.android.ui.navigation.FragmentNavigator
-import stream.reconfig.kirinmaru.android.util.livedata.observe
+import stream.reconfig.kirinmaru.android.util.livedata.observeNonNull
 import stream.reconfig.kirinmaru.android.util.viewmodel.ViewModelFactory
 import stream.reconfig.kirinmaru.android.util.viewmodel.viewModel
 import javax.inject.Inject
@@ -24,8 +24,8 @@ class MainActivity : DrawerBindingActivity() {
     bindContentView()
     binding.drawerNavigation.setNavigationItemSelectedListener(this)
 
-    mvm.appState.observe(this) { appState ->
-      appState?.apply {
+    mvm.appState.observeNonNull(this) { appState ->
+      appState.apply {
         if (isFirstLoad) {
           //TODO future firstLoad features
         }
