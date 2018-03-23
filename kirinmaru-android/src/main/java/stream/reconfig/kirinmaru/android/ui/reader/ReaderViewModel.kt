@@ -19,8 +19,14 @@ class ReaderViewModel @Inject constructor(
   val readerSetting = object : RxMediatorLiveData<ReaderSetting>() {
     override fun onActive() {
       super.onActive()
-      Single.fromCallable { readerPref.load(readerParcel.novelParcel) }
-          .map(::postValue)
+      Single.fromCallable {
+        readerPref.load(readerParcel.novelParcel).let {
+          when {
+            it.isGlobal -> ReaderSetting.default(application)
+            else -> it
+          }
+        }
+      }.map(::postValue)
           .subscribeOn(Schedulers.io())
           .subscribe()
           .addTo(disposables)

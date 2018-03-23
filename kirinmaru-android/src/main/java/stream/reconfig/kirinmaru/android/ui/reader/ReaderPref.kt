@@ -13,13 +13,13 @@ class ReaderPref @Inject constructor(
     @ApplicationContext context: Context,
     prefs: SharedPreferences,
     gson: Gson
-) : GsonDynamicPrefModel<ReaderSetting, NovelId?>(
+) : GsonDynamicPrefModel<ReaderSetting, NovelId>(
     default = ReaderSetting.default(context),
     prefs = prefs,
     gson = gson,
     type = lazy { object : TypeToken<ReaderSetting>() {}.type }
 ) {
-  override fun key(input: NovelId?): String {
-    return input?.let { "rs_${it.origin}_${it.url}" } ?: "rs_global"
+  override fun key(input: NovelId): String {
+    return "rs_${input.origin}_${input.url}"
   }
 }
