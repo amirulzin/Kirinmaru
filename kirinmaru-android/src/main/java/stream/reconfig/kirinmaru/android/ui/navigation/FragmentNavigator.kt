@@ -50,9 +50,8 @@ object FragmentNavigator {
     val outFrag = frag ?: when (item.itemId) {
       R.id.navLibrary -> LibraryFragment.newInstance()
       R.id.navCatalogues -> NovelsFragment.newInstance(firstOrigin)
-      R.id.navDownloads -> return true
       R.id.navSettings -> SettingsFragment.newInstance()
-      else -> throw NotImplementedError("Menu id case not implemented")
+      else -> return true
     }
 
     fm.beginTransaction()
