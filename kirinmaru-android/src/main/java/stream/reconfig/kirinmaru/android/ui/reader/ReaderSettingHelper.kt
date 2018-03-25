@@ -11,7 +11,6 @@ import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import stream.reconfig.kirinmaru.android.R
 import stream.reconfig.kirinmaru.android.databinding.ViewReaderSettingBinding
 import stream.reconfig.kirinmaru.android.di.scopes.ActivityScope
-import stream.reconfig.kirinmaru.android.logd
 import stream.reconfig.kirinmaru.android.ui.numberpicker.NumberPicker
 
 @ActivityScope
@@ -62,7 +61,6 @@ data class ReaderSettingHelper(
     }
 
     override fun onColorSelected(dialogId: Int, color: Int) {
-      logd("color selected $color")
       when (dialogId) {
         backgroundColorId() -> setBackgroundColor(color)
         textColorId() -> setTextColor(color)
@@ -83,18 +81,14 @@ data class ReaderSettingHelper(
       fontSizeSp = binding.pickerFontSize!!.picker!!.number,
       letterSpacingSp = binding.pickerLetterSpacing!!.picker!!.number,
       lineSpacingExtra = binding.pickerLineSpacing!!.picker!!.number
-  ).apply {
-    logd("Apply Result: $this")
-  }
+  )
 
   private fun setBackgroundColor(@ColorInt color: Int) {
-    logd("BG Received $color")
     binding.backgroundColorButton.setBackgroundColor(color)
     result = result.copy(backgroundColor = color)
   }
 
   private fun setTextColor(@ColorInt color: Int) {
-    logd("TX Received $color")
     binding.textColorButton.setBackgroundColor(color)
     result = result.copy(fontColor = color)
   }
