@@ -1,6 +1,5 @@
 package stream.reconfig.kirinmaru.android.ui.reader
 
-import android.annotation.SuppressLint
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.support.annotation.MainThread
@@ -104,7 +103,6 @@ class ReaderLiveData @Inject constructor(
     }
   }
 
-  @SuppressLint("CheckResult")
   override fun refresh() {
     if (State.LOADING != resourceState.value?.state) {
       postLoading()

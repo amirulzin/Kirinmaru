@@ -1,6 +1,5 @@
 package stream.reconfig.kirinmaru.android.ui.novels
 
-import android.annotation.SuppressLint
 import android.support.v7.util.DiffUtil
 import io.reactivex.disposables.CompositeDisposable
 import stream.reconfig.kirinmaru.android.R
@@ -32,7 +31,6 @@ class NovelAdapter(
 
   private val disposables = CompositeDisposable()
 
-  @SuppressLint("CheckResult")
   fun updateData(result: List<NovelItem>) {
     RxRecyclerUtil.calcAndDispatchDiff(this) {
       object : DiffUtil.Callback() {
