@@ -38,7 +38,7 @@
 -keeppackagenames org.jsoup.nodes
 
 # Proguard debugging
-#-dontobfuscate
+-dontobfuscate
 -renamesourcefileattribute SourceFile
 -keepattributes SourceFile,LineNumberTable
 
