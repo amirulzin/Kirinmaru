@@ -9,7 +9,8 @@ import stream.reconfig.kirinmaru.android.databinding.ItemChapterBinding
 import stream.reconfig.kirinmaru.android.parcel.NovelParcel
 import stream.reconfig.kirinmaru.android.ui.common.fragment.DrawerRecyclerFragment
 import stream.reconfig.kirinmaru.android.ui.navigation.FragmentNavigator
-import stream.reconfig.kirinmaru.android.util.livedata.observe
+import stream.reconfig.kirinmaru.android.util.livedata.observeNonNull
+import stream.reconfig.kirinmaru.android.util.offline.ResourceType
 import stream.reconfig.kirinmaru.android.util.offline.State
 import stream.reconfig.kirinmaru.android.util.recycler.ItemDecorationUtil
 import stream.reconfig.kirinmaru.android.util.viewmodel.ViewModelFactory
@@ -23,7 +24,6 @@ import javax.inject.Inject
 class ChaptersFragment : DrawerRecyclerFragment() {
   companion object {
     private const val FARGS_NOVEL = "novelParcel"
-
     @JvmStatic
     fun newInstance(novelParcel: NovelParcel): ChaptersFragment {
       return ChaptersFragment().apply {
@@ -37,8 +37,8 @@ class ChaptersFragment : DrawerRecyclerFragment() {
 
   private val cvm by lazy { viewModel(vmf, ChaptersViewModel::class.java) }
 
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
+  override fun onActivityCreated(savedInstanceState: Bundle?) {
+    super.onActivityCreated(savedInstanceState)
     val novelParcel: NovelParcel = arguments!!.getParcelable(FARGS_NOVEL)
 
     cvm.chapters.initNovel(novelParcel)
@@ -55,8 +55,21 @@ class ChaptersFragment : DrawerRecyclerFragment() {
       setAdapter(adapter)
     }
 
-    view.post {
-      observe(adapter)
+    binding.root.post {
+      cvm.chapters.observeNonNull(this) { adapter.updateData(it) }
+
+      cvm.chapters.resourceState.observeNonNull(this) {
+        with(binding.refreshLayout) {
+          when (it.state) {
+            State.COMPLETE -> if (it.type == ResourceType.REMOTE) isRefreshing = false
+            State.LOADING -> isRefreshing = true
+            State.ERROR -> {
+              isRefreshing = false
+              showSnackbar(it.message)
+            }
+          }
+        }
+      }
     }
   }
 
@@ -71,27 +84,8 @@ class ChaptersFragment : DrawerRecyclerFragment() {
     activity?.let { FragmentNavigator.toReader(it, novelItem, chapterItem) }
   }
 
-  private fun observe(adapter: ChaptersAdapter) {
-    cvm.chapters.observe(this) {
-      it?.let {
-        adapter.updateData(it)
-      }
-    }
-
-    cvm.chapters.resourceState.observe(this) {
-      it?.let {
-        with(binding.refreshLayout) {
-          when (it.state) {
-            State.LOADING -> isRefreshing = true
-            State.COMPLETE -> isRefreshing = false
-            State.ERROR -> {
-              isRefreshing = false
-              Snackbar.make(binding.coordinatorLayout, it.message, Snackbar.LENGTH_SHORT).show()
-            }
-          }
-        }
-      }
-    }
+  private fun showSnackbar(message: String) {
+    Snackbar.make(binding.coordinatorLayout, message, Snackbar.LENGTH_SHORT).show()
   }
 }
 
