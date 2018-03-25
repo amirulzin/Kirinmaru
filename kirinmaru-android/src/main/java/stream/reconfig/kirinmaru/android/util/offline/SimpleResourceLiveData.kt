@@ -1,6 +1,7 @@
 package stream.reconfig.kirinmaru.android.util.offline
 
 import android.support.annotation.AnyThread
+import android.support.annotation.CallSuper
 import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
 import stream.reconfig.kirinmaru.android.util.rx.addTo
@@ -30,6 +31,7 @@ abstract class SimpleResourceLiveData<V, L, R> : RxResourceLiveData<V>() {
 
   protected open fun isInitialized() = resourceState.value != null
 
+  @CallSuper
   override fun onActive() {
     super.onActive()
     if (contract.autoFetch()) refresh()
