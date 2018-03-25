@@ -10,7 +10,6 @@ import stream.reconfig.kirinmaru.android.parcel.NovelParcel
 import stream.reconfig.kirinmaru.android.ui.common.fragment.DrawerRecyclerFragment
 import stream.reconfig.kirinmaru.android.ui.navigation.FragmentNavigator
 import stream.reconfig.kirinmaru.android.util.livedata.observeNonNull
-import stream.reconfig.kirinmaru.android.util.offline.ResourceType
 import stream.reconfig.kirinmaru.android.util.offline.State
 import stream.reconfig.kirinmaru.android.util.recycler.ItemDecorationUtil
 import stream.reconfig.kirinmaru.android.util.viewmodel.ViewModelFactory
@@ -61,7 +60,7 @@ class ChaptersFragment : DrawerRecyclerFragment() {
       cvm.chapters.resourceState.observeNonNull(this) {
         with(binding.refreshLayout) {
           when (it.state) {
-            State.COMPLETE -> if (it.type == ResourceType.REMOTE) isRefreshing = false
+            State.COMPLETE -> isRefreshing = false
             State.LOADING -> isRefreshing = true
             State.ERROR -> {
               isRefreshing = false
