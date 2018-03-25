@@ -30,6 +30,11 @@ abstract class SimpleResourceLiveData<V, L, R> : RxResourceLiveData<V>() {
 
   protected open fun isInitialized() = resourceState.value != null
 
+  override fun onActive() {
+    super.onActive()
+    if (contract.autoFetch()) refresh()
+  }
+
   @AnyThread
   override fun refresh() {
     if (resourceState.value?.state != State.LOADING) {

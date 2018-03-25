@@ -33,4 +33,9 @@ interface ResourceContract<out V, L, R> {
    * Transform from local queried type [L] into the view type [V]
    */
   fun view(local: L): V
+
+  /**
+   * Dictates if data should be fetched automatically
+   */
+  fun autoFetch(): Boolean
 }

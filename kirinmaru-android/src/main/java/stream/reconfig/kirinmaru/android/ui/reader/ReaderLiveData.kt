@@ -67,6 +67,8 @@ class ReaderLiveData @Inject constructor(
       log(local, "view")
       return local.toReaderDetail()
     }
+
+    override fun autoFetch() = true
   }
 
   @MainThread
@@ -104,12 +106,9 @@ class ReaderLiveData @Inject constructor(
 
   @SuppressLint("CheckResult")
   override fun refresh() {
-    logd("[STATE ${resourceState.value}] Refresh check")
     if (State.LOADING != resourceState.value?.state) {
       postLoading()
-      logd("[Disposables ${disposables.size()}] refresh passed. Refreshing")
       disposables.clear()
-      logd("[Disposables ${disposables.size()} Cleaned")
 
       contract.remote()
           .map(contract::persist)
