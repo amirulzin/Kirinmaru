@@ -26,7 +26,7 @@ import javax.inject.Inject
 
 class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
   companion object {
-    private const val FARGS_READER = "readerData"
+    private const val FARGS_READER = "readerParcel"
     @JvmStatic
     fun newInstance(readerParcel: ReaderParcel): ReaderFragment {
       return ReaderFragment().apply {
@@ -49,18 +49,18 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
 
   override val layoutId = R.layout.fragment_reader
 
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
+  override fun onActivityCreated(savedInstanceState: Bundle?) {
+    super.onActivityCreated(savedInstanceState)
+
     val readerParcel: ReaderParcel = arguments!!.getParcelable(FARGS_READER)!!
     rvm.initReader(readerParcel)
+
     binding.refreshLayout.setColorSchemeColors(
         ContextCompat.getColor(context!!, R.color.colorAccent),
         ContextCompat.getColor(context!!, R.color.colorPrimary)
     )
 
-    binding.refreshLayout.setOnRefreshListener {
-      rvm.reader.refresh()
-    }
+    binding.refreshLayout.setOnRefreshListener { rvm.reader.refresh() }
 
     binding.appBar.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
       handleBottomBarVisibility(verticalOffset, appBarLayout)
@@ -78,18 +78,16 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
       binding.refreshLayout.isRefreshing = false
     }
 
-    rvm.reader.resourceState.observe(this) { resourceState ->
+    rvm.reader.resourceState.observeNonNull(this) {
       with(binding.refreshLayout) {
-        resourceState?.apply {
-          when (this.state) {
-            COMPLETE -> isRefreshing = false
-            LOADING -> isRefreshing = true
-            ERROR -> {
-              isRefreshing = false
-              showSnackbar(this.message)
-            }
+        when (it.state) {
+          COMPLETE -> isRefreshing = false
+          LOADING -> isRefreshing = true
+          ERROR -> {
+            isRefreshing = false
+            showSnackbar(it.message)
           }
-        } ?: run { isRefreshing = false }
+        }
       }
     }
 
@@ -124,11 +122,11 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
     }
   }
 
-  private fun updateReaderBar(it: ReaderDetail) {
-    setReaderBarTitle(it.taxon, binding.buttonBarTop!!)
-    setReaderBarTitle(it.taxon, binding.buttonBarBottom!!)
-    setReaderBarNavigation(it, binding.buttonBarTop!!)
-    setReaderBarNavigation(it, binding.buttonBarBottom!!)
+  private fun updateReaderBar(detail: ReaderDetail) {
+    setReaderBarTitle(detail.taxon, binding.buttonBarTop!!)
+    setReaderBarTitle(detail.taxon, binding.buttonBarBottom!!)
+    setReaderBarNavigation(detail, binding.buttonBarTop!!)
+    setReaderBarNavigation(detail, binding.buttonBarBottom!!)
   }
 
 
@@ -170,15 +168,18 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
 
   private fun handleBottomBarVisibility(verticalOffset: Int, appBarLayout: AppBarLayout) {
     val visibility = binding.buttonBarBottom!!.container.visibility
-    if (visibility == View.VISIBLE && verticalOffset == 0)
+
+    if (visibility == View.VISIBLE && verticalOffset == 0) {
       binding.buttonBarBottom!!.container.visibility = View.INVISIBLE
-    else if (visibility == View.INVISIBLE
+    } else if (visibility == View.INVISIBLE
         && appBarLayout.height + verticalOffset == 0
-        && rvm.reader.value?.hasText() != null) binding.buttonBarBottom!!.container.visibility = View.VISIBLE
+        && rvm.reader.value?.hasText() != null) {
+      binding.buttonBarBottom!!.container.visibility = View.VISIBLE
+    }
   }
 
   private fun showSnackbar(message: String) {
-    Snackbar.make(binding.coordinatorLayout, message, Snackbar.LENGTH_LONG)
+    Snackbar.make(binding.coordinatorLayout, message, Snackbar.LENGTH_SHORT)
         .show()
   }
 
