@@ -16,6 +16,11 @@ class LibraryCacheLiveData : MutableLiveData<MutableMap<NovelId, LibraryItem>>()
     postValue(value().apply { put(libraryItem.novel, libraryItem) })
   }
 
+  fun update(list: List<LibraryItem>) {
+    list.map { value().put(it.novel, it) }
+    postValue(value())
+  }
+
   fun remove(novelId: NovelId) {
     postValue(value().apply { remove(novelId) })
   }
