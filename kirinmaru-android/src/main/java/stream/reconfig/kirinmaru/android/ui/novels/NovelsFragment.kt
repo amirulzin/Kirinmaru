@@ -47,6 +47,8 @@ class NovelsFragment : DrawerRecyclerFragment() {
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
 
+    getToolbar().contentInsetStartWithNavigation = 0
+
     val origin = arguments!!.getString(FARGS_ORIGIN)!!
 
     val novelAdapter = NovelAdapter(
