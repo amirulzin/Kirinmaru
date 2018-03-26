@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/kirin_grey_500"
+        android:elevation="2dp"
+        android:foreground="?attr/selectableItemBackground">
+
+        <CheckBox
+            android:id="@+id/favorite"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:button="@drawable/checkable_favorite"
+            android:buttonTint="@color/favorite_checkable"
+            android:scaleType="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/category"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="4dp"
+            android:textSize="12sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/title"
+            app:layout_constraintRight_toLeftOf="@+id/favorite"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Chinese | Completed"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/AppTheme.Text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="4dp"
+            android:textColor="@color/text_clickable"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/category"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Sovereign of Three Realms" />
+    </android.support.constraint.ConstraintLayout>
+</layout>
