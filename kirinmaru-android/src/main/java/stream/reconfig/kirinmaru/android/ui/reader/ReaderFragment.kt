@@ -11,7 +11,6 @@ import stream.reconfig.kirinmaru.android.R
 import stream.reconfig.kirinmaru.android.assets.Fonts
 import stream.reconfig.kirinmaru.android.databinding.FragmentReaderBinding
 import stream.reconfig.kirinmaru.android.databinding.ViewReaderbarBinding
-import stream.reconfig.kirinmaru.android.logd
 import stream.reconfig.kirinmaru.android.ui.common.fragment.DatabindingFragment
 import stream.reconfig.kirinmaru.android.util.fullscreen.FullScreenUtil.enterFullscreen
 import stream.reconfig.kirinmaru.android.util.fullscreen.FullScreenUtil.exitFullScreen
@@ -92,7 +91,6 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
     }
 
     rvm.readerSetting.observeNonNull(this) { readerSetting ->
-      logd(readerSetting.toString())
       createFontView(readerSetting)
       with(binding) {
         rawText.apply {
