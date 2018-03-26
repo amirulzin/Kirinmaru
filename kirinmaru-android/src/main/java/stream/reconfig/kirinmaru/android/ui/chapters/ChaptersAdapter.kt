@@ -1,6 +1,5 @@
 package stream.reconfig.kirinmaru.android.ui.chapters
 
-import android.annotation.SuppressLint
 import android.support.v7.util.DiffUtil
 import io.reactivex.disposables.CompositeDisposable
 import stream.reconfig.kirinmaru.android.R
@@ -29,7 +28,6 @@ class ChaptersAdapter(
 
   private val disposables = CompositeDisposable()
 
-  @SuppressLint("CheckResult")
   fun updateData(result: List<ChapterItem>) {
     RxRecyclerUtil.calcAndDispatchDiff(this) {
       object : DiffUtil.Callback() {

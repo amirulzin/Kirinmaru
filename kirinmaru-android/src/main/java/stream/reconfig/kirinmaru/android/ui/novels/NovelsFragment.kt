@@ -11,6 +11,7 @@ import stream.reconfig.kirinmaru.android.databinding.ItemNovelBinding
 import stream.reconfig.kirinmaru.android.ui.common.fragment.DrawerRecyclerFragment
 import stream.reconfig.kirinmaru.android.ui.navigation.FragmentNavigator
 import stream.reconfig.kirinmaru.android.util.livedata.observe
+import stream.reconfig.kirinmaru.android.util.livedata.observeNonNull
 import stream.reconfig.kirinmaru.android.util.offline.State
 import stream.reconfig.kirinmaru.android.util.recycler.ItemDecorationUtil
 import stream.reconfig.kirinmaru.android.util.viewmodel.ViewModelFactory
@@ -46,16 +47,9 @@ class NovelsFragment : DrawerRecyclerFragment() {
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
 
+    getToolbar().contentInsetStartWithNavigation = 0
+
     val origin = arguments!!.getString(FARGS_ORIGIN)!!
-    binding.root.post {
-      with(binding.toolbarSpinner) {
-        visibility = View.VISIBLE
-        val list = pluginMap.keys.toList()
-        adapter = ArrayAdapter<String>(context, R.layout.item_spinner, R.id.textView, list)
-        setSelection(list.indexOf(origin))
-        onItemSelectedListener = onSpinnerItem(list)
-      }
-    }
 
     val novelAdapter = NovelAdapter(
         onClickNovel = ::onClickNovel,
@@ -75,21 +69,26 @@ class NovelsFragment : DrawerRecyclerFragment() {
     }
 
     binding.root.post {
+      with(binding.toolbarSpinner) {
+        visibility = View.VISIBLE
+        val list = pluginMap.keys.toList()
+        adapter = ArrayAdapter<String>(context, R.layout.item_spinner, R.id.textView, list)
+        setSelection(list.indexOf(origin))
+        onItemSelectedListener = onSpinnerItem(list)
+      }
+
       nvm.novels.observe(this) {
         novelAdapter.updateData(it ?: emptyList())
       }
 
-      nvm.novels.resourceState.observe(this) {
-        it?.let {
-          with(binding.refreshLayout) {
-            when (it.state) {
-              State.COMPLETE -> isRefreshing = false
-              State.LOADING -> isRefreshing = true
-              State.ERROR -> {
-                isRefreshing = false
-                val message = it.message
-                showSnackbar(message)
-              }
+      nvm.novels.resourceState.observeNonNull(this) {
+        with(binding.refreshLayout) {
+          when (it.state) {
+            State.COMPLETE -> isRefreshing = false
+            State.LOADING -> isRefreshing = true
+            State.ERROR -> {
+              isRefreshing = false
+              showSnackbar(it.message)
             }
           }
         }
@@ -129,11 +128,13 @@ class NovelsFragment : DrawerRecyclerFragment() {
     }
   }
 
-  private fun onClickNovel(novelItem: NovelItem) =
-      FragmentNavigator.toChapters(activity!!, novelItem)
+  private fun onClickNovel(novelItem: NovelItem) {
+    FragmentNavigator.toChapters(activity!!, novelItem)
+  }
 
-  private fun onToggleFavorite(novelItem: NovelItem, isChecked: Boolean) =
-      nvm.novels.toggleFavorite(novelItem, isChecked)
+  private fun onToggleFavorite(novelItem: NovelItem, isChecked: Boolean) {
+    nvm.novels.toggleFavorite(novelItem, isChecked)
+  }
 
   private fun displayTags(set: Set<String>): String {
     val sb = StringBuilder()

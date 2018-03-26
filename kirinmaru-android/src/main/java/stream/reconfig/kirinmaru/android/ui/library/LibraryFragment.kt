@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.TextView
 import stream.reconfig.kirinmaru.android.R
-import stream.reconfig.kirinmaru.android.logd
 import stream.reconfig.kirinmaru.android.ui.common.fragment.DrawerRecyclerFragment
 import stream.reconfig.kirinmaru.android.ui.navigation.FragmentNavigator
 import stream.reconfig.kirinmaru.android.util.livedata.observe
@@ -53,7 +52,6 @@ class LibraryFragment : DrawerRecyclerFragment() {
               text = currentRead?.taxonView.also { visibility = if (it == null) View.GONE else View.VISIBLE }
             }
             binding.loadingView.visibility = if (isLoading) View.VISIBLE else View.GONE
-            logd("Updated : $isUpdated for ${novel.url}")
             if (isUpdated)
               setUpdatedColor(binding.latestChapter)
           }

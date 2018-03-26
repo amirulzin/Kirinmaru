@@ -6,7 +6,6 @@ import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import stream.reconfig.kirinmaru.android.Kirinmaru
-import stream.reconfig.kirinmaru.android.db.DatabaseBugTest
 import stream.reconfig.kirinmaru.android.di.scopes.ApplicationScope
 
 /**
@@ -19,8 +18,6 @@ import stream.reconfig.kirinmaru.android.di.scopes.ApplicationScope
 ])
 interface AndroidTestAppComponent : AndroidInjector<Kirinmaru> {
   override fun inject(kirinmaru: Kirinmaru)
-
-  fun injectTest(databaseTest: DatabaseBugTest)
 
   @Component.Builder
   interface Builder {

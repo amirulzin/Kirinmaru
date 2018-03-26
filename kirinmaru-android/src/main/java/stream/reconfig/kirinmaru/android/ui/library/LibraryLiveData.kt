@@ -1,5 +1,6 @@
 package stream.reconfig.kirinmaru.android.ui.library
 
+import android.arch.lifecycle.Observer
 import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -14,6 +15,7 @@ import stream.reconfig.kirinmaru.android.util.rx.addTo
 import stream.reconfig.kirinmaru.android.vo.Chapter
 import stream.reconfig.kirinmaru.core.ChapterId
 import stream.reconfig.kirinmaru.core.NovelDetail
+import stream.reconfig.kirinmaru.core.NovelId
 import stream.reconfig.kirinmaru.plugins.PluginMap
 import stream.reconfig.kirinmaru.plugins.getPlugin
 import javax.inject.Inject
@@ -28,11 +30,26 @@ class LibraryLiveData @Inject constructor(
 
   private val favorites by lazy { favoritePref.load() }
 
-  fun deleteFavorite(favorite: FavoriteNovel) = favorites.remove(favorite)
+  private val cache = LibraryCacheLiveData()
+
+  private val cacheObserver = Observer<MutableMap<NovelId, LibraryItem>> {
+    it?.let { postValue(it.values.toList()) }
+  }
+
+  fun deleteFavorite(favorite: FavoriteNovel) {
+    favorites.remove(favorite)
+    cache.remove(favorite)
+  }
 
   override fun onActive() {
     super.onActive()
+    cache.observeForever(cacheObserver)
     refresh()
+  }
+
+  override fun onInactive() {
+    super.onInactive()
+    cache.removeObserver(cacheObserver)
   }
 
   override fun refresh() {
@@ -42,7 +59,7 @@ class LibraryLiveData @Inject constructor(
 
       local()
           .doOnSuccess {
-            postValue(it)
+            cache.update(it)
             postCompleteLocal()
           }
           .toFlowable()
@@ -52,11 +69,7 @@ class LibraryLiveData @Inject constructor(
           .runOn(Schedulers.io())
           .flatMap(::remote)
           .sequential()
-          .collectInto(mutableListOf<LibraryItem>()) { list, item -> list.add(item) }
-          .doOnSuccess {
-            postValue(it)
-            postCompleteRemote()
-          }
+          .doOnNext(cache::update)
           .subscribeOn(Schedulers.io())
           .observeOn(Schedulers.computation())
           .subscribe(

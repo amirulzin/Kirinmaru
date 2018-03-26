@@ -65,6 +65,8 @@ class NovelsLiveData @Inject constructor(
         override fun view(local: List<Novel>): List<NovelItem> {
           return local.map(::toNovelItem)
         }
+
+        override fun autoFetch() = true
       }
 
   private fun origin() = origin.value!!

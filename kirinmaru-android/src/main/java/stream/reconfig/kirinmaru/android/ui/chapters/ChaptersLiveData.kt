@@ -7,7 +7,7 @@ import stream.reconfig.kirinmaru.android.db.ChapterDao
 import stream.reconfig.kirinmaru.android.parcel.NovelParcel
 import stream.reconfig.kirinmaru.android.prefs.CurrentReadPref
 import stream.reconfig.kirinmaru.android.util.offline.ResourceContract
-import stream.reconfig.kirinmaru.android.util.offline.ResourceLiveData
+import stream.reconfig.kirinmaru.android.util.offline.SimpleResourceLiveData
 import stream.reconfig.kirinmaru.android.vo.Chapter
 import stream.reconfig.kirinmaru.core.ChapterId
 import stream.reconfig.kirinmaru.plugins.PluginMap
@@ -18,7 +18,7 @@ class ChaptersLiveData @Inject constructor(
     private val pluginMap: PluginMap,
     private val chapterDao: ChapterDao,
     private val currentReadPref: CurrentReadPref
-) : ResourceLiveData<List<ChapterItem>, List<String>, List<ChapterId>>() {
+) : SimpleResourceLiveData<List<ChapterItem>, List<String>, List<ChapterId>>() {
 
   private val novel = MutableLiveData<NovelParcel>()
 
@@ -51,5 +51,7 @@ class ChaptersLiveData @Inject constructor(
           return local.map { ChapterItem(it, it == currentRead) }
               .sortedByDescending { it.taxonomicNumber }
         }
+
+        override fun autoFetch() = true
       }
 }
