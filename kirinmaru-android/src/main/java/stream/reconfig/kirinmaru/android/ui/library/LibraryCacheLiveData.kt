@@ -7,7 +7,7 @@ import stream.reconfig.kirinmaru.core.NovelId
  * Simple key-value cache for collecting LibraryItem emission and
  * posting each item updates (or delta state) as a cumulative collection update
  */
-class LibraryCache : MutableLiveData<MutableMap<NovelId, LibraryItem>>() {
+class LibraryCacheLiveData : MutableLiveData<MutableMap<NovelId, LibraryItem>>() {
   init {
     value = mutableMapOf()
   }
