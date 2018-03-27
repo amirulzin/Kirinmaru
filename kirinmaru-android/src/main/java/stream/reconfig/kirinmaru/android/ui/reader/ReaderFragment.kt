@@ -26,13 +26,13 @@ import javax.inject.Inject
 class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
   companion object {
     private const val FARGS_READER = "readerParcel"
+
+    @JvmStatic
+    fun createArguments(readerParcel: ReaderParcel) = Bundle().apply { putParcelable(FARGS_READER, readerParcel) }
+
     @JvmStatic
     fun newInstance(readerParcel: ReaderParcel): ReaderFragment {
-      return ReaderFragment().apply {
-        arguments = Bundle().apply {
-          putParcelable(FARGS_READER, readerParcel)
-        }
-      }
+      return ReaderFragment().apply { arguments = createArguments(readerParcel) }
     }
   }
 

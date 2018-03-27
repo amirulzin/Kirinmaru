@@ -1,5 +1,6 @@
 package stream.reconfig.kirinmaru.android.ui.navigation
 
+import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.view.Menu
@@ -26,15 +27,17 @@ object FragmentNavigator {
 
   @JvmStatic
   fun toChapters(activity: FragmentActivity, novel: NovelDetail) {
-    navigate("chapters", activity, true) {
-      ChaptersFragment.newInstance(novel.toParcel())
+    val parcel = novel.toParcel()
+    navigate("chapters", activity, true, ChaptersFragment.createArguments(parcel)) {
+      ChaptersFragment.newInstance(parcel)
     }
   }
 
   @JvmStatic
   fun toReader(activity: FragmentActivity, novel: NovelDetail, chapter: ChapterId) {
-    navigate("reader", activity, true) {
-      ReaderFragment.newInstance(ReaderParcel(novel.toParcel(), chapter.toParcel()))
+    val parcel = ReaderParcel(novel.toParcel(), chapter.toParcel())
+    navigate("reader", activity, true, ReaderFragment.createArguments(parcel)) {
+      ReaderFragment.newInstance(parcel)
     }
   }
 
@@ -65,10 +68,11 @@ object FragmentNavigator {
       tag: String,
       activity: FragmentActivity,
       toBackStack: Boolean,
+      updateBundle: Bundle,
       crossinline creator: () -> Fragment
   ) {
     val fm = activity.supportFragmentManager
-    val frag = fm.findFragmentByTag(tag) ?: creator()
+    val frag = fm.findFragmentByTag(tag)?.apply { arguments = updateBundle } ?: creator()
     fm.beginTransaction()
         .replace(container, frag, tag)
         .apply { if (toBackStack) addToBackStack(tag) }

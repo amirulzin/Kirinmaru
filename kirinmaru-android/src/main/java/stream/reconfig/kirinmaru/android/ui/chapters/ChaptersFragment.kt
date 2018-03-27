@@ -22,11 +22,13 @@ import javax.inject.Inject
 class ChaptersFragment : DrawerRecyclerFragment() {
   companion object {
     private const val FARGS_NOVEL = "novelParcel"
+
+    @JvmStatic
+    fun createArguments(novelParcel: NovelParcel) = Bundle().apply { putParcelable(FARGS_NOVEL, novelParcel) }
+
     @JvmStatic
     fun newInstance(novelParcel: NovelParcel): ChaptersFragment {
-      return ChaptersFragment().apply {
-        arguments = Bundle().apply { putParcelable(FARGS_NOVEL, novelParcel) }
-      }
+      return ChaptersFragment().apply { arguments = createArguments(novelParcel) }
     }
   }
 
