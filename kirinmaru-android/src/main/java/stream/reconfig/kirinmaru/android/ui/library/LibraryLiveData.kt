@@ -93,6 +93,7 @@ class LibraryLiveData @Inject constructor(
         .onBackpressureBuffer()
         .map(::splitForQuery)
         .map { (origins, urls) -> novelDao.novels(origins, urls) }
+        .map { if (it.isEmpty() && favorites.isNotEmpty()) favorites else it }
         .concatMapIterable { it }
         .map { novel -> novel to chapterDao.chapters(novel.origin, novel.url).map { LibraryItem.Chapter(it) } }
         .map { (novel, chapters) -> toLibraryItem(novel, chapters, isLoading = true) }
