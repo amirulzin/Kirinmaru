@@ -71,9 +71,7 @@ class NovelsLiveData @Inject constructor(
 
   private fun origin() = origin.value!!
 
-  private fun NovelItem.toFavorite() = FavoriteNovel(origin, url)
-
-  private fun NovelDetail.toFavorite() = FavoriteNovel(origin(), url)
+  private fun NovelDetail.toFavorite() = FavoriteNovel(origin(), url, novelTitle, id, tags)
 
   @WorkerThread
   private fun toNovel(novel: NovelDetail): Novel {
