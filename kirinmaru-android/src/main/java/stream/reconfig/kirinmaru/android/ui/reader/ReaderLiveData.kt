@@ -7,7 +7,6 @@ import android.support.annotation.WorkerThread
 import io.reactivex.Flowable
 import io.reactivex.Single
 import stream.reconfig.kirinmaru.android.db.ChapterDao
-import stream.reconfig.kirinmaru.android.logd
 import stream.reconfig.kirinmaru.android.parcel.ChapterIdParcel
 import stream.reconfig.kirinmaru.android.parcel.NovelParcel
 import stream.reconfig.kirinmaru.android.prefs.CurrentReadPref
@@ -50,12 +49,10 @@ class ReaderLiveData @Inject constructor(
           rawText = data.rawText,
           nextUrl = data.nextUrl,
           previousUrl = data.previousUrl)
-      log(chapter, "persist")
       chapterDao.upsert(chapter)
     }
 
     override fun view(local: Chapter): ReaderDetail {
-      log(local, "view")
       return local.toReaderDetail()
     }
 
@@ -114,11 +111,4 @@ class ReaderLiveData @Inject constructor(
       nextUrl = nextUrl,
       taxon = Taxonomy.createTaxonomicDisplay(Taxonomy.createTaxonomicNumber(url))
   )
-
-  private fun log(chapter: Chapter?, ops: String = "") {
-    logd("State: $ops [${resourceState.value}]" +
-        "\nLocal -> Length: [${chapter?.rawText?.length}] Pre: [${chapter?.previousUrl}] Nex: [${chapter?.nextUrl}]" +
-        "\nNovel: [${novel().url}]" +
-        "\nChapter: [${chapterId().url}] ")
-  }
 }
