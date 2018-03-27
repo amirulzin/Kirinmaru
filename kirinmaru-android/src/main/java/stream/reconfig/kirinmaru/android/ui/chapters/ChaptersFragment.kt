@@ -1,16 +1,15 @@
 package stream.reconfig.kirinmaru.android.ui.chapters
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import stream.reconfig.kirinmaru.android.databinding.ItemChapterBinding
 import stream.reconfig.kirinmaru.android.parcel.NovelParcel
 import stream.reconfig.kirinmaru.android.ui.common.fragment.DrawerRecyclerFragment
+import stream.reconfig.kirinmaru.android.ui.common.refresh.ResourceStateHandler
 import stream.reconfig.kirinmaru.android.ui.navigation.FragmentNavigator
 import stream.reconfig.kirinmaru.android.util.livedata.observeNonNull
-import stream.reconfig.kirinmaru.android.util.offline.State
 import stream.reconfig.kirinmaru.android.util.recycler.ItemDecorationUtil
 import stream.reconfig.kirinmaru.android.util.viewmodel.ViewModelFactory
 import stream.reconfig.kirinmaru.android.util.viewmodel.viewModel
@@ -58,16 +57,12 @@ class ChaptersFragment : DrawerRecyclerFragment() {
       cvm.chapters.observeNonNull(this) { adapter.updateData(it) }
 
       cvm.chapters.resourceState.observeNonNull(this) {
-        with(binding.refreshLayout) {
-          when (it.state) {
-            State.COMPLETE -> isRefreshing = false
-            State.LOADING -> isRefreshing = true
-            State.ERROR -> {
-              isRefreshing = false
-              showSnackbar(it.message)
-            }
-          }
-        }
+        ResourceStateHandler.handleStateUpdates(
+            coordinatorLayout = binding.coordinatorLayout,
+            refreshLayout = binding.refreshLayout,
+            resourceState = it,
+            remoteRefreshable = this
+        )
       }
     }
   }
@@ -81,10 +76,6 @@ class ChaptersFragment : DrawerRecyclerFragment() {
 
   private fun onClickItem(novelItem: NovelDetail, chapterItem: ChapterItem) {
     activity?.let { FragmentNavigator.toReader(it, novelItem, chapterItem) }
-  }
-
-  private fun showSnackbar(message: String) {
-    Snackbar.make(binding.coordinatorLayout, message, Snackbar.LENGTH_SHORT).show()
   }
 }
 

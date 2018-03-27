@@ -9,10 +9,10 @@ import android.widget.ArrayAdapter
 import stream.reconfig.kirinmaru.android.R
 import stream.reconfig.kirinmaru.android.databinding.ItemNovelBinding
 import stream.reconfig.kirinmaru.android.ui.common.fragment.DrawerRecyclerFragment
+import stream.reconfig.kirinmaru.android.ui.common.refresh.ResourceStateHandler
 import stream.reconfig.kirinmaru.android.ui.navigation.FragmentNavigator
 import stream.reconfig.kirinmaru.android.util.livedata.observe
 import stream.reconfig.kirinmaru.android.util.livedata.observeNonNull
-import stream.reconfig.kirinmaru.android.util.offline.State
 import stream.reconfig.kirinmaru.android.util.recycler.ItemDecorationUtil
 import stream.reconfig.kirinmaru.android.util.viewmodel.ViewModelFactory
 import stream.reconfig.kirinmaru.android.util.viewmodel.viewModel
@@ -82,16 +82,12 @@ class NovelsFragment : DrawerRecyclerFragment() {
       }
 
       nvm.novels.resourceState.observeNonNull(this) {
-        with(binding.refreshLayout) {
-          when (it.state) {
-            State.COMPLETE -> isRefreshing = false
-            State.LOADING -> isRefreshing = true
-            State.ERROR -> {
-              isRefreshing = false
-              showSnackbar(it.message)
-            }
-          }
-        }
+        ResourceStateHandler.handleStateUpdates(
+            coordinatorLayout = binding.coordinatorLayout,
+            refreshLayout = binding.refreshLayout,
+            resourceState = it,
+            remoteRefreshable = this
+        )
       }
     }
   }

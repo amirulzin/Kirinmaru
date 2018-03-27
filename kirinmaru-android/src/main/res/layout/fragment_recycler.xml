@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.design.widget.CoordinatorLayout
+        android:animateLayoutChanges="true"
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -32,8 +33,8 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="?attr/actionBarSize"
                 android:background="?colorPrimary"
+                android:minHeight="?attr/actionBarSize"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:titleTextColor="@color/colorWhite">
 
@@ -44,5 +45,27 @@
                     android:visibility="gone" />
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
+
+        <FrameLayout
+            android:id="@+id/remoteLoading"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/round_background"
+            android:elevation="2dp"
+            android:visibility="gone"
+            app:layout_anchor="@id/refreshLayout"
+            app:layout_anchorGravity="bottom|center_horizontal"
+            tools:visibility="visible">
+
+            <net.bohush.geometricprogressview.GeometricProgressView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                app:gp_color="@color/colorAccentSecondary"
+                app:gp_number_of_angles="4"
+                app:gp_type="kite" />
+        </FrameLayout>
     </android.support.design.widget.CoordinatorLayout>
 </layout>
