@@ -28,11 +28,8 @@ class NovelsLiveData @Inject constructor(
 
   @MainThread
   fun initOrigin(newOrigin: String) {
-
-    if (origin.value == null) {
-      origin.value = newOrigin
-    } else {
-      origin.value = newOrigin
+    origin.value = newOrigin
+    if (origin.value != null) {
       refresh()
     }
   }
