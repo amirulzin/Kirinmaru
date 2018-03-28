@@ -14,13 +14,15 @@ internal object GravityTalesIndexParser : AbsIndexParser(
 )
 
 internal class GravityTalesChapterDetailParser(novelDetail: NovelDetail) : AbsChapterDetailParser(
+    title = "title",
     rawText = "#chapterContent",
     nextUrl = ".chapter-navigation a:contains(next chapter)",
     prevUrl = ".chapter-navigation a:contains(previous chapter)",
     clean = {
+      val title = it.title?.removePrefix(novelDetail.novelTitle)?.removeSuffix(" - Gravity Tales")?.trim()
       val nextUrl = chapterSlug(it.nextUrl)?.isValidSlug(novelDetail.url)
       val prevUrl = chapterSlug(it.previousUrl)?.isValidSlug(novelDetail.url)
-      CoreChapterDetail(it.rawText, nextUrl, prevUrl)
+      CoreChapterDetail(title, it.rawText, nextUrl, prevUrl)
     }
 ) {
   companion object {
