@@ -4,20 +4,13 @@ import okhttp3.HttpUrl
 import stream.reconfig.kirinmaru.core.LinkTransformer
 import stream.reconfig.kirinmaru.core.NovelDetail
 import stream.reconfig.kirinmaru.core.domain.CoreChapterDetail
-import stream.reconfig.kirinmaru.core.domain.CoreChapterId
 import stream.reconfig.kirinmaru.core.domain.CoreNovelDetail
 import stream.reconfig.kirinmaru.core.parser.AbsChapterDetailParser
-import stream.reconfig.kirinmaru.core.parser.AbsChapterIdParser
 import stream.reconfig.kirinmaru.core.parser.AbsIndexParser
 
 internal object GravityTalesIndexParser : AbsIndexParser(
     selector = ".multi-column-dropdown a[href*=/novel/]",
     transformer = { CoreNovelDetail(GRAVITYTALES_ORIGIN, it.text(), it.attr("href")) }
-)
-
-internal object GravityTalesChapterIdParser : AbsChapterIdParser(
-    chapterIds = "#chapters a[href*=/novel/]",
-    transformer = { CoreChapterId(it.attr("href")) }
 )
 
 internal class GravityTalesChapterDetailParser(novelDetail: NovelDetail) : AbsChapterDetailParser(
