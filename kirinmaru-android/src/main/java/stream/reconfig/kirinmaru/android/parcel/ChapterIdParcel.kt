@@ -8,6 +8,6 @@ import stream.reconfig.kirinmaru.core.ChapterId
  *
  */
 @SuppressLint("ParcelCreator")
-data class ChapterIdParcel(override val url: String) : ChapterId, AutoParcelable
+data class ChapterIdParcel(override val url: String, override val title: String?) : ChapterId, AutoParcelable
 
-fun ChapterId.toParcel() = ChapterIdParcel(url)
+fun ChapterId.toParcel() = ChapterIdParcel(url, title)

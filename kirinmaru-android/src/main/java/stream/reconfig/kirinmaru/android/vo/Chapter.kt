@@ -22,6 +22,7 @@ data class Chapter(
     val origin: String,
     val novelUrl: String,
     @PrimaryKey override val url: String,
+    override val title: String?,
     override val rawText: String? = null,
     override val nextUrl: String? = null,
     override val previousUrl: String? = null
@@ -30,13 +31,15 @@ data class Chapter(
   constructor(novelId: NovelId, chapterId: ChapterId) : this(
       origin = novelId.origin,
       novelUrl = novelId.url,
-      url = chapterId.url
+      url = chapterId.url,
+      title = chapterId.title
   )
 
   constructor(novelId: NovelId, chapterId: ChapterId, chapterDetail: ChapterDetail) : this(
       origin = novelId.origin,
       novelUrl = novelId.url,
       url = chapterId.url,
+      title = chapterId.title,
       rawText = chapterDetail.rawText,
       nextUrl = chapterDetail.nextUrl,
       previousUrl = chapterDetail.previousUrl

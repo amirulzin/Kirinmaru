@@ -10,5 +10,6 @@ import stream.reconfig.kirinmaru.android.ui.domain.AbsChapterId
 @SuppressLint("ParcelCreator")
 data class ChapterItem(
     override val url: String,
+    override val title: String?,
     val currentRead: Boolean
 ) : AbsChapterId(), AutoParcelable
