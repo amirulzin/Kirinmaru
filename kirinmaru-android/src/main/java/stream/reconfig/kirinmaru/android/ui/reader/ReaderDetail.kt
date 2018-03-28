@@ -4,6 +4,7 @@ import android.text.Spanned
 
 
 data class ReaderDetail(
+    val title: String?,
     val text: Spanned? = null,
     val url: String,
     val previousUrl: String? = null,

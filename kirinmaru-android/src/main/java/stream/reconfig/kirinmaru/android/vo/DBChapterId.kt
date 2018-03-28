@@ -1,11 +1,8 @@
-package stream.reconfig.kirinmaru.core.domain
+package stream.reconfig.kirinmaru.android.vo
 
 import stream.reconfig.kirinmaru.core.ChapterId
 
-/**
- * Stub CoreChapterId class for IPC.
- */
-data class CoreChapterId(
+data class DBChapterId(
     override val url: String,
     override val title: String?
 ) : ChapterId

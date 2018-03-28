@@ -95,7 +95,7 @@ class LibraryLiveData @Inject constructor(
         .map { (origins, urls) -> novelDao.novels(origins, urls) }
         .map { if (it.isEmpty() && favorites.isNotEmpty()) favorites else it }
         .concatMapIterable { it }
-        .map { novel -> novel to chapterDao.chapters(novel.origin, novel.url).map { LibraryItem.Chapter(it) } }
+        .map { novel -> novel to chapterDao.chapters(novel.origin, novel.url).map { LibraryItem.Chapter(it.url, it.title) } }
         .map { (novel, chapters) -> toLibraryItem(novel, chapters, isLoading = true) }
         .collectInto(mutableListOf<LibraryItem>()) { list, item -> list.add(item) }
   }
@@ -148,13 +148,12 @@ class LibraryLiveData @Inject constructor(
 
   private fun findLatest(chapters: List<ChapterId>): LibraryItem.Chapter? {
     return chapters.takeIf { it.isNotEmpty() }
-        ?.map { LibraryItem.Chapter(it.url) }
+        ?.map { LibraryItem.Chapter(it.url, it.title) }
         ?.sortedByDescending { it.taxonomicNumber }
         ?.first()
   }
 
   private fun NovelDetail.toNovel() = LibraryItem.Novel(origin, url, novelTitle, id, tags)
 
-  private fun String.toChapter() = LibraryItem.Chapter(this)
-
+  private fun ChapterId.toChapter() = LibraryItem.Chapter(url, title)
 }

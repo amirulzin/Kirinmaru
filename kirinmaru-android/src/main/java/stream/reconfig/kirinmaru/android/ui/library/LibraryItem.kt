@@ -11,7 +11,7 @@ data class LibraryItem(
     var isUpdated: Boolean = false
 ) {
 
-  data class Chapter(override val url: String) : AbsChapterId()
+  data class Chapter(override val url: String, override val title: String?) : AbsChapterId()
 
   data class Novel(
       override val origin: String,

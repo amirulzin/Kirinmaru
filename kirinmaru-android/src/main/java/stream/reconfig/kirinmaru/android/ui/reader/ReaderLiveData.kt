@@ -27,7 +27,7 @@ class ReaderLiveData @Inject constructor(
     private val currentReadPref: CurrentReadPref
 ) : SimpleResourceLiveData<ReaderDetail, Chapter, ChapterDetail>() {
 
-  private val readerData = MutableLiveData<ReaderParcel>()
+  private val readerParcel = MutableLiveData<ReaderParcel>()
 
   private val localObserver = Observer<ReaderParcel> { refresh() }
 
@@ -46,6 +46,7 @@ class ReaderLiveData @Inject constructor(
           origin = novel().origin,
           novelUrl = novel().url,
           url = chapterId().url,
+          title = data.title,
           rawText = data.rawText,
           nextUrl = data.nextUrl,
           previousUrl = data.previousUrl)
@@ -61,7 +62,7 @@ class ReaderLiveData @Inject constructor(
 
   @MainThread
   fun initReaderData(data: ReaderParcel) {
-    readerData.value = data
+    readerParcel.value = data
   }
 
   fun navigateNext() {
@@ -81,30 +82,31 @@ class ReaderLiveData @Inject constructor(
 
   override fun onActive() {
     super.onActive()
-    readerData.observeForever(localObserver)
+    readerParcel.observeForever(localObserver)
   }
 
   override fun onInactive() {
     super.onInactive()
-    readerData.removeObserver(localObserver)
-    readerData.value?.let {
-      currentReadPref.persist(it.novelParcel, it.chapterParcel.url)
+    readerParcel.removeObserver(localObserver)
+    readerParcel.value?.let {
+      currentReadPref.persist(it.novelParcel, it.chapterParcel)
     }
   }
 
-  private fun chapterId(): ChapterId = readerData.value!!.chapterParcel
+  private fun chapterId(): ChapterId = readerParcel.value!!.chapterParcel
 
-  private fun novel(): NovelParcel = readerData.value!!.novelParcel
+  private fun novel(): NovelParcel = readerParcel.value!!.novelParcel
 
   private fun navigateActual(url: String) {
-    readerData.value?.let {
+    readerParcel.value?.let {
       postValue(null)
-      readerData.postValue(it.copy(chapterParcel = ChapterIdParcel(url)))
+      readerParcel.postValue(it.copy(chapterParcel = ChapterIdParcel(url, null)))
     } ?: throw IllegalStateException("Novel must be set before any operation")
   }
 
   @WorkerThread
   private fun Chapter.toReaderDetail() = ReaderDetail(
+      title = title,
       text = rawText?.let(HtmlTextUtil::toHtmlSpannable),
       url = url,
       previousUrl = previousUrl,

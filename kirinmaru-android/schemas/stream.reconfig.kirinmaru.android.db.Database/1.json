@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "4d5a33ec06e05b9d85b6bfa9583b46f7",
+    "identityHash": "33e27cfeeee32fd84ce3b7f9add787d4",
     "entities": [
       {
         "tableName": "Novel",
@@ -51,7 +51,7 @@
       },
       {
         "tableName": "Chapter",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`origin` TEXT NOT NULL, `novelUrl` TEXT NOT NULL, `url` TEXT NOT NULL, `rawText` TEXT, `nextUrl` TEXT, `previousUrl` TEXT, PRIMARY KEY(`url`), FOREIGN KEY(`origin`, `novelUrl`) REFERENCES `Novel`(`origin`, `url`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`origin` TEXT NOT NULL, `novelUrl` TEXT NOT NULL, `url` TEXT NOT NULL, `title` TEXT, `rawText` TEXT, `nextUrl` TEXT, `previousUrl` TEXT, PRIMARY KEY(`url`), FOREIGN KEY(`origin`, `novelUrl`) REFERENCES `Novel`(`origin`, `url`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "origin",
@@ -70,6 +70,12 @@
             "columnName": "url",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "rawText",
@@ -126,7 +132,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"4d5a33ec06e05b9d85b6bfa9583b46f7\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"33e27cfeeee32fd84ce3b7f9add787d4\")"
     ]
   }
 }

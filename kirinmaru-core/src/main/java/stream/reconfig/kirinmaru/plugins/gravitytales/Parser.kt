@@ -4,10 +4,8 @@ import okhttp3.HttpUrl
 import stream.reconfig.kirinmaru.core.LinkTransformer
 import stream.reconfig.kirinmaru.core.NovelDetail
 import stream.reconfig.kirinmaru.core.domain.CoreChapterDetail
-import stream.reconfig.kirinmaru.core.domain.CoreChapterId
 import stream.reconfig.kirinmaru.core.domain.CoreNovelDetail
 import stream.reconfig.kirinmaru.core.parser.AbsChapterDetailParser
-import stream.reconfig.kirinmaru.core.parser.AbsChapterIdParser
 import stream.reconfig.kirinmaru.core.parser.AbsIndexParser
 
 internal object GravityTalesIndexParser : AbsIndexParser(
@@ -15,19 +13,16 @@ internal object GravityTalesIndexParser : AbsIndexParser(
     transformer = { CoreNovelDetail(GRAVITYTALES_ORIGIN, it.text(), it.attr("href")) }
 )
 
-internal object GravityTalesChapterIdParser : AbsChapterIdParser(
-    chapterIds = "#chapters a[href*=/novel/]",
-    transformer = { CoreChapterId(it.attr("href")) }
-)
-
 internal class GravityTalesChapterDetailParser(novelDetail: NovelDetail) : AbsChapterDetailParser(
+    title = "title",
     rawText = "#chapterContent",
     nextUrl = ".chapter-navigation a:contains(next chapter)",
     prevUrl = ".chapter-navigation a:contains(previous chapter)",
     clean = {
+      val title = it.title?.removePrefix("${novelDetail.novelTitle} - ")?.removeSuffix(" - Gravity Tales")?.trim()
       val nextUrl = chapterSlug(it.nextUrl)?.isValidSlug(novelDetail.url)
       val prevUrl = chapterSlug(it.previousUrl)?.isValidSlug(novelDetail.url)
-      CoreChapterDetail(it.rawText, nextUrl, prevUrl)
+      CoreChapterDetail(title, it.rawText, nextUrl, prevUrl)
     }
 ) {
   companion object {
