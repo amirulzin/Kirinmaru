@@ -16,7 +16,7 @@ internal class WuxiaWorldIndexParserV2(val key: String) : AbsIndexParser(
 
 internal object WuxiaWorldChapterIdParser : AbsChapterIdParser(
     chapterIds = ".section-content .chapter-item a[href*=/novel/]",
-    transformer = { CoreChapterId(it.attr("href")) }
+    transformer = { CoreChapterId(it.attr("href"), it.text()) }
 )
 
 internal object WuxiaWorldChapterDetailParser : AbsChapterDetailParser(

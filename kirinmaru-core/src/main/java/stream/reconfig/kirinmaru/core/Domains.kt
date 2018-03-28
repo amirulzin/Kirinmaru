@@ -30,6 +30,7 @@ interface NovelDetail : NovelId {
  */
 interface ChapterId {
   val url: String
+  val title: String?
 }
 
 /**

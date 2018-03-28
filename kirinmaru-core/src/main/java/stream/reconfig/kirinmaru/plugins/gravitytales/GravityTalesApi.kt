@@ -45,6 +45,7 @@ internal interface GravityTalesApi {
   )
 
   data class GTChapterId(
-      @SerializedName("Slug") override val url: String
+      @SerializedName("Slug") override val url: String,
+      @SerializedName("Name") override val title: String?
   ) : ChapterId
 }

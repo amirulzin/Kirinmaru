@@ -117,9 +117,9 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
         .map { it to plugin.toAbsoluteUrl(novelDetail!!, chapterId!!) }
         .doOnSuccess { (detail, currentUrl) ->
           logger.log("6 Curr url: $currentUrl")
-          verifyUrlExist(plugin.toAbsoluteUrl(novelDetail!!, CoreChapterId(detail.previousUrl!!)))
+          verifyUrlExist(plugin.toAbsoluteUrl(novelDetail!!, CoreChapterId(detail.previousUrl!!, null)))
           verifyUrlExist(currentUrl)
-          verifyUrlExist(plugin.toAbsoluteUrl(novelDetail!!, CoreChapterId(detail.nextUrl!!)))
+          verifyUrlExist(plugin.toAbsoluteUrl(novelDetail!!, CoreChapterId(detail.nextUrl!!, null)))
         }
         .flatMap {
           plugin.obtainDetail(novelDetail!!, firstChapterId!!)
