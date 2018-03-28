@@ -6,7 +6,6 @@ import okhttp3.OkHttpClient
 
 /**
  * Interface that must be implemented for any Plugin.
- * Order of method calls can be observed at [PluginContract]
  *
  * # Rules:
  *
@@ -31,13 +30,7 @@ interface Plugin {
 
   fun obtainNovels(): Single<List<NovelDetail>>
 
-  fun obtainChapters(novelDetail: NovelDetail): Single<List<ChapterId>> {
-    throw NotImplementedError("Not implemented: obtainChapters(novelDetail)")
-  }
-
-  fun obtainChapters(novelDetail: NovelDetail, currentPage: Int): Single<List<ChapterId>> {
-    throw NotImplementedError("Not implemented: obtainChapters(novelDetail, currentPage)")
-  }
+  fun obtainChapters(novelDetail: NovelDetail): Single<List<ChapterId>>
 
   fun obtainDetail(novelDetail: NovelDetail, chapterId: ChapterId): Single<ChapterDetail>
 
