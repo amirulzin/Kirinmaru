@@ -49,7 +49,7 @@ class ChaptersLiveData @Inject constructor(
 
         override fun view(local: List<DBChapterId>): List<ChapterItem> {
           val currentRead = currentReadPref.load(novel.value!!)
-          return local.map { ChapterItem(it.url, it.title, it.url == currentRead) }
+          return local.map { ChapterItem(it.url, it.title, it.url == currentRead?.url) }
               .sortedByDescending { it.taxonomicNumber }
         }
 
