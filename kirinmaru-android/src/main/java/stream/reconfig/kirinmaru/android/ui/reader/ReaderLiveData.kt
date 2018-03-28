@@ -106,6 +106,7 @@ class ReaderLiveData @Inject constructor(
 
   @WorkerThread
   private fun Chapter.toReaderDetail() = ReaderDetail(
+      title = title,
       text = rawText?.let(HtmlTextUtil::toHtmlSpannable),
       url = url,
       previousUrl = previousUrl,
