@@ -71,7 +71,7 @@ class ChaptersFragment : DrawerRecyclerFragment() {
 
   private fun onBindItem(binding: ItemChapterBinding, list: MutableList<ChapterItem>, position: Int) {
     with(list[position]) {
-      binding.title.text = taxonView
+      binding.title.text = title ?: taxonView
       binding.bookmark.visibility = if (currentRead) View.VISIBLE else View.GONE
     }
   }
