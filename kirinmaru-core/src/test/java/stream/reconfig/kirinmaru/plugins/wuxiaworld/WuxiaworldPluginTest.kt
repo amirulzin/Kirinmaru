@@ -1,7 +1,6 @@
 package stream.reconfig.kirinmaru.plugins.wuxiaworld
 
 import okhttp3.CookieJar
-import org.junit.Assert.assertTrue
 import org.junit.Test
 import stream.reconfig.kirinmaru.TestHelper
 import stream.reconfig.kirinmaru.core.domain.CoreChapterId
@@ -29,15 +28,7 @@ class WuxiaworldPluginTest {
 
   @Test
   fun obtainChapters() {
-    PluginTestHelper(plugin).verifyObtainChapterIds(testNovel) { list ->
-      assertTrue(list.isNotEmpty())
-      list.forEach {
-        with(it) {
-          assertTrue(url.isNotBlank())
-          assertTrue(!title.isNullOrBlank())
-        }
-      }
-    }
+    PluginTestHelper(plugin).verifyObtainChapterIds(testNovel)
   }
 
   @Test

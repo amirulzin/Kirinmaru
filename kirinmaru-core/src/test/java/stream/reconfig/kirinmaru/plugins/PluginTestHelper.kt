@@ -58,9 +58,7 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
       chapter: ChapterId,
       crossinline assertBlock: (ChapterDetail) -> Unit = {
         logger.log(it)
-        assertTrue("Next url is null or blank", !it.nextUrl.isNullOrBlank())
-        assertTrue("Previous url is  null or blank", !it.previousUrl.isNullOrBlank())
-        assertTrue("Raw text is null or blank", !it.rawText.isNullOrBlank())
+        verifyChapterDetail(it)
       }
   ) {
     plugin.obtainDetail(novel, chapter)
@@ -164,6 +162,7 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
 
   fun verifyChapterDetail(detail: ChapterDetail) {
     with(detail) {
+      assertFalse("Title text is null/blank:", title.isNullOrBlank())
       assertFalse("Raw text is null/blank:", rawText.isNullOrBlank())
       assertFalse("Next url is null/blank:", nextUrl.isNullOrBlank())
       assertFalse("Previous url is null/blank:", previousUrl.isNullOrBlank())

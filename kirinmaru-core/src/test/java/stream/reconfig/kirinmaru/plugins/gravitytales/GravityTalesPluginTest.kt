@@ -36,15 +36,7 @@ class GravityTalesPluginTest {
 
   @Test
   fun obtainChapters() {
-    PluginTestHelper(plugin).verifyObtainChapterIds(novel) { list ->
-      assertTrue(list.isNotEmpty())
-      list.forEach {
-        with(it) {
-          assertTrue(url.isNotBlank())
-          assertTrue(!title.isNullOrBlank())
-        }
-      }
-    }
+    PluginTestHelper(plugin).verifyObtainChapterIds(novel)
   }
 
   @Test
