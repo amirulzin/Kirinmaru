@@ -9,6 +9,7 @@ import stream.reconfig.kirinmaru.android.prefs.CurrentReadPref
 import stream.reconfig.kirinmaru.android.util.offline.ResourceContract
 import stream.reconfig.kirinmaru.android.util.offline.SimpleResourceLiveData
 import stream.reconfig.kirinmaru.android.vo.Chapter
+import stream.reconfig.kirinmaru.android.vo.DBChapterId
 import stream.reconfig.kirinmaru.core.ChapterId
 import stream.reconfig.kirinmaru.plugins.PluginMap
 import stream.reconfig.kirinmaru.plugins.getPlugin
@@ -18,7 +19,7 @@ class ChaptersLiveData @Inject constructor(
     private val pluginMap: PluginMap,
     private val chapterDao: ChapterDao,
     private val currentReadPref: CurrentReadPref
-) : SimpleResourceLiveData<List<ChapterItem>, List<String>, List<ChapterId>>() {
+) : SimpleResourceLiveData<List<ChapterItem>, List<DBChapterId>, List<ChapterId>>() {
 
   private val novel = MutableLiveData<NovelParcel>()
 
@@ -27,8 +28,8 @@ class ChaptersLiveData @Inject constructor(
   }
 
   override fun createContract() =
-      object : ResourceContract<List<ChapterItem>, List<String>, List<ChapterId>> {
-        override fun local(): Flowable<List<String>> {
+      object : ResourceContract<List<ChapterItem>, List<DBChapterId>, List<ChapterId>> {
+        override fun local(): Flowable<List<DBChapterId>> {
           return novel.value?.let { novel ->
             chapterDao.chaptersAsync(novel.origin, novel.url)
           } ?: Flowable.error(IllegalStateException("Novel null in chapters local()"))
@@ -42,13 +43,13 @@ class ChaptersLiveData @Inject constructor(
 
         override fun persist(data: List<ChapterId>) {
           novel.value?.let { novel ->
-            chapterDao.upsert(data.map { Chapter(novel.origin, novel.url, it.url) })
+            chapterDao.upsert(data.map { Chapter(novel.origin, novel.url, it.url, it.title) })
           }
         }
 
-        override fun view(local: List<String>): List<ChapterItem> {
+        override fun view(local: List<DBChapterId>): List<ChapterItem> {
           val currentRead = currentReadPref.load(novel.value!!)
-          return local.map { ChapterItem(it, it == currentRead) }
+          return local.map { ChapterItem(it.url, it.title, it.url == currentRead) }
               .sortedByDescending { it.taxonomicNumber }
         }
 
