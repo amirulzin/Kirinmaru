@@ -8,7 +8,7 @@ targetCompatibility = "1.8"
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation kotlinStdLib8
+    implementation kotlinStdLib
 
     testImplementation jUnit
     testImplementation commonsIo

@@ -72,7 +72,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     testImplementation 'org.robolectric:robolectric:3.6.1'
     //Kotlin
-    implementation kotlinStdLib8
+    implementation kotlinStdLib
     //Android baseline libs
     implementation supportLib.appcompat_v7
     implementation supportLib.design
@@ -86,7 +86,6 @@ dependencies {
     implementation room.runtime
     implementation room.rxjava2
     kapt room.compiler
-    kapt "com.android.databinding:compiler:$build_tools_version"
     //DI
     implementation dagger.dagger
     implementation dagger.daggerAndroid
