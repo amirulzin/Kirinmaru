@@ -1,15 +1,15 @@
 package stream.reconfig.kirinmaru.android.ui.chapters
 
-import android.annotation.SuppressLint
-import io.mironov.smuggler.AutoParcelable
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import stream.reconfig.kirinmaru.android.ui.domain.AbsChapterId
 
 /**
  * ChapterItem for views
  */
-@SuppressLint("ParcelCreator")
+@Parcelize
 data class ChapterItem(
-    override val url: String,
-    override val title: String?,
-    val currentRead: Boolean
-) : AbsChapterId(), AutoParcelable
+  override val url: String,
+  override val title: String?,
+  val currentRead: Boolean
+) : AbsChapterId(), Parcelable

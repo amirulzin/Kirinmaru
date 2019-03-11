@@ -12,7 +12,6 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$androidPluginVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath "io.mironov.smuggler:smuggler-plugin:0.13.1"
         classpath "net.ltgt.gradle:gradle-errorprone-plugin:0.0.13"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
