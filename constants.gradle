@@ -1,17 +1,17 @@
 ext {
 
-    kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    kotlinStdLib7 = "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    kotlinStdLib8 = "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+    kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    kotlinStdLib7 = "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
+    kotlinStdLib8 = "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlinVersion"
 
     commonsIoVer = '2.6'; commonsIo = new DString('commons-io', 'commons-io', commonsIoVer).toString()
-    gsonVer = '2.8.2'; gson = new DString('com.google.code.gson', 'gson', gsonVer).toString()
-    jsoupVer = '1.10.3'; jsoup = new DString('org.jsoup', 'jsoup', jsoupVer).toString()
+    gsonVer = '2.8.5'; gson = new DString('com.google.code.gson', 'gson', gsonVer).toString()
+    jsoupVer = '1.11.3'; jsoup = new DString('org.jsoup', 'jsoup', jsoupVer).toString()
     jUnitVer = '4.12'; jUnit = new DString('junit', 'junit', jUnitVer).toString()
-    rxJavaVer = '2.1.7'; rxJava = new DString('io.reactivex.rxjava2', 'rxjava', rxJavaVer).toString()
-    rxAndroidVer = '2.0.2'; rxAndroid = new DString('io.reactivex.rxjava2', 'rxandroid', rxAndroidVer).toString()
+    rxJavaVer = '2.2.7'; rxJava = new DString('io.reactivex.rxjava2', 'rxjava', rxJavaVer).toString()
+    rxAndroidVer = '2.1.1'; rxAndroid = new DString('io.reactivex.rxjava2', 'rxandroid', rxAndroidVer).toString()
 
-    archLifecycleVer = '1.1.0'; _archLifecycle = new DString('android.arch.lifecycle', archLifecycleVer)
+    archLifecycleVer = '1.1.1'; _archLifecycle = new DString('android.arch.lifecycle', archLifecycleVer)
     archLifecycle = [
             runtime        : _archLifecycle.art('runtime'), //lightweight without LiveData and ViewModel
             extensions     : _archLifecycle.art('extensions'), //both LiveData and ViewModel
