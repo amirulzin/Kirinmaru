@@ -70,11 +70,11 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    testImplementation 'org.robolectric:robolectric:4.1'
+    testImplementation 'org.robolectric:robolectric:4.2.1'
     //Kotlin
     implementation kotlinStdLib
     //Android baseline libs
@@ -114,7 +114,6 @@ dependencies {
     implementation project(':kirinmaru-core')
     //UI
     implementation 'com.baseconfig.pillar:materials:0.3.2'
-    implementation 'com.baseconfig.pillar:utils:0.3.2'
     implementation 'net.bohush.geometricprogressview:geometricprogressview:1.1.1'
     implementation 'com.jaredrummler:colorpicker:1.0.2'
 }

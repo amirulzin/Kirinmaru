@@ -1,8 +1,8 @@
 ext {
 
     kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    kotlinStdLib7 = "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
-    kotlinStdLib8 = "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlinVersion"
+    kotlinStdLib7 = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    kotlinStdLib8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
 
     commonsIoVer = '2.6'; commonsIo = new DString('commons-io', 'commons-io', commonsIoVer).toString()
     gsonVer = '2.8.5'; gson = new DString('com.google.code.gson', 'gson', gsonVer).toString()
@@ -21,7 +21,7 @@ ext {
             common_java8   : _archLifecycle.art('common-java8'),
     ]
 
-    roomVer = '1.1.0-beta2'; _room = new DString('android.arch.persistence.room', roomVer)
+    roomVer = '1.1.1'; _room = new DString('android.arch.persistence.room', roomVer)
     room = [
             runtime : _room.art('runtime'),
             compiler: _room.art('compiler'),
@@ -29,7 +29,7 @@ ext {
     ]
 
     //DI
-    daggerVer = '2.13'; _dagger = new DString("com.google.dagger", daggerVer)
+    daggerVer = '2.21'; _dagger = new DString("com.google.dagger", daggerVer)
     dagger = [
             dagger                : _dagger.art('dagger'),
             daggerCompiler        : _dagger.art('dagger-compiler'),
@@ -38,20 +38,20 @@ ext {
             daggerAndroidProcessor: _dagger.art('dagger-android-processor')
     ]
 
-    okHttpVer = '3.9.1'; _okHttp = new DString('com.squareup.okhttp3', okHttpVer)
+    okHttpVer = '3.14.0'; _okHttp = new DString('com.squareup.okhttp3', okHttpVer)
     okHttp = [
             okHttp : _okHttp.art('okhttp'),
             logging: _okHttp.art('logging-interceptor')
     ]
 
-    retrofitVer = '2.3.0'; _retrofit2 = new DString('com.squareup.retrofit2', retrofitVer)
+    retrofitVer = '2.5.0'; _retrofit2 = new DString('com.squareup.retrofit2', retrofitVer)
     retrofit2 = [
             retrofit      : _retrofit2.art('retrofit'),
             adapterRxJava2: _retrofit2.art('adapter-rxjava2'),
             converterGson : _retrofit2.art('converter-gson')
     ]
 
-    supportLibVer = "27.1.1"; _androidSupport = new DString("com.android.support", supportLibVer)
+    supportLibVer = "28.0.0"; _androidSupport = new DString("com.android.support", supportLibVer)
     supportLib = [
             appcompat_v7           : _androidSupport.art('appcompat-v7'),
             cardview_v7            : _androidSupport.art('cardview-v7'),
