@@ -61,9 +61,9 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
 
     binding.refreshLayout.setOnRefreshListener { rvm.reader.refresh() }
 
-    binding.appBar.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+    binding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
       handleBottomBarVisibility(verticalOffset, appBarLayout)
-    }
+    })
 
     rvm.reader.observe(this) {
       it?.let {
