@@ -15,7 +15,6 @@ import javax.inject.Singleton
 /**
  * Plugin registry
  */
-@Singleton
 @Module
 interface PluginModule {
 
