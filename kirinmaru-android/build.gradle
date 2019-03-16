@@ -78,6 +78,7 @@ dependencies {
     //Kotlin
     implementation kotlinStdLib
     //Android baseline libs
+    implementation supportLib.annotations
     implementation supportLib.appcompat_v7
     implementation supportLib.design
     implementation supportLib.cardview_v7

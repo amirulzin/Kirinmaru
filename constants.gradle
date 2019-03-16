@@ -53,6 +53,7 @@ ext {
 
     supportLibVer = "28.0.0"; _androidSupport = new DString("com.android.support", supportLibVer)
     supportLib = [
+            annotations            : _androidSupport.art('support-annotations'),
             appcompat_v7           : _androidSupport.art('appcompat-v7'),
             cardview_v7            : _androidSupport.art('cardview-v7'),
             design                 : _androidSupport.art("design"),
