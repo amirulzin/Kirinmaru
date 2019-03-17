@@ -1,5 +1,8 @@
 package commons.android
 
+import dagger.android.support.DaggerAppCompatActivity
+import dagger.android.support.DaggerAppCompatDialogFragment
+import dagger.android.support.DaggerFragment
 import stream.reconfig.kirinmaru.android.BuildConfig
 import stream.reconfig.kirinmaru.android.R
 import stream.reconfig.kirinmaru.android.databinding.ActivityBaseDrawerBinding
@@ -17,6 +20,10 @@ object ProjectConstants {
   const val SHADOW_85 = R.color.pcc_shadow_85
   const val DEBUG_TAG = "DEBUG_TAG"
 }
+
 typealias BuildConfigAlias = BuildConfig
+typealias RootActivityAlias = DaggerAppCompatActivity
+typealias DialogFragmentAlias = DaggerAppCompatDialogFragment
+typealias FragmentAlias = DaggerFragment
 typealias DrawerActivityBindingAlias = ActivityBaseDrawerBinding
 typealias DrawerFragmentRecyclerBindingAlias = FragmentRecyclerBinding
