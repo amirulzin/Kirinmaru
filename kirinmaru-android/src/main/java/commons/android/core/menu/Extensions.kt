@@ -1,4 +1,4 @@
-package stream.reconfig.kirinmaru.android.util.menu
+package commons.android.core.menu
 
 import android.view.Menu
 import android.view.MenuItem
