@@ -1,4 +1,4 @@
-package stream.reconfig.kirinmaru.android.util.rx
+package commons.android.rx
 
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
