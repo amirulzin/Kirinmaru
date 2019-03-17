@@ -1,4 +1,4 @@
-package stream.reconfig.kirinmaru.android.util.preference
+package commons.android.dagger.compat
 
 import android.content.Context
 import android.support.v4.app.Fragment
@@ -8,7 +8,6 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
-
 
 abstract class DaggerPreferenceFragmentCompat : PreferenceFragmentCompat(), HasSupportFragmentInjector {
 
