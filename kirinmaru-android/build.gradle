@@ -93,7 +93,6 @@ dependencies {
     kapt room.compiler
     //DI
     implementation dagger.dagger
-    implementation dagger.daggerAndroid
     implementation dagger.daggerAndroidSupport
     kapt dagger.daggerCompiler
     kapt dagger.daggerAndroidProcessor
