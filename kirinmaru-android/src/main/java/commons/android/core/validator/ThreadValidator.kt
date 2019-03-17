@@ -1,4 +1,4 @@
-package stream.reconfig.kirinmaru.android.util.validator
+package commons.android.core.validator
 
 import android.os.Looper
 import android.support.annotation.MainThread
