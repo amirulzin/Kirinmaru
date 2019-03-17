@@ -1,8 +1,8 @@
 package stream.reconfig.kirinmaru.android.prefs
 
 import android.content.SharedPreferences
+import commons.android.core.prefs.primitive.IntPref
 import stream.reconfig.kirinmaru.android.R
-import stream.reconfig.kirinmaru.android.util.prefs.primitive.IntPref
 import javax.inject.Inject
 
 /**

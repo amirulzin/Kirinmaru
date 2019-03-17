@@ -6,16 +6,16 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import commons.android.arch.ViewModelFactory
+import commons.android.arch.observe
+import commons.android.arch.observeNonNull
+import commons.android.arch.offline.refresh.ResourceStateHandler
+import commons.android.arch.viewModel
+import commons.android.core.fragment.DrawerRecyclerFragment
 import stream.reconfig.kirinmaru.android.R
 import stream.reconfig.kirinmaru.android.databinding.ItemNovelBinding
-import stream.reconfig.kirinmaru.android.ui.common.fragment.DrawerRecyclerFragment
-import stream.reconfig.kirinmaru.android.ui.common.refresh.ResourceStateHandler
 import stream.reconfig.kirinmaru.android.ui.navigation.FragmentNavigator
-import stream.reconfig.kirinmaru.android.util.livedata.observe
-import stream.reconfig.kirinmaru.android.util.livedata.observeNonNull
 import stream.reconfig.kirinmaru.android.util.recycler.ItemDecorationUtil
-import stream.reconfig.kirinmaru.android.util.viewmodel.ViewModelFactory
-import stream.reconfig.kirinmaru.android.util.viewmodel.viewModel
 import stream.reconfig.kirinmaru.plugins.PluginMap
 import javax.inject.Inject
 
@@ -52,9 +52,9 @@ class NovelsFragment : DrawerRecyclerFragment() {
     val origin = arguments!!.getString(FARGS_ORIGIN)!!
 
     val novelAdapter = NovelAdapter(
-        onClickNovel = ::onClickNovel,
-        onToggleFavorite = ::onToggleFavorite,
-        onBind = ::onBindItem
+      onClickNovel = ::onClickNovel,
+      onToggleFavorite = ::onToggleFavorite,
+      onBind = ::onBindItem
     )
 
     with(binding.recyclerView) {
@@ -83,10 +83,10 @@ class NovelsFragment : DrawerRecyclerFragment() {
 
       nvm.novels.resourceState.observeNonNull(this) {
         ResourceStateHandler.handleStateUpdates(
-            coordinatorLayout = binding.coordinatorLayout,
-            refreshLayout = binding.refreshLayout,
-            resourceState = it,
-            remoteRefreshable = this
+          coordinatorLayout = binding.coordinatorLayout,
+          refreshLayout = binding.refreshLayout,
+          resourceState = it,
+          remoteRefreshable = this
         )
       }
     }
@@ -108,7 +108,7 @@ class NovelsFragment : DrawerRecyclerFragment() {
 
   private fun showSnackbar(message: String) {
     Snackbar.make(binding.coordinatorLayout, message, Snackbar.LENGTH_SHORT)
-        .show()
+      .show()
   }
 
   private fun onBindItem(binding: ItemNovelBinding, list: MutableList<NovelItem>, position: Int) {

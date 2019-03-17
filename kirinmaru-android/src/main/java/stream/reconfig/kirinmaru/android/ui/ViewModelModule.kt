@@ -2,16 +2,16 @@ package stream.reconfig.kirinmaru.android.ui
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import commons.android.arch.ViewModelFactory
+import commons.android.dagger.ViewModelKey
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import stream.reconfig.kirinmaru.android.di.keys.ViewModelKey
 import stream.reconfig.kirinmaru.android.ui.chapters.ChaptersViewModel
 import stream.reconfig.kirinmaru.android.ui.library.LibraryViewModel
 import stream.reconfig.kirinmaru.android.ui.main.MainViewModel
 import stream.reconfig.kirinmaru.android.ui.novels.NovelsViewModel
 import stream.reconfig.kirinmaru.android.ui.reader.ReaderViewModel
-import stream.reconfig.kirinmaru.android.util.viewmodel.ViewModelFactory
 
 @Module
 interface ViewModelModule {

@@ -1,6 +1,6 @@
 package stream.reconfig.kirinmaru.android.ui.domain
 
-import stream.reconfig.kirinmaru.android.util.validator.ThreadValidator
+import commons.android.core.validator.ThreadValidator
 import stream.reconfig.kirinmaru.core.ChapterId
 import stream.reconfig.kirinmaru.core.taxonomy.Taxonomy
 

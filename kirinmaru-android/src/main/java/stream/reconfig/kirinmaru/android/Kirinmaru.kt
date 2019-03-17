@@ -10,7 +10,7 @@ import stream.reconfig.kirinmaru.android.di.DaggerAppComponent
 class Kirinmaru : DaggerApplication() {
   override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
     return DaggerAppComponent.builder()
-        .application(this)
-        .build()
+      .application(this)
+      .build()
   }
 }

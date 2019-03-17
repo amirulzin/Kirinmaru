@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import commons.android.dagger.compat.DaggerPreferenceFragmentCompat
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -13,7 +14,6 @@ import stream.reconfig.kirinmaru.android.R
 import stream.reconfig.kirinmaru.android.db.Database
 import stream.reconfig.kirinmaru.android.prefs.FirstNavPref
 import stream.reconfig.kirinmaru.android.prefs.SHARED_PREF_NAME
-import stream.reconfig.kirinmaru.android.util.preference.DaggerPreferenceFragmentCompat
 import javax.inject.Inject
 
 class PrefChildFragment : DaggerPreferenceFragmentCompat() {
@@ -45,34 +45,34 @@ class PrefChildFragment : DaggerPreferenceFragmentCompat() {
 
     findPreference(getString(R.string.first_nav_key)).apply {
       Single.fromCallable { firstNavPref.load() }
-          .subscribeOn(Schedulers.io())
-          .observeOn(AndroidSchedulers.mainThread())
-          .subscribe { successId, _ ->
-            setDefaultValue(successId == R.id.navLibrary)
-            setOnPreferenceChangeListener { _, newValue ->
-              if (newValue as Boolean) firstNavPref.persist(R.id.navLibrary)
-              else firstNavPref.persist(R.id.navCatalogues)
-              true
-            }
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe { successId, _ ->
+          setDefaultValue(successId == R.id.navLibrary)
+          setOnPreferenceChangeListener { _, newValue ->
+            if (newValue as Boolean) firstNavPref.persist(R.id.navLibrary)
+            else firstNavPref.persist(R.id.navCatalogues)
+            true
           }
+        }
     }
 
     findPreference(getString(R.string.reset_database_key)).setOnPreferenceClickListener {
       Completable.fromCallable { database.clearAllTables() }
-          .subscribeOn(Schedulers.io())
-          .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(
-              { toast("Database cleared") },
-              {
-                toast(it.message
-                    ?: "Clearing database error. Try clearing the app storage via Android Settings")
-              }
-          )
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(
+          { toast("Database cleared") },
+          {
+            toast(it.message
+              ?: "Clearing database error. Try clearing the app storage via Android Settings")
+          }
+        )
       true
     }
 
     findPreference(getString(R.string.version_key))
-        .summary = BuildConfig.VERSION_NAME
+      .summary = BuildConfig.VERSION_NAME
   }
 
   private fun toast(msg: String) {

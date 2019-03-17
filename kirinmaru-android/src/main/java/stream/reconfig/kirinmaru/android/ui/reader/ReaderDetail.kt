@@ -4,12 +4,12 @@ import android.text.Spanned
 
 
 data class ReaderDetail(
-    val title: String?,
-    val text: Spanned? = null,
-    val url: String,
-    val previousUrl: String? = null,
-    val nextUrl: String? = null,
-    val taxon: String
+  val title: String?,
+  val text: Spanned? = null,
+  val url: String,
+  val previousUrl: String? = null,
+  val nextUrl: String? = null,
+  val taxon: String
 ) {
   fun canNavigateNext() = !nextUrl.isNullOrBlank()
 

@@ -4,14 +4,21 @@ import android.os.Bundle
 import android.support.annotation.IdRes
 import android.view.Menu
 import android.view.MenuItem
-import stream.reconfig.kirinmaru.android.ui.common.activity.DrawerBindingActivity
+import commons.android.arch.ViewModelFactory
+import commons.android.arch.observeNonNull
+import commons.android.arch.viewModel
+import commons.android.core.activity.DrawerBindingActivity
 import stream.reconfig.kirinmaru.android.ui.navigation.FragmentNavigator
-import stream.reconfig.kirinmaru.android.util.livedata.observeNonNull
-import stream.reconfig.kirinmaru.android.util.viewmodel.ViewModelFactory
-import stream.reconfig.kirinmaru.android.util.viewmodel.viewModel
 import javax.inject.Inject
 
 class MainActivity : DrawerBindingActivity() {
+  override fun toggleBottomNav(enabled: Boolean) {
+
+  }
+
+  override fun showDrawer(gravity: Int) {
+
+  }
 
   @Inject
   lateinit var vmf: ViewModelFactory
@@ -26,7 +33,7 @@ class MainActivity : DrawerBindingActivity() {
 
     mvm.appState.observeNonNull(this) { appState ->
       appState.apply {
-        if (isFirstLoad) {
+        if (isFirstLoad == true) {
           //TODO future firstLoad features
         }
         if (savedInstanceState == null) {
@@ -38,10 +45,10 @@ class MainActivity : DrawerBindingActivity() {
 
   override fun onNavigationItemSelected(item: MenuItem): Boolean {
     return FragmentNavigator.sideNavigate(
-        this,
-        item,
-        binding.drawerNavigation.menu,
-        mvm.appState.value!!.firstOrigin
+      this,
+      item,
+      binding.drawerNavigation.menu,
+      mvm.appState.value!!.firstOrigin!!
     )
   }
 

@@ -1,25 +1,23 @@
 package stream.reconfig.kirinmaru.android.ui.reader
 
-import android.app.FragmentManager
-
 import android.support.annotation.ColorInt
+import android.support.v4.app.FragmentManager
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
+import commons.android.dagger.ActivityScope
 import stream.reconfig.kirinmaru.android.R
 import stream.reconfig.kirinmaru.android.databinding.ViewReaderSettingBinding
-import stream.reconfig.kirinmaru.android.di.scopes.ActivityScope
 import stream.reconfig.kirinmaru.android.ui.numberpicker.NumberPicker
 
 @ActivityScope
 data class ReaderSettingHelper(
-    private val fragmentManager: FragmentManager,
-    private val binding: ViewReaderSettingBinding,
-    private val readerSetting: ReaderSetting,
-    private val fonts: List<String>,
-    private val listener: Listener
+  private val fragmentManager: FragmentManager,
+  private val binding: ViewReaderSettingBinding,
+  private val readerSetting: ReaderSetting,
+  private val fonts: List<String>,
+  private val listener: Listener
 ) {
 
   init {
@@ -38,9 +36,9 @@ data class ReaderSettingHelper(
         }
       }
 
-      pickerFontSize!!.picker = NumberPicker(readerSetting.fontSizeSp)
-      pickerLetterSpacing!!.picker = NumberPicker(readerSetting.letterSpacingSp)
-      pickerLineSpacing!!.picker = NumberPicker(readerSetting.lineSpacingExtra)
+      pickerFontSize.picker = NumberPicker(readerSetting.fontSizeSp)
+      pickerLetterSpacing.picker = NumberPicker(readerSetting.letterSpacingSp)
+      pickerLineSpacing.picker = NumberPicker(readerSetting.lineSpacingExtra)
 
       backgroundColorButton.setOnClickListener { launchColorPicker(backgroundColorId()) }
 
@@ -69,18 +67,19 @@ data class ReaderSettingHelper(
   }
 
   private fun launchColorPicker(int: Int) {
-    ColorPickerDialog.newBuilder()
-        .setShowAlphaSlider(false)
-        .setDialogId(int)
-        .create()
-        .apply { setColorPickerDialogListener(colorPickerListener) }
-        .show(fragmentManager, "color-picker-dialog")
+    //TODO
+//    ColorPickerDialog.newBuilder()
+//      .setShowAlphaSlider(false)
+//      .setDialogId(int)
+//      .create()
+//      .apply { setColorPickerDialogListener(colorPickerListener) }
+//      .show(fragmentManager, "color-picker-dialog")
   }
 
   private fun retrieveResult() = result.copy(
-      fontSizeSp = binding.pickerFontSize!!.picker!!.number,
-      letterSpacingSp = binding.pickerLetterSpacing!!.picker!!.number,
-      lineSpacingExtra = binding.pickerLineSpacing!!.picker!!.number
+    fontSizeSp = binding.pickerFontSize.picker!!.number,
+    letterSpacingSp = binding.pickerLetterSpacing.picker!!.number,
+    lineSpacingExtra = binding.pickerLineSpacing.picker!!.number
   )
 
   private fun setBackgroundColor(@ColorInt color: Int) {

@@ -7,23 +7,23 @@ import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.TextView
+import commons.android.arch.ViewModelFactory
+import commons.android.arch.observe
+import commons.android.arch.observeNonNull
+import commons.android.arch.offline.State
+import commons.android.arch.viewModel
+import commons.android.core.fragment.DataBindingFragment
+import commons.android.core.fullscreen.FullScreenUtil.enterFullscreen
+import commons.android.core.fullscreen.FullScreenUtil.exitFullScreen
+import commons.android.core.intent.IntentFactory
 import stream.reconfig.kirinmaru.android.R
 import stream.reconfig.kirinmaru.android.assets.Fonts
 import stream.reconfig.kirinmaru.android.databinding.FragmentReaderBinding
 import stream.reconfig.kirinmaru.android.databinding.ViewReaderbarBinding
-import stream.reconfig.kirinmaru.android.ui.common.fragment.DatabindingFragment
-import stream.reconfig.kirinmaru.android.util.fullscreen.FullScreenUtil.enterFullscreen
-import stream.reconfig.kirinmaru.android.util.fullscreen.FullScreenUtil.exitFullScreen
-import stream.reconfig.kirinmaru.android.util.intent.IntentFactory
-import stream.reconfig.kirinmaru.android.util.livedata.observe
-import stream.reconfig.kirinmaru.android.util.livedata.observeNonNull
-import stream.reconfig.kirinmaru.android.util.offline.State.*
-import stream.reconfig.kirinmaru.android.util.viewmodel.ViewModelFactory
-import stream.reconfig.kirinmaru.android.util.viewmodel.viewModel
 import javax.inject.Inject
 
 
-class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
+class ReaderFragment : DataBindingFragment<FragmentReaderBinding>() {
   companion object {
     private const val FARGS_READER = "readerParcel"
 
@@ -55,8 +55,8 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
     rvm.initReader(readerParcel)
 
     binding.refreshLayout.setColorSchemeColors(
-        ContextCompat.getColor(context!!, R.color.colorAccent),
-        ContextCompat.getColor(context!!, R.color.colorPrimary)
+      ContextCompat.getColor(context!!, R.color.colorAccent),
+      ContextCompat.getColor(context!!, R.color.colorPrimary)
     )
 
     binding.refreshLayout.setOnRefreshListener { rvm.reader.refresh() }
@@ -65,12 +65,12 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
       handleBottomBarVisibility(verticalOffset, appBarLayout)
     })
 
-    rvm.reader.observe(this) {
-      it?.let {
+    rvm.reader.observe(this) { readerDetail ->
+      readerDetail?.let {
         updateReaderBar(it)
         if (it.hasText()) binding.rawText.setText(it.text, TextView.BufferType.SPANNABLE)
       } ?: when (rvm.reader.resourceState.value?.state) {
-        ERROR -> binding.rawText.text = "Chapter can't be retrieved. Try refreshing"
+        State.ERROR -> binding.rawText.text = "Chapter can't be retrieved. Try refreshing"
         else -> binding.rawText.text = ""
       }
       binding.refreshLayout.isRefreshing = false
@@ -79,9 +79,9 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
     rvm.reader.resourceState.observeNonNull(this) {
       with(binding.refreshLayout) {
         when (it.state) {
-          COMPLETE -> isRefreshing = false
-          LOADING -> isRefreshing = true
-          ERROR -> {
+          State.COMPLETE -> isRefreshing = false
+          State.LOADING -> isRefreshing = true
+          State.ERROR -> {
             isRefreshing = false
             showSnackbar(it.message)
           }
@@ -103,8 +103,8 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
       }
     }
 
-    bindReaderBar(binding.buttonBarTop!!)
-    bindReaderBar(binding.buttonBarBottom!!)
+    bindReaderBar(binding.buttonBarTop)
+    bindReaderBar(binding.buttonBarBottom)
     hideFontMenu()
   }
 
@@ -120,10 +120,10 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
   }
 
   private fun updateReaderBar(detail: ReaderDetail) {
-    setReaderBarTitle(detail.title ?: detail.taxon, binding.buttonBarTop!!)
-    setReaderBarTitle(detail.title ?: detail.taxon, binding.buttonBarBottom!!)
-    setReaderBarNavigation(detail, binding.buttonBarTop!!)
-    setReaderBarNavigation(detail, binding.buttonBarBottom!!)
+    setReaderBarTitle(detail.title ?: detail.taxon, binding.buttonBarTop)
+    setReaderBarTitle(detail.title ?: detail.taxon, binding.buttonBarBottom)
+    setReaderBarNavigation(detail, binding.buttonBarTop)
+    setReaderBarNavigation(detail, binding.buttonBarBottom)
   }
 
 
@@ -146,38 +146,38 @@ class ReaderFragment : DatabindingFragment<FragmentReaderBinding>() {
 
   private fun createFontView(readerSetting: ReaderSetting) {
     ReaderSettingHelper(
-        fragmentManager = activity!!.fragmentManager,
-        binding = binding.readerSetting!!,
-        readerSetting = readerSetting,
-        fonts = fonts.list,
-        listener = object : ReaderSettingHelper.Listener {
-          override fun onComplete(readerSetting: ReaderSetting) {
-            rvm.readerSetting.postValue(readerSetting)
-            hideFontMenu()
-          }
-
-          override fun onCancel() {
-            hideFontMenu()
-          }
+      fragmentManager = activity!!.supportFragmentManager,
+      binding = binding.readerSetting,
+      readerSetting = readerSetting,
+      fonts = fonts.list,
+      listener = object : ReaderSettingHelper.Listener {
+        override fun onComplete(readerSetting: ReaderSetting) {
+          rvm.readerSetting.postValue(readerSetting)
+          hideFontMenu()
         }
+
+        override fun onCancel() {
+          hideFontMenu()
+        }
+      }
     )
   }
 
   private fun handleBottomBarVisibility(verticalOffset: Int, appBarLayout: AppBarLayout) {
-    val visibility = binding.buttonBarBottom!!.container.visibility
+    val visibility = binding.buttonBarBottom.container.visibility
 
     if (visibility == View.VISIBLE && verticalOffset == 0) {
-      binding.buttonBarBottom!!.container.visibility = View.INVISIBLE
+      binding.buttonBarBottom.container.visibility = View.INVISIBLE
     } else if (visibility == View.INVISIBLE
-        && appBarLayout.height + verticalOffset == 0
-        && rvm.reader.value?.hasText() != null) {
-      binding.buttonBarBottom!!.container.visibility = View.VISIBLE
+      && appBarLayout.height + verticalOffset == 0
+      && rvm.reader.value?.hasText() != null) {
+      binding.buttonBarBottom.container.visibility = View.VISIBLE
     }
   }
 
   private fun showSnackbar(message: String) {
     Snackbar.make(binding.coordinatorLayout, message, Snackbar.LENGTH_SHORT)
-        .show()
+      .show()
   }
 
   override fun onStart() {

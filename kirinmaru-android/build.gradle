@@ -93,7 +93,6 @@ dependencies {
     kapt room.compiler
     //DI
     implementation dagger.dagger
-    implementation dagger.daggerAndroid
     implementation dagger.daggerAndroidSupport
     kapt dagger.daggerCompiler
     kapt dagger.daggerAndroidProcessor
@@ -112,6 +111,7 @@ dependencies {
     //Behaviors
     implementation rxJava
     implementation rxAndroid
+    implementation rxKotlin
     implementation project(':kirinmaru-core')
     //UI
     implementation 'com.baseconfig.pillar:materials:0.3.2'

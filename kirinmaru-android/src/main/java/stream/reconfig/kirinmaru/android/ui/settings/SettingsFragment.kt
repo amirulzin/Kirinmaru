@@ -2,9 +2,9 @@ package stream.reconfig.kirinmaru.android.ui.settings
 
 import android.os.Bundle
 import android.view.View
+import commons.android.core.fragment.DrawerFragment
 import stream.reconfig.kirinmaru.android.R
 import stream.reconfig.kirinmaru.android.databinding.FragmentScrollableBinding
-import stream.reconfig.kirinmaru.android.ui.common.fragment.DrawerFragment
 
 class SettingsFragment : DrawerFragment<FragmentScrollableBinding>() {
   companion object {
@@ -23,8 +23,8 @@ class SettingsFragment : DrawerFragment<FragmentScrollableBinding>() {
     if (activity?.isFinishing == false) {
       view.post {
         childFragmentManager.beginTransaction()
-            .replace(binding.contentContainer.id, PrefChildFragment.newInstance())
-            .commit()
+          .replace(binding.contentContainer.id, PrefChildFragment.newInstance())
+          .commit()
       }
     }
   }

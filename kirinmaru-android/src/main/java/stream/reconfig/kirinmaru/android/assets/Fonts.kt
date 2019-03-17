@@ -2,7 +2,7 @@ package stream.reconfig.kirinmaru.android.assets
 
 import android.content.Context
 import android.graphics.Typeface
-import stream.reconfig.kirinmaru.android.di.qualifiers.ApplicationContext
+import commons.android.dagger.ApplicationContext
 import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 
@@ -18,11 +18,13 @@ class Fonts @Inject constructor(@ApplicationContext private val application: Con
   }
 
   val list by lazy {
-    application.assets.list(FONT_FOLDER)
+    application.assets.list(FONT_FOLDER).let { result ->
+      (result ?: emptyArray())
         .filter { it.isNotBlank() }
         .toMutableList()
         .apply { add(DEFAULT_TYPEFACE_NAME) }
         .sorted()
+    }
   }
 
   private val map by lazy { ConcurrentHashMap<String, Typeface>(8, 1f) }

@@ -8,6 +8,6 @@ import javax.inject.Inject
  *
  */
 class NovelsViewModel @Inject constructor(
-    application: Application,
-    val novels: NovelsLiveData
+  application: Application,
+  val novels: NovelsLiveData
 ) : AndroidViewModel(application)
