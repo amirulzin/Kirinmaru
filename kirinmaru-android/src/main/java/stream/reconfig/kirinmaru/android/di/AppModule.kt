@@ -2,10 +2,10 @@ package stream.reconfig.kirinmaru.android.di
 
 import android.app.Application
 import android.content.Context
+import commons.android.dagger.ApplicationContext
 import dagger.Binds
 import dagger.Module
 import stream.reconfig.kirinmaru.android.db.DatabaseModule
-import stream.reconfig.kirinmaru.android.di.qualifiers.ApplicationContext
 import stream.reconfig.kirinmaru.android.network.NetworkModule
 import stream.reconfig.kirinmaru.android.prefs.PrefModule
 import stream.reconfig.kirinmaru.android.ui.ActivityModule

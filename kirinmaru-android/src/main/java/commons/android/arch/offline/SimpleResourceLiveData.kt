@@ -2,8 +2,8 @@ package commons.android.arch.offline
 
 import android.support.annotation.AnyThread
 import android.support.annotation.CallSuper
-import commons.android.rx.addTo
 import io.reactivex.Completable
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 
 /**

@@ -2,16 +2,16 @@ package stream.reconfig.kirinmaru.android.ui.reader
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
+import commons.android.arch.RxMediatorLiveData
 import io.reactivex.Single
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
-import stream.reconfig.kirinmaru.android.util.livedata.RxMediatorLiveData
-import stream.reconfig.kirinmaru.android.util.rx.addTo
 import javax.inject.Inject
 
 class ReaderViewModel @Inject constructor(
-    application: Application,
-    val reader: ReaderLiveData,
-    private val readerPref: ReaderPref
+  application: Application,
+  val reader: ReaderLiveData,
+  private val readerPref: ReaderPref
 ) : AndroidViewModel(application) {
 
   private lateinit var readerParcel: ReaderParcel
@@ -27,9 +27,9 @@ class ReaderViewModel @Inject constructor(
           }
         }
       }.map(::postValue)
-          .subscribeOn(Schedulers.io())
-          .subscribe()
-          .addTo(disposables)
+        .subscribeOn(Schedulers.io())
+        .subscribe()
+        .addTo(disposables)
     }
 
     override fun onInactive() {

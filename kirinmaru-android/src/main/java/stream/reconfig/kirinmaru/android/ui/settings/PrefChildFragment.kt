@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import commons.android.dagger.compat.DaggerPreferenceFragmentCompat
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -13,7 +14,6 @@ import stream.reconfig.kirinmaru.android.R
 import stream.reconfig.kirinmaru.android.db.Database
 import stream.reconfig.kirinmaru.android.prefs.FirstNavPref
 import stream.reconfig.kirinmaru.android.prefs.SHARED_PREF_NAME
-import stream.reconfig.kirinmaru.android.util.preference.DaggerPreferenceFragmentCompat
 import javax.inject.Inject
 
 class PrefChildFragment : DaggerPreferenceFragmentCompat() {

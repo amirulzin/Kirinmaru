@@ -10,7 +10,7 @@ import android.support.annotation.WorkerThread
  *
  * [T] must be any valid SharedPreferences primitive type (String set included)
  */
-open class PrefModel<T : Any>(
+open class PrefModel<T>(
   private val key: String,
   private val default: T? = null,
   private inline val retrieve: SharedPreferences.(key: String, default: T?) -> T?,
@@ -22,7 +22,7 @@ open class PrefModel<T : Any>(
   open fun load(defaultVal: T? = default): T? = retrieve(prefs, key, defaultVal)
 
   @WorkerThread
-  open fun loadNonNull(defaultVal: T = requireNotNull(default)): T = requireNotNull(retrieve(prefs, key, defaultVal))
+  open fun loadNonNull(defaultVal: T = default!!): T = retrieve(prefs, key, defaultVal)!!
 
   @SuppressLint("ApplySharedPref")
   @AnyThread

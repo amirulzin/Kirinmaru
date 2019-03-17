@@ -1,7 +1,7 @@
 package stream.reconfig.kirinmaru.android.prefs
 
 import android.content.SharedPreferences
-import stream.reconfig.kirinmaru.android.util.prefs.primitive.BooleanPref
+import commons.android.core.prefs.primitive.BooleanPref
 import javax.inject.Inject
 
 /**

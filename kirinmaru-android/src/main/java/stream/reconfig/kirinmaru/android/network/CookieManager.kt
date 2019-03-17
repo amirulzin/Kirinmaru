@@ -4,14 +4,14 @@ import android.arch.lifecycle.LifecycleObserver
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import commons.android.core.validator.ThreadValidator
+import commons.android.dagger.ApplicationContext
 import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Cookie
 import okhttp3.CookieJar
 import okhttp3.HttpUrl
-import stream.reconfig.kirinmaru.android.di.qualifiers.ApplicationContext
 import stream.reconfig.kirinmaru.android.prefs.CookiePref
-import stream.reconfig.kirinmaru.android.util.validator.ThreadValidator
 import javax.inject.Inject
 
 private typealias CookieMap = MutableMap<String, MutableList<Cookie>>
@@ -21,9 +21,9 @@ private typealias CookieMap = MutableMap<String, MutableList<Cookie>>
  * with new ones for a given domain
  */
 class CookieManager @Inject constructor(
-    @ApplicationContext private val application: Context,
-    private val gson: Gson,
-    private val cookiePref: CookiePref
+  @ApplicationContext private val application: Context,
+  private val gson: Gson,
+  private val cookiePref: CookiePref
 ) : CookieJar, LifecycleObserver {
   private val gsonType = object : TypeToken<CookieMap>() {}.type
 
@@ -47,7 +47,7 @@ class CookieManager @Inject constructor(
 
   fun persist() {
     Completable.fromCallable { cookiePref.persist(gson.toJson(map, gsonType)) }
-        .subscribeOn(Schedulers.io())
-        .subscribe()
+      .subscribeOn(Schedulers.io())
+      .subscribe()
   }
 }

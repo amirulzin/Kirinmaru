@@ -3,13 +3,13 @@ package stream.reconfig.kirinmaru.android.ui.novels
 import android.arch.lifecycle.MutableLiveData
 import android.support.annotation.MainThread
 import android.support.annotation.WorkerThread
+import commons.android.arch.offline.ResourceContract
+import commons.android.arch.offline.SimpleResourceLiveData
 import io.reactivex.Flowable
 import io.reactivex.Single
 import stream.reconfig.kirinmaru.android.db.NovelDao
 import stream.reconfig.kirinmaru.android.ui.favorites.FavoriteNovel
 import stream.reconfig.kirinmaru.android.ui.favorites.FavoritePref
-import stream.reconfig.kirinmaru.android.util.offline.ResourceContract
-import stream.reconfig.kirinmaru.android.util.offline.SimpleResourceLiveData
 import stream.reconfig.kirinmaru.android.vo.Novel
 import stream.reconfig.kirinmaru.core.NovelDetail
 import stream.reconfig.kirinmaru.plugins.PluginMap
@@ -17,14 +17,14 @@ import stream.reconfig.kirinmaru.plugins.getPlugin
 import javax.inject.Inject
 
 class NovelsLiveData @Inject constructor(
-    private val pluginMap: PluginMap,
-    private val novelDao: NovelDao,
-    private val favoritePref: FavoritePref
+  private val pluginMap: PluginMap,
+  private val novelDao: NovelDao,
+  private val favoritePref: FavoritePref
 ) : SimpleResourceLiveData<List<NovelItem>, List<Novel>, List<NovelDetail>>() {
 
   private val origin = MutableLiveData<String>()
 
-  private val favorites by lazy { favoritePref.load() }
+  private val favorites by lazy { favoritePref.loadNonNull() }
 
   @MainThread
   fun initOrigin(newOrigin: String) {
@@ -46,25 +46,25 @@ class NovelsLiveData @Inject constructor(
   }
 
   override fun createContract() =
-      object : ResourceContract<List<NovelItem>, List<Novel>, List<NovelDetail>> {
-        override fun local(): Flowable<List<Novel>> {
-          return novelDao.novelsAsync(origin())
-        }
-
-        override fun remote(): Single<List<NovelDetail>> {
-          return pluginMap.getPlugin(origin()).obtainNovels()
-        }
-
-        override fun persist(data: List<NovelDetail>) {
-          novelDao.upsert(data.map(::toNovel))
-        }
-
-        override fun view(local: List<Novel>): List<NovelItem> {
-          return local.map(::toNovelItem)
-        }
-
-        override fun autoFetch() = true
+    object : ResourceContract<List<NovelItem>, List<Novel>, List<NovelDetail>> {
+      override fun local(): Flowable<List<Novel>> {
+        return novelDao.novelsAsync(origin())
       }
+
+      override fun remote(): Single<List<NovelDetail>> {
+        return pluginMap.getPlugin(origin()).obtainNovels()
+      }
+
+      override fun persist(data: List<NovelDetail>) {
+        novelDao.upsert(data.map(::toNovel))
+      }
+
+      override fun view(local: List<Novel>): List<NovelItem> {
+        return local.map(::toNovelItem)
+      }
+
+      override fun autoFetch() = true
+    }
 
   private fun origin() = origin.value!!
 

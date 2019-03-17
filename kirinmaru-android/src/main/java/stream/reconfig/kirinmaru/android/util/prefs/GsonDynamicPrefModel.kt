@@ -2,6 +2,7 @@ package stream.reconfig.kirinmaru.android.util.prefs
 
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import commons.android.core.prefs.PrefDynamicModel
 import java.lang.reflect.Type
 
 /**

@@ -4,15 +4,15 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.support.annotation.MainThread
 import android.support.annotation.WorkerThread
+import commons.android.arch.offline.ResourceContract
+import commons.android.arch.offline.SimpleResourceLiveData
+import commons.android.core.textview.CompatText
 import io.reactivex.Flowable
 import io.reactivex.Single
 import stream.reconfig.kirinmaru.android.db.ChapterDao
 import stream.reconfig.kirinmaru.android.parcel.ChapterIdParcel
 import stream.reconfig.kirinmaru.android.parcel.NovelParcel
 import stream.reconfig.kirinmaru.android.prefs.CurrentReadPref
-import stream.reconfig.kirinmaru.android.util.offline.ResourceContract
-import stream.reconfig.kirinmaru.android.util.offline.SimpleResourceLiveData
-import stream.reconfig.kirinmaru.android.util.textview.HtmlTextUtil
 import stream.reconfig.kirinmaru.android.vo.Chapter
 import stream.reconfig.kirinmaru.core.ChapterDetail
 import stream.reconfig.kirinmaru.core.ChapterId
@@ -22,9 +22,9 @@ import stream.reconfig.kirinmaru.plugins.getPlugin
 import javax.inject.Inject
 
 class ReaderLiveData @Inject constructor(
-    private val pluginMap: PluginMap,
-    private val chapterDao: ChapterDao,
-    private val currentReadPref: CurrentReadPref
+  private val pluginMap: PluginMap,
+  private val chapterDao: ChapterDao,
+  private val currentReadPref: CurrentReadPref
 ) : SimpleResourceLiveData<ReaderDetail, Chapter, ChapterDetail>() {
 
   private val readerParcel = MutableLiveData<ReaderParcel>()
@@ -38,18 +38,18 @@ class ReaderLiveData @Inject constructor(
 
     override fun remote(): Single<ChapterDetail> {
       return pluginMap.getPlugin(novel().origin)
-          .obtainDetail(novel(), chapterId())
+        .obtainDetail(novel(), chapterId())
     }
 
     override fun persist(data: ChapterDetail) {
       val chapter = Chapter(
-          origin = novel().origin,
-          novelUrl = novel().url,
-          url = chapterId().url,
-          title = data.title,
-          rawText = data.rawText,
-          nextUrl = data.nextUrl,
-          previousUrl = data.previousUrl)
+        origin = novel().origin,
+        novelUrl = novel().url,
+        url = chapterId().url,
+        title = data.title,
+        rawText = data.rawText,
+        nextUrl = data.nextUrl,
+        previousUrl = data.previousUrl)
       chapterDao.upsert(chapter)
     }
 
@@ -67,13 +67,13 @@ class ReaderLiveData @Inject constructor(
 
   fun navigateNext() {
     value?.nextUrl?.run(::navigateActual)
-        ?: postError("Next chapter doesn't exist")
+      ?: postError("Next chapter doesn't exist")
 
   }
 
   fun navigatePrevious() {
     value?.previousUrl?.run(::navigateActual)
-        ?: postError("Previous chapter doesn't exist")
+      ?: postError("Previous chapter doesn't exist")
   }
 
   fun absoluteUrl(): String? {
@@ -106,11 +106,11 @@ class ReaderLiveData @Inject constructor(
 
   @WorkerThread
   private fun Chapter.toReaderDetail() = ReaderDetail(
-      title = title,
-      text = rawText?.let(HtmlTextUtil::toHtmlSpannable),
-      url = url,
-      previousUrl = previousUrl,
-      nextUrl = nextUrl,
-      taxon = Taxonomy.createTaxonomicDisplay(Taxonomy.createTaxonomicNumber(url))
+    title = title,
+    text = rawText?.let(CompatText::toHtmlSpannable),
+    url = url,
+    previousUrl = previousUrl,
+    nextUrl = nextUrl,
+    taxon = Taxonomy.createTaxonomicDisplay(Taxonomy.createTaxonomicNumber(url))
   )
 }
