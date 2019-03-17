@@ -1,4 +1,4 @@
-package stream.reconfig.kirinmaru.android.util.livedata
+package commons.android.arch
 
 import android.arch.lifecycle.MediatorLiveData
 import android.support.annotation.CallSuper
