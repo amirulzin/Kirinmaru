@@ -1,7 +1,6 @@
 package commons.android.arch
 
 import android.arch.lifecycle.MediatorLiveData
-import android.support.annotation.CallSuper
 import io.reactivex.disposables.CompositeDisposable
 
 /**
@@ -10,9 +9,5 @@ import io.reactivex.disposables.CompositeDisposable
 abstract class RxMediatorLiveData<T> : MediatorLiveData<T>() {
   protected val disposables = CompositeDisposable()
 
-  @CallSuper
-  override fun onInactive() {
-    super.onInactive()
-    disposables.clear()
-  }
+  fun clearDisposables() = disposables.clear()
 }
