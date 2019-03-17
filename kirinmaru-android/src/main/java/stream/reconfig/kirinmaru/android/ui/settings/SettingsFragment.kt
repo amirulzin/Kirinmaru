@@ -23,8 +23,8 @@ class SettingsFragment : DrawerFragment<FragmentScrollableBinding>() {
     if (activity?.isFinishing == false) {
       view.post {
         childFragmentManager.beginTransaction()
-            .replace(binding.contentContainer.id, PrefChildFragment.newInstance())
-            .commit()
+          .replace(binding.contentContainer.id, PrefChildFragment.newInstance())
+          .commit()
       }
     }
   }

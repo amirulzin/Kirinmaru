@@ -58,24 +58,24 @@ object FragmentNavigator {
     }
 
     fm.beginTransaction()
-        .replace(container, outFrag, tag)
-        .commit()
+      .replace(container, outFrag, tag)
+      .commit()
     return true
   }
 
   @JvmStatic
   private inline fun navigate(
-      tag: String,
-      activity: FragmentActivity,
-      toBackStack: Boolean,
-      updateBundle: Bundle,
-      crossinline creator: () -> Fragment
+    tag: String,
+    activity: FragmentActivity,
+    toBackStack: Boolean,
+    updateBundle: Bundle,
+    crossinline creator: () -> Fragment
   ) {
     val fm = activity.supportFragmentManager
     val frag = fm.findFragmentByTag(tag)?.apply { arguments = updateBundle } ?: creator()
     fm.beginTransaction()
-        .replace(container, frag, tag)
-        .apply { if (toBackStack) addToBackStack(tag) }
-        .commit()
+      .replace(container, frag, tag)
+      .apply { if (toBackStack) addToBackStack(tag) }
+      .commit()
   }
 }

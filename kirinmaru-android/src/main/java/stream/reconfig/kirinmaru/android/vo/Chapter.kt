@@ -10,38 +10,38 @@ import stream.reconfig.kirinmaru.core.NovelId
 
 @Entity(foreignKeys = [
   (ForeignKey(
-      entity = Novel::class,
-      parentColumns = ["origin", "url"],
-      childColumns = ["origin", "novelUrl"],
-      onDelete = ForeignKey.CASCADE,
-      onUpdate = ForeignKey.CASCADE
+    entity = Novel::class,
+    parentColumns = ["origin", "url"],
+    childColumns = ["origin", "novelUrl"],
+    onDelete = ForeignKey.CASCADE,
+    onUpdate = ForeignKey.CASCADE
   ))],
-    indices = [(Index(value = ["origin", "url"], unique = false))]
+  indices = [(Index(value = ["origin", "url"], unique = false))]
 )
 data class Chapter(
-    val origin: String,
-    val novelUrl: String,
-    @PrimaryKey override val url: String,
-    override val title: String?,
-    override val rawText: String? = null,
-    override val nextUrl: String? = null,
-    override val previousUrl: String? = null
+  val origin: String,
+  val novelUrl: String,
+  @PrimaryKey override val url: String,
+  override val title: String?,
+  override val rawText: String? = null,
+  override val nextUrl: String? = null,
+  override val previousUrl: String? = null
 ) : ChapterId, ChapterDetail {
 
   constructor(novelId: NovelId, chapterId: ChapterId) : this(
-      origin = novelId.origin,
-      novelUrl = novelId.url,
-      url = chapterId.url,
-      title = chapterId.title
+    origin = novelId.origin,
+    novelUrl = novelId.url,
+    url = chapterId.url,
+    title = chapterId.title
   )
 
   constructor(novelId: NovelId, chapterId: ChapterId, chapterDetail: ChapterDetail) : this(
-      origin = novelId.origin,
-      novelUrl = novelId.url,
-      url = chapterId.url,
-      title = chapterId.title,
-      rawText = chapterDetail.rawText,
-      nextUrl = chapterDetail.nextUrl,
-      previousUrl = chapterDetail.previousUrl
+    origin = novelId.origin,
+    novelUrl = novelId.url,
+    url = chapterId.url,
+    title = chapterId.title,
+    rawText = chapterDetail.rawText,
+    nextUrl = chapterDetail.nextUrl,
+    previousUrl = chapterDetail.previousUrl
   )
 }

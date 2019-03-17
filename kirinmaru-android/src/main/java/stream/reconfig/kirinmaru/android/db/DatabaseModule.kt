@@ -16,7 +16,7 @@ class DatabaseModule {
   @Provides
   fun provideDatabase(@ApplicationContext application: Context): Database {
     return Room.databaseBuilder(application, Database::class.java, "sqlite.db")
-        .build()
+      .build()
   }
 
   @Provides
