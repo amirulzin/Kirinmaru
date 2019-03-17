@@ -1,4 +1,4 @@
-package stream.reconfig.kirinmaru.android.util.offline
+package commons.android.arch.offline
 
 import io.reactivex.Flowable
 import io.reactivex.Single

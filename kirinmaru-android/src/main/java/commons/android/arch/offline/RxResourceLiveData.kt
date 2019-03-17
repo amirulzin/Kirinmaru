@@ -1,7 +1,7 @@
-package stream.reconfig.kirinmaru.android.util.offline
+package commons.android.arch.offline
 
 import android.arch.lifecycle.MutableLiveData
-import stream.reconfig.kirinmaru.android.util.livedata.RxMediatorLiveData
+import commons.android.arch.RxMediatorLiveData
 
 /**
  * Rx resource-based live data model

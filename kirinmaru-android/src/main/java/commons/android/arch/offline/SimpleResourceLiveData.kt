@@ -1,10 +1,10 @@
-package stream.reconfig.kirinmaru.android.util.offline
+package commons.android.arch.offline
 
 import android.support.annotation.AnyThread
 import android.support.annotation.CallSuper
+import commons.android.rx.addTo
 import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
-import stream.reconfig.kirinmaru.android.util.rx.addTo
 
 /**
  * Simplified **offline-first** LiveData based on the implemented [ResourceContract].
@@ -46,24 +46,24 @@ abstract class SimpleResourceLiveData<V, L, R> : RxResourceLiveData<V>() {
         disposables.clear()
 
         contract.local()
-            .map(contract::view)
-            .onBackpressureBuffer()
-            .subscribeOn(Schedulers.io())
-            .subscribe(
-                { success -> postValue(success); postCompleteLocal() },
-                { error -> postErrorLocal(error?.message ?: "Database error") },
-                { postComplete() }
-            ).addTo(disposables)
+          .map(contract::view)
+          .onBackpressureBuffer()
+          .subscribeOn(Schedulers.io())
+          .subscribe(
+            { success -> postValue(success); postCompleteLocal() },
+            { error -> postErrorLocal(error?.message ?: "Database error") },
+            { postComplete() }
+          ).addTo(disposables)
 
         contract.remote()
-            .map(contract::persist)
-            .subscribeOn(Schedulers.io())
-            .subscribe(
-                { _ -> postCompleteRemote() },
-                { error -> postErrorRemote(error?.message ?: "Network error") }
-            ).addTo(disposables)
+          .map(contract::persist)
+          .subscribeOn(Schedulers.io())
+          .subscribe(
+            { _ -> postCompleteRemote() },
+            { error -> postErrorRemote(error?.message ?: "Network error") }
+          ).addTo(disposables)
       }.subscribeOn(Schedulers.computation())
-          .subscribe()
+        .subscribe()
     }
   }
 }

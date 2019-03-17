@@ -1,4 +1,4 @@
-package stream.reconfig.kirinmaru.android.util.offline
+package commons.android.arch.offline
 
 /**
  * State used during operation on resources
