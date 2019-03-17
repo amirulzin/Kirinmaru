@@ -112,6 +112,7 @@ dependencies {
     //Behaviors
     implementation rxJava
     implementation rxAndroid
+    implementation rxKotlin
     implementation project(':kirinmaru-core')
     //UI
     implementation 'com.baseconfig.pillar:materials:0.3.2'
