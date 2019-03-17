@@ -1,4 +1,4 @@
-package stream.reconfig.kirinmaru.android.util.context
+package commons.android.core.context
 
 import android.content.Context
 import android.util.TypedValue
