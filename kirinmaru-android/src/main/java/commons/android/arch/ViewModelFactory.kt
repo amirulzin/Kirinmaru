@@ -1,16 +1,17 @@
-package stream.reconfig.kirinmaru.android.util.viewmodel
+package commons.android.arch
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import commons.android.dagger.ApplicationScope
 import javax.inject.Inject
 import javax.inject.Provider
 
 /**
  * ViewModelFactory to help Dagger injection
  */
-
+@ApplicationScope
 class ViewModelFactory @Inject constructor(
-    private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
+  private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
 
   @Suppress("UNCHECKED_CAST")
