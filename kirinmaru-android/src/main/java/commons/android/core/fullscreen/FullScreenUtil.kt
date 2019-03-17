@@ -1,4 +1,4 @@
-package stream.reconfig.kirinmaru.android.util.fullscreen
+package commons.android.core.fullscreen
 
 import android.support.v4.app.FragmentActivity
 import android.view.WindowManager
