@@ -1,4 +1,4 @@
-package stream.reconfig.kirinmaru.android.util.xdatabinding
+package commons.android.core.databinding
 
 import android.annotation.TargetApi
 import android.databinding.BindingAdapter
