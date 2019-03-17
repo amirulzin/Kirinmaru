@@ -1,10 +1,10 @@
-package stream.reconfig.kirinmaru.android.util.textview
+package commons.android.core.textview
 
 import android.os.Build
 import android.text.Html
 import android.text.Spanned
 
-object HtmlTextUtil {
+object CompatText {
 
   @JvmStatic
   fun toHtmlSpannable(string: String): Spanned {
@@ -13,4 +13,5 @@ object HtmlTextUtil {
       Html.fromHtml(string, Html.FROM_HTML_MODE_LEGACY)
     else Html.fromHtml(string)
   }
+
 }
