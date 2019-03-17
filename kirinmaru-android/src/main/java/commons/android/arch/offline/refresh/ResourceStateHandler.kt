@@ -1,11 +1,11 @@
-package stream.reconfig.kirinmaru.android.ui.common.refresh
+package commons.android.arch.offline.refresh
 
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
 import android.support.v4.widget.SwipeRefreshLayout
-import stream.reconfig.kirinmaru.android.util.offline.ResourceState
-import stream.reconfig.kirinmaru.android.util.offline.ResourceType
-import stream.reconfig.kirinmaru.android.util.offline.State.*
+import commons.android.arch.offline.ResourceState
+import commons.android.arch.offline.ResourceType
+import commons.android.arch.offline.State.*
 
 /**
  * Handles ResourceState updates to relevant views.
@@ -16,10 +16,10 @@ object ResourceStateHandler {
 
   @JvmStatic
   fun handleStateUpdates(
-      coordinatorLayout: CoordinatorLayout,
-      refreshLayout: SwipeRefreshLayout,
-      resourceState: ResourceState,
-      remoteRefreshable: RemoteRefreshable
+    coordinatorLayout: CoordinatorLayout,
+    refreshLayout: SwipeRefreshLayout,
+    resourceState: ResourceState,
+    remoteRefreshable: RemoteRefreshable
   ) {
     with(refreshLayout) {
       when (resourceState.state) {

@@ -1,4 +1,4 @@
-package stream.reconfig.kirinmaru.android.ui.common.refresh
+package commons.android.arch.offline.refresh
 
 interface RemoteRefreshable {
   fun showRemoteIndicator(isShown: Boolean)
