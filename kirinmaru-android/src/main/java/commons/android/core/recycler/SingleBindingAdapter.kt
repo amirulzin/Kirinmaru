@@ -1,4 +1,4 @@
-package stream.reconfig.kirinmaru.android.ui.common.recycler
+package commons.android.core.recycler
 
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
@@ -12,10 +12,10 @@ import android.view.ViewGroup
  *  More efficient than [BindingAdapter] due to calls do not use manual type checking.
  */
 open class SingleBindingAdapter<out C : Collection<*>, V : ViewDataBinding>(
-    protected val collection: C,
-    private inline val resourceId: Int,
-    private inline val postCreate: (holder: BindingHolder<V>, collection: C) -> Unit = { _, _ -> },
-    private inline val bind: (binding: V, collection: C, position: Int) -> Unit = { _, _, _ -> throw NotImplementedError("ViewHolder bind block not defined") }
+  @Suppress("MemberVisibilityCanBePrivate") protected val collection: C,
+  private inline val resourceId: Int,
+  private inline val postCreate: (holder: BindingHolder<V>, collection: C) -> Unit = { _, _ -> },
+  private inline val bind: (binding: V, collection: C, position: Int) -> Unit = { _, _, _ -> throw NotImplementedError("ViewHolder bind block not defined") }
 ) : RecyclerView.Adapter<BindingHolder<V>>() {
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingHolder<V> {
@@ -34,9 +34,9 @@ open class SingleBindingAdapter<out C : Collection<*>, V : ViewDataBinding>(
   companion object {
     @JvmStatic
     inline fun <C : Collection<*>, V : ViewDataBinding> clickPredicate(
-        holder: BindingHolder<V>,
-        collection: C,
-        behavior: (pos: Int) -> Unit
+      holder: BindingHolder<V>,
+      collection: C,
+      behavior: (pos: Int) -> Unit
     ) {
       val i = holder.adapterPosition
       if (i >= 0 && i < collection.size) {

@@ -1,4 +1,4 @@
-package stream.reconfig.kirinmaru.android.ui.common.recycler
+package commons.android.core.recycler
 
 import android.databinding.ViewDataBinding
 import android.support.v7.widget.RecyclerView

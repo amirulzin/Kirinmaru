@@ -1,4 +1,4 @@
-package stream.reconfig.kirinmaru.android.ui.common.fragment
+package commons.android.core.fragment
 
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
@@ -6,12 +6,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import dagger.android.support.DaggerFragment
+import commons.android.FragmentAlias
 
 /**
  * Abstract fragment with ViewDataBinding helper
  */
-abstract class DatabindingFragment<V : ViewDataBinding> : DaggerFragment() {
+abstract class DataBindingFragment<V : ViewDataBinding> : FragmentAlias() {
   protected lateinit var binding: V
   protected abstract val layoutId: Int
 

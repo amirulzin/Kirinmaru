@@ -1,19 +1,19 @@
-package stream.reconfig.kirinmaru.android.ui.common.fragment
+package commons.android.core.fragment
 
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.design.widget.AppBarLayout
 import android.support.v4.content.ContextCompat
 import android.view.View
-import stream.reconfig.kirinmaru.android.R
-import stream.reconfig.kirinmaru.android.databinding.FragmentRecyclerBinding
-import stream.reconfig.kirinmaru.android.ui.common.refresh.RemoteRefreshable
+import commons.android.DrawerFragmentRecyclerBindingAlias
+import commons.android.ProjectConstants
+import commons.android.arch.offline.refresh.RemoteRefreshable
 
 /**
  * Extensible list fragment containing a RecyclerView with a Toolbar enclosed by an [AppBarLayout]
  */
-abstract class DrawerRecyclerFragment : DrawerFragment<FragmentRecyclerBinding>(), RemoteRefreshable {
-  override val layoutId = R.layout.fragment_recycler
+abstract class DrawerRecyclerFragment : DrawerFragment<DrawerFragmentRecyclerBindingAlias>(), RemoteRefreshable {
+  override val layoutId = ProjectConstants.LYT_FRAGMENT_RECYCLER_VIEW
 
   override fun getToolbar() = binding.toolbar
 
@@ -21,8 +21,8 @@ abstract class DrawerRecyclerFragment : DrawerFragment<FragmentRecyclerBinding>(
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     binding.refreshLayout.setColorSchemeColors(
-        ContextCompat.getColor(context!!, R.color.colorAccent),
-        ContextCompat.getColor(context!!, R.color.colorPrimary)
+      ContextCompat.getColor(context!!, ProjectConstants.CLR_ACCENT),
+      ContextCompat.getColor(context!!, ProjectConstants.CLR_PRIMARY)
     )
   }
 

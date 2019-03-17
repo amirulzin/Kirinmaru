@@ -1,13 +1,14 @@
-package stream.reconfig.kirinmaru.android.ui.common.activity
+package commons.android.core.activity
 
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
-import dagger.android.support.DaggerAppCompatActivity
+import commons.android.RootActivityAlias
 
 /**
  * Base DataBindingActivity. Invoke [bindContentView] to set the view contents
  */
-abstract class DataBindingActivity<V : ViewDataBinding> : DaggerAppCompatActivity() {
+@Suppress("MemberVisibilityCanBePrivate")
+abstract class DataBindingActivity<V : ViewDataBinding> : RootActivityAlias() {
   protected lateinit var binding: V
   protected abstract val layoutId: Int
 
