@@ -1,4 +1,4 @@
-package stream.reconfig.kirinmaru.android.di.keys
+package commons.android.dagger
 
 import android.arch.lifecycle.ViewModel
 import dagger.MapKey
