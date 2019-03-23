@@ -1,4 +1,4 @@
-![license](https://img.shields.io/badge/license-MIT_2.0-blue.svg) ![license](https://img.shields.io/badge/stable-0.1.0-brightgreen.svg) ![minSdk](https://img.shields.io/badge/minSdk-Lollipop-orange.svg)
+![license](https://img.shields.io/badge/license-MIT_2.0-blue.svg) ![license](https://img.shields.io/badge/stable-0.1.0-brightgreen.svg) [![CircleCI](https://circleci.com/gh/amirulzin/Kirinmaru/tree/master.svg?style=shield)](https://circleci.com/gh/amirulzin/Kirinmaru/tree/master) ![minSdk](https://img.shields.io/badge/minSdk-Lollipop-orange.svg)
 
 # Kirinmaru
 
