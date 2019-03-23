@@ -35,7 +35,7 @@ task wrapper(type: Wrapper) {
 }
 
 tasks.withType(JavaCompile) {
-    configure(options) {
+    options {
         compilerArgs << "-Xlint:-unchecked"
         compilerArgs << "-Xlint:-rawtypes"
     }
