@@ -75,6 +75,8 @@ dependencies {
     })
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     testImplementation 'org.robolectric:robolectric:4.2.1'
+    testImplementation 'junit:junit:4.12'
+
     //Kotlin
     implementation kotlinStdLib
     //Android baseline libs
@@ -96,10 +98,6 @@ dependencies {
     implementation dagger.daggerAndroidSupport
     kapt dagger.daggerCompiler
     kapt dagger.daggerAndroidProcessor
-    kaptTest dagger.daggerCompiler
-    kaptTest dagger.daggerAndroidProcessor
-    kaptAndroidTest dagger.daggerCompiler
-    kaptAndroidTest dagger.daggerAndroidProcessor
     //Network
     implementation okHttp.okHttp
     implementation okHttp.logging
