@@ -21,18 +21,53 @@ import okhttp3.OkHttpClient
  * * Try to use methods/classes/utils from [com.reconfig.kirinmaru.core] as much as possible to avoid duplicates
  */
 interface Plugin {
-
+  /**
+   * Implement as constructor injection
+   */
   val client: OkHttpClient
 
+  /**
+   * Implement as constructor injection. The provided shared CookieJar can be used for any authentication black magic
+   */
   val cookieJar: CookieJar
 
+  /**
+   * The full site URL
+   */
   val origin: String
 
-  fun obtainNovels(): Single<List<NovelDetail>>
+  /**
+   * The [PluginFeature] should dictate what optional features is available for the plugin. Can be empty
+   */
+  val feature: Set<PluginFeature>
 
-  fun obtainChapters(novelDetail: NovelDetail): Single<List<ChapterId>>
+  /**
+   * Return plugin own implementation of [SearchOptions]. Can be used for paging, genre, tags, etc or empty (default)
+   */
+  fun searchOptions(): Single<SearchOptions> = Single.just(emptyMap())
 
+  /**
+   * Return a list of some [NovelDetail] to be showed to user. Can be empty (default behavior)
+   */
+  fun obtainPreliminaryNovels(searchOptions: SearchOptions = emptyMap()): Single<List<NovelDetail>> = Single.just(emptyList())
+
+  /**
+   * Return a list of [NovelDetail] with optional [SearchOptions]
+   */
+  fun obtainNovels(searchOptions: SearchOptions = emptyMap()): Single<List<NovelDetail>> = Single.just(emptyList())
+
+  /**
+   * Return a list of [ChapterId] with optional [SearchOptions]
+   */
+  fun obtainChapters(novelDetail: NovelDetail, searchOptions: SearchOptions = emptyMap()): Single<List<ChapterId>> = Single.just(emptyList())
+
+  /**
+   * Obtain [ChapterDetail] for the given [ChapterId]
+   */
   fun obtainDetail(novelDetail: NovelDetail, chapterId: ChapterId): Single<ChapterDetail>
 
+  /**
+   * Obtain absolute url of a [ChapterDetail]. Used when user wanted to visit the actual chapter page
+   */
   fun toAbsoluteUrl(novelDetail: NovelDetail, chapterId: ChapterId): String
 }

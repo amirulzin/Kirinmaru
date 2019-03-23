@@ -22,6 +22,8 @@ internal const val WUXIAWORLD_ORIGIN = "WuxiaWorld"
  */
 class WuxiaworldPlugin @Inject constructor(override val client: OkHttpClient, override val cookieJar: CookieJar) : Plugin {
 
+  override val feature: Set<PluginFeature> = emptySet()
+
   override val origin = WUXIAWORLD_ORIGIN
 
   private val language = listOf("Chinese", "Korean", "English")
@@ -35,7 +37,7 @@ class WuxiaworldPlugin @Inject constructor(override val client: OkHttpClient, ov
         .create(WuxiaWorldApi::class.java)
   }
 
-  override fun obtainNovels(): Single<List<NovelDetail>> {
+  override fun obtainNovels(searchOptions: SearchOptions): Single<List<NovelDetail>> {
 
     val obsCompleted = Observable.fromIterable(tags)
         .flatMapSingle(::obtainNovelsByTag)
@@ -59,7 +61,7 @@ class WuxiaworldPlugin @Inject constructor(override val client: OkHttpClient, ov
   }
 
 
-  override fun obtainChapters(novelDetail: NovelDetail): Single<List<ChapterId>> {
+  override fun obtainChapters(novelDetail: NovelDetail, searchOptions: SearchOptions): Single<List<ChapterId>> {
     return api.chapters(novelDetail.url)
         .map(::streamToDocument)
         .map(WuxiaWorldChapterIdParser::parse)
