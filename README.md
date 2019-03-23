@@ -13,7 +13,6 @@ Feel free to report issues here on Github.
 
 Current site plugins:
 - Wuxiaworld
-- GravityTales
 
 Planned:
 - VolareNovels
@@ -21,6 +20,8 @@ Planned:
 - Qidian?
 
 ## Contributing
+
+Plugin implementations are under `kirinmaru-core` and must be registered under [PluginModule](stream/reconfig/kirinmaru/plugins/PluginModule.kt)
 
 Fork, branch, squash and rebase with proper commit messages before submitting your pull request.
 

@@ -169,6 +169,14 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
     }
   }
 
+  fun obtainRandomNovel(): NovelDetail {
+    return plugin.obtainNovels().blockingGet().random()
+  }
+
+  fun obtainRandomChapterId(novelDetail: NovelDetail): ChapterId {
+    return plugin.obtainChapters(novelDetail).blockingGet().random()
+  }
+
   private fun <T> List<T>.middle(): T {
     if (isEmpty())
       throw NoSuchElementException("List is empty.")
