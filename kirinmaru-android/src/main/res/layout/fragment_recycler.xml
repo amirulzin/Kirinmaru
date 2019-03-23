@@ -10,6 +10,7 @@
         android:layout_height="match_parent"
         tools:context="com.baseconfig.kirinmaru.view.NovelActivity">
 
+        <!--suppress AndroidDomInspection -->
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/refreshLayout"
             android:layout_width="match_parent"

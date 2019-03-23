@@ -13,7 +13,7 @@ import stream.reconfig.kirinmaru.remote.Providers
  * Integration test for WordPress API based on the official demo site
  */
 @Ignore("Remote")
-class ordpressApiRemoteTest {
+class WordpressApiRemoteTest {
 
   val baseUrl = "https://demo.wp-api.org/"
   val api = Providers.retrofitBuilder()

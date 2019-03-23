@@ -12,7 +12,7 @@ import stream.reconfig.kirinmaru.remote.Providers
 /**
  * Quick test to validate novels retrieval
  */
-@Ignore
+@Ignore("Unused")
 class WuxiaWorldIndexParserTest {
 
   @Test
