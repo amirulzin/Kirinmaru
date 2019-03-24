@@ -19,13 +19,13 @@ abstract class FilterableData<T>(private val liveData: MutableLiveData<List<T>>)
     originalCopy = list
   }
 
-  fun applyFilter(input: CharSequence) {
+  open fun applyFilter(input: CharSequence) {
     liveData.postValue(originalCopy.filter { data ->
       filter(input, data)
     })
   }
 
-  fun revertFilter() {
+  open fun revertFilter() {
     liveData.postValue(originalCopy)
   }
 }

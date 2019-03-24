@@ -6,7 +6,7 @@ package stream.reconfig.kirinmaru.core
 enum class PluginFeature {
   COVER_IMAGE,
   CAN_SEARCH_NOVEL,
-  PAGED_SEARCH,
+  PAGED_NOVEL_IDS,
   PAGED_CHAPTER_IDS,
 }
 

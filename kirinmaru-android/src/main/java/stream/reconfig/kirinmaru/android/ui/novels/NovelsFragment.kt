@@ -3,6 +3,7 @@ package stream.reconfig.kirinmaru.android.ui.novels
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.SearchView
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -68,6 +69,12 @@ class NovelsFragment : DrawerRecyclerFragment() {
       initOrigin(origin)
     }
 
+    with(binding.toolbar) {
+      inflateMenu(R.menu.novel_toolbar_menu)
+      val searchView = menu.findItem(R.id.search).actionView as SearchView
+      searchView.setOnQueryTextListener(onSearchQuery())
+    }
+
     binding.root.post {
       with(binding.toolbarSpinner) {
         visibility = View.VISIBLE
@@ -102,6 +109,20 @@ class NovelsFragment : DrawerRecyclerFragment() {
         arguments = Bundle().apply {
           putString(FARGS_ORIGIN, newOrigin)
         }
+      }
+    }
+  }
+
+  private fun onSearchQuery(): SearchView.OnQueryTextListener {
+    return object : SearchView.OnQueryTextListener {
+      override fun onQueryTextSubmit(query: String?): Boolean {
+        query?.let(nvm.novels.filter::applyFilter)
+        return true
+      }
+
+      override fun onQueryTextChange(newText: String?): Boolean {
+        newText?.let(nvm.novels.filter::applyFilter)
+        return true
       }
     }
   }

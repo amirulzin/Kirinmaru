@@ -4,6 +4,7 @@ import io.reactivex.Single
 import okhttp3.CookieJar
 import okhttp3.OkHttpClient
 import stream.reconfig.kirinmaru.core.*
+import stream.reconfig.kirinmaru.core.PluginFeature.*
 import stream.reconfig.kirinmaru.remote.Providers
 import javax.inject.Inject
 
@@ -21,7 +22,12 @@ class NovelFullPlugin @Inject constructor(override val client: OkHttpClient, ove
       .create(NovelFullApi::class.java)
   }
 
-  override val feature: Set<PluginFeature> = emptySet()
+  override val feature: Set<PluginFeature> = setOf(
+    COVER_IMAGE,
+    CAN_SEARCH_NOVEL,
+    PAGED_NOVEL_IDS,
+    PAGED_CHAPTER_IDS
+  )
 
   override val origin: String = NOVELFULL_ORIGIN
 
