@@ -15,10 +15,10 @@ public class Taxonomy {
 
   //Currently index of the identifier (b, c ,s, p) is hard coded in Taxonomy.View
   static final String FILL_CHAR = "0";
-  static final String BOOK_MOLD = "b" + fill(3);
+  static final String BOOK_MOLD = "b" + fill(5);
   static final String CHAPTER_MOLD = "c" + fill(5); //enough for 99999 chapters
-  static final String SECTION_MOLD = "s" + fill(3);
-  static final String PART_MOLD = "p" + fill(3);
+  static final String SECTION_MOLD = "s" + fill(5);
+  static final String PART_MOLD = "p" + fill(5);
   private static final String[] BOOKS_ID = {"book", "vol", "volume"};
   private static final String[] CHAPTERS_ID = {"chapter", "ch"};
 
@@ -37,7 +37,7 @@ public class Taxonomy {
   static IndexedTaxon createTaxon(String url) {
     String path = url;
     if (path.contains("prologue")) {
-      path = path.substring(0, path.length())
+      path = path
         .concat("-chapter-0"); //length - 1 to exclude the last '/' returned from formatted url
     }
 
@@ -47,6 +47,7 @@ public class Taxonomy {
     try {
       return parseSegment(lastSegment + "/"); //TODO FIX THIS. Currently iteration need a dummy last char so substring can work even on single character
     } catch (IllegalStateException | IndexOutOfBoundsException e) {
+      // /release-that-witch/chapter-1067-1067-the-person-pursuing-miracles.html
       throw new IllegalStateException(String.format(Locale.US, "%10s %s\nError: [%s]", "Problem", url, e.getMessage()), e);
     }
     //return new IndexedTaxon(); //return default 0 on failure
