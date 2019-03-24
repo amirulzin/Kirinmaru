@@ -10,13 +10,13 @@ import org.apache.commons.io.IOUtils
 object TestHelper {
   fun readResource(path: String): String {
     TestHelper::class.java.classLoader
-        .getResourceAsStream(path)
-        .use { return IOUtils.toString(it, Charsets.UTF_8) }
+      .getResourceAsStream(path)
+      .use { return IOUtils.toString(it, Charsets.UTF_8) }
   }
 
   fun okHttpClient(level: HttpLoggingInterceptor.Level = HttpLoggingInterceptor.Level.NONE): OkHttpClient {
     return OkHttpClient.Builder()
-        .addInterceptor(HttpLoggingInterceptor().setLevel(level))
-        .build()
+      .addInterceptor(HttpLoggingInterceptor().setLevel(level))
+      .build()
   }
 }

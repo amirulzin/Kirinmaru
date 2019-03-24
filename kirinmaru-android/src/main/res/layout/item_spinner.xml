@@ -8,8 +8,8 @@
     android:gravity="center_vertical"
     android:maxLines="1"
     android:minHeight="48dp"
-    android:paddingEnd="16dp"
     android:paddingStart="16dp"
+    android:paddingEnd="16dp"
     android:textSize="20sp"
     tools:ignore="RtlSymmetry"
     tools:text="Plugin Source" />

@@ -17,8 +17,8 @@ import java.io.IOException
 @Nullable
 internal inline fun <T> Document.selectBy(selector: String, crossinline block: Elements.() -> T?): T? {
   return select(selector)
-      .takeIf { it.isNotEmpty() }
-      ?.block()
+    .takeIf { it.isNotEmpty() }
+    ?.block()
 }
 
 @NotNull
@@ -26,9 +26,9 @@ internal fun Single<Response<ResponseBody>>.mapDocument(baseUri: String): Single
   return this.map {
     if (it.isSuccessful) {
       it.body()
-          ?.byteStream()
-          ?.use { Jsoup.parse(it, "UTF-8", baseUri) }
-          ?: throw ParseException("Body is null/empty", baseUri)
+        ?.byteStream()
+        ?.use { Jsoup.parse(it, "UTF-8", baseUri) }
+        ?: throw ParseException("Body is null/empty", baseUri)
     } else throw IOException("Origin: $baseUri\nError: ${it.message()}\nHeaders: ${it.headers()}\nBody: ${it.errorBody()}")
 
   }

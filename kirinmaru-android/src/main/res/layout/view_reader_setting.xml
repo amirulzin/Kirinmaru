@@ -41,13 +41,13 @@
             app:layout_constraintVertical_bias="1.0" />
 
         <TextView
-            app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/fontSize"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:gravity="center_vertical"
             android:text="Size"
             android:textColor="@color/colorTextPrimary"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fontName" />
 
 
@@ -66,8 +66,8 @@
             android:layout_height="40dp"
             android:gravity="center_vertical"
             android:text="Letter spacing"
-            app:layout_constraintStart_toStartOf="parent"
             android:textColor="@color/colorTextPrimary"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fontSize" />
 
         <include
@@ -79,13 +79,13 @@
             app:layout_constraintTop_toBottomOf="@id/fontSize" />
 
         <TextView
-            app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/lineSpacing"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:gravity="center_vertical"
             android:text="Line spacing"
             android:textColor="@color/colorTextPrimary"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/letterSpacing" />
 
         <include
@@ -97,13 +97,13 @@
             app:layout_constraintTop_toBottomOf="@id/letterSpacing" />
 
         <TextView
-            app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/textColor"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:gravity="center_vertical"
             android:text="Text color"
             android:textColor="@color/colorTextPrimary"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/lineSpacing" />
 
         <View
@@ -116,13 +116,13 @@
             app:layout_constraintTop_toBottomOf="@+id/lineSpacing" />
 
         <TextView
-            app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/backgroundColor"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:gravity="center_vertical"
             android:text="Background color"
             android:textColor="@color/colorTextPrimary"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textColor" />
 
         <View

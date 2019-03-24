@@ -12,11 +12,11 @@ class WuxiaworldPluginTest {
   val plugin = WuxiaworldPlugin(TestHelper.okHttpClient(), CookieJar.NO_COOKIES)
 
   val testNovel = CoreNovelDetail(
-      novelTitle = "I Shall Seal the Heavens",
-      url = "/novel/i-shall-seal-the-heavens",
-      id = null,
-      tags = setOf("Chinese", "Completed"),
-      origin = WUXIAWORLD_ORIGIN
+    novelTitle = "I Shall Seal the Heavens",
+    url = "/novel/i-shall-seal-the-heavens",
+    id = null,
+    tags = setOf("Chinese", "Completed"),
+    origin = WUXIAWORLD_ORIGIN
   )
 
   val testChapter = CoreChapterId("/novel/i-shall-seal-the-heavens/issth-book-9-chapter-1453", "Chapter 1453: Enjoy Yourself, Prince!")

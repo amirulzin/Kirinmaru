@@ -18,12 +18,12 @@ class CookieManagerTest {
   fun persist() {
     val gson = GsonBuilder().setPrettyPrinting().create()
     val map = mutableMapOf<String, MutableList<Cookie>>(
-        "test" to mutableListOf(
-            Cookie.Builder()
-                .name("testName")
-                .value("testValue")
-                .domain("testDomain")
-                .build()))
+      "test" to mutableListOf(
+        Cookie.Builder()
+          .name("testName")
+          .value("testValue")
+          .domain("testDomain")
+          .build()))
 
     val json = gson.toJson(map)
     println(json)

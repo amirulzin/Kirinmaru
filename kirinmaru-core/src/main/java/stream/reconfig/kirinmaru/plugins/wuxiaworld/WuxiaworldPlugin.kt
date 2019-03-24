@@ -31,10 +31,10 @@ class WuxiaworldPlugin @Inject constructor(override val client: OkHttpClient, ov
 
   internal val api by lazy {
     Providers.retrofitBuilder()
-        .baseUrl(WUXIAWORLD_HOME)
-        .client(client)
-        .build()
-        .create(WuxiaWorldApi::class.java)
+      .baseUrl(WUXIAWORLD_HOME)
+      .client(client)
+      .build()
+      .create(WuxiaWorldApi::class.java)
   }
 
   override fun obtainPreliminaryNovels(searchOptions: SearchOptions): Single<List<NovelDetail>> {
@@ -62,37 +62,37 @@ class WuxiaworldPlugin @Inject constructor(override val client: OkHttpClient, ov
   override fun obtainNovels(searchOptions: SearchOptions): Single<List<NovelDetail>> {
 
     val obsCompleted = Observable.fromIterable(tags)
-        .flatMapSingle(::obtainNovelsByTag)
+      .flatMapSingle(::obtainNovelsByTag)
     val obsLanguage = Observable.fromIterable(language)
-        .flatMapSingle(::obtainNovelsByLanguage)
+      .flatMapSingle(::obtainNovelsByLanguage)
 
     return Observable.concat(obsCompleted, obsLanguage)
-        .collectInto(mutableSetOf<NovelDetail>()) { set, input ->
-          for (novel in input) {
-            set.find { cached -> cached.url == novel.url }
-                ?.let {
-                  set.remove(it)
-                  val tags = mutableSetOf<String>().apply {
-                    addAll(novel.tags)
-                    addAll(it.tags)
-                  }
-                  set.add(CoreNovelDetail(WUXIAWORLD_ORIGIN, it.novelTitle, it.url, it.id, tags))
-                } ?: set.add(novel)
-          }
-        }.map { it.toList() }
+      .collectInto(mutableSetOf<NovelDetail>()) { set, input ->
+        for (novel in input) {
+          set.find { cached -> cached.url == novel.url }
+            ?.let {
+              set.remove(it)
+              val tags = mutableSetOf<String>().apply {
+                addAll(novel.tags)
+                addAll(it.tags)
+              }
+              set.add(CoreNovelDetail(WUXIAWORLD_ORIGIN, it.novelTitle, it.url, it.id, tags))
+            } ?: set.add(novel)
+        }
+      }.map { it.toList() }
   }
 
 
   override fun obtainChapters(novelDetail: NovelDetail, searchOptions: SearchOptions): Single<List<ChapterId>> {
     return api.chapters(novelDetail.url)
-        .map(::streamToDocument)
-        .map(WuxiaWorldChapterIdParser::parse)
+      .map(::streamToDocument)
+      .map(WuxiaWorldChapterIdParser::parse)
   }
 
   override fun obtainDetail(novelDetail: NovelDetail, chapterId: ChapterId): Single<ChapterDetail> {
     return api.chapter(chapterId.url)
-        .map(::streamToDocument)
-        .map(WuxiaWorldChapterDetailParser::parse)
+      .map(::streamToDocument)
+      .map(WuxiaWorldChapterDetailParser::parse)
   }
 
   override fun toAbsoluteUrl(novelDetail: NovelDetail, chapterId: ChapterId): String {
@@ -101,19 +101,19 @@ class WuxiaworldPlugin @Inject constructor(override val client: OkHttpClient, ov
 
   private fun obtainNovelsByLanguage(key: String): Single<List<NovelDetail>> {
     return api.novelsByLanguage(key)
-        .map(::streamToDocument)
-        .map(WuxiaWorldIndexParserV2(key)::parse)
+      .map(::streamToDocument)
+      .map(WuxiaWorldIndexParserV2(key)::parse)
   }
 
   private fun obtainNovelsByTag(tag: String): Single<List<NovelDetail>> {
     return api.novelsByTag(tag)
-        .map(::streamToDocument)
-        .map(WuxiaWorldIndexParserV2(tag)::parse)
+      .map(::streamToDocument)
+      .map(WuxiaWorldIndexParserV2(tag)::parse)
   }
 
   private fun streamToDocument(response: Response<ResponseBody>): Document {
     return flattenResponse(response).byteStream()
-        .use { Jsoup.parse(it, "UTF-8", WUXIAWORLD_HOME) }
+      .use { Jsoup.parse(it, "UTF-8", WUXIAWORLD_HOME) }
   }
 }
 

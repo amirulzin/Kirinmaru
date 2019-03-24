@@ -13,13 +13,14 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
         <ImageView
-            android:layout_marginStart="6dp"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_marginStart="6dp"
             android:contentDescription="@string/app_name"
             android:scaleType="centerInside"
             android:src="@drawable/ic_bookmark"
             android:tint="@color/colorAccent" />
+
         <Button
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"

@@ -141,7 +141,7 @@ public class PredictiveTaxonomy {
   //  @NonNull
   private String createIncrementedString(String targetString, int startIndex, int endIndex, int targetNumber) {
     return new StringBuilder(targetString).replace(startIndex, endIndex, String.valueOf(targetNumber))
-        .toString();
+      .toString();
   }
 
 }

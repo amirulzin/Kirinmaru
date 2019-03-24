@@ -6,6 +6,6 @@ import stream.reconfig.kirinmaru.core.ChapterId
  * Stub CoreChapterId class for IPC.
  */
 data class CoreChapterId(
-    override val url: String,
-    override val title: String?
+  override val url: String,
+  override val title: String?
 ) : ChapterId

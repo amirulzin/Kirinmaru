@@ -38,7 +38,7 @@ public class Taxonomy {
     String path = url;
     if (path.contains("prologue")) {
       path = path.substring(0, path.length())
-          .concat("-chapter-0"); //length - 1 to exclude the last '/' returned from formatted url
+        .concat("-chapter-0"); //length - 1 to exclude the last '/' returned from formatted url
     }
 
     String lastSegment = TaxonomyUtil.getLastSegment(path);

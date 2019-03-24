@@ -17,10 +17,10 @@ class WordpressApiRemoteTest {
 
   val baseUrl = "https://demo.wp-api.org/"
   val api = Providers.retrofitBuilder()
-      .baseUrl(WordPressApi.apiPath(baseUrl))
-      .client(TestHelper.okHttpClient(HttpLoggingInterceptor.Level.BASIC))
-      .build()
-      .create(WordPressApi::class.java)
+    .baseUrl(WordPressApi.apiPath(baseUrl))
+    .client(TestHelper.okHttpClient(HttpLoggingInterceptor.Level.BASIC))
+    .build()
+    .create(WordPressApi::class.java)
 
   @Test
   fun testPathBuilder() {

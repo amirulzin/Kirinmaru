@@ -26,9 +26,9 @@ class Taxon {
   public String toString() {
     // Android Studio hinted for this optimization. And I ate the bait.
     return (book != null ? book : Taxonomy.BOOK_MOLD)
-        + (chapter != null ? chapter : Taxonomy.CHAPTER_MOLD)
-        + (section != null ? section : Taxonomy.SECTION_MOLD)
-        + (part != null ? part : Taxonomy.PART_MOLD);
+      + (chapter != null ? chapter : Taxonomy.CHAPTER_MOLD)
+      + (section != null ? section : Taxonomy.SECTION_MOLD)
+      + (part != null ? part : Taxonomy.PART_MOLD);
   }
 
   Taxon setBook(String book) {

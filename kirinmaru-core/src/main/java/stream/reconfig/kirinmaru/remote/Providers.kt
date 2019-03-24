@@ -11,9 +11,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 object Providers {
   fun retrofitBuilder(gson: Gson? = null): Retrofit.Builder {
     val gsonConverterFactory = gson?.let { GsonConverterFactory.create(it) }
-        ?: GsonConverterFactory.create()
+      ?: GsonConverterFactory.create()
     return Retrofit.Builder()
-        .addConverterFactory(gsonConverterFactory)
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+      .addConverterFactory(gsonConverterFactory)
+      .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
   }
 }

@@ -9,8 +9,8 @@ import stream.reconfig.kirinmaru.core.selectBy
  *
  */
 abstract class AbsIndexParser(
-    open val selector: String,
-    open inline val transformer: (Element) -> NovelDetail
+  open val selector: String,
+  open inline val transformer: (Element) -> NovelDetail
 ) : Parser<List<NovelDetail>> {
 
   override fun parse(document: Document): List<NovelDetail> {

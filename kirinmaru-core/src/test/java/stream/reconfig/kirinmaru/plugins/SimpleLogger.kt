@@ -1,7 +1,5 @@
 package stream.reconfig.kirinmaru.plugins
 
-import java.lang.StringBuilder
-
 class SimpleLogger(private val logging: Boolean) {
   private val sb = StringBuilder()
   fun log(str: Any?) {

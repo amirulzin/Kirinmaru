@@ -26,9 +26,9 @@ interface WordPressApi {
     const val apiPath = "wp-json/wp/v2/"
 
     fun apiPath(baseUrl: String): HttpUrl = HttpUrl.parse(baseUrl)!!
-        .newBuilder()
-        .addPathSegments(apiPath)
-        .build()
+      .newBuilder()
+      .addPathSegments(apiPath)
+      .build()
   }
 
   /**
@@ -47,26 +47,26 @@ interface WordPressApi {
    */
   @GET("pages")
   fun getPages(
-      @Query("context") context: String = "view",
-      @Query("per_page") pageSize: Int = 10,
-      @Query("page") page: Int = 1, //page selected
-      @Query("parent") parent: Long? = null, //parent id
-      @Query("search") search: String? = null, //flaky result. Avoid using this if possible.
-      @Query("slug") slug: String? = null, //will, and should, always have single result
-      @Query("order") order: String = "desc",
-      @Query("orderBy") orderBy: String = "date"
+    @Query("context") context: String = "view",
+    @Query("per_page") pageSize: Int = 10,
+    @Query("page") page: Int = 1, //page selected
+    @Query("parent") parent: Long? = null, //parent id
+    @Query("search") search: String? = null, //flaky result. Avoid using this if possible.
+    @Query("slug") slug: String? = null, //will, and should, always have single result
+    @Query("order") order: String = "desc",
+    @Query("orderBy") orderBy: String = "date"
   ): Observable<Response<List<Page>>>
 
   @GET("pages/{id}")
   fun getPage(@Path("id") id: Long): Single<Response<Page>>
 
   data class Page(
-      val id: Long,
-      val link: String,
-      val slug: String,
-      val parent: Long?, //only available in context = 'view'
-      val title: Rendered,
-      val content: Rendered)
+    val id: Long,
+    val link: String,
+    val slug: String,
+    val parent: Long?, //only available in context = 'view'
+    val title: Rendered,
+    val content: Rendered)
 
   data class Rendered(val rendered: String)
 

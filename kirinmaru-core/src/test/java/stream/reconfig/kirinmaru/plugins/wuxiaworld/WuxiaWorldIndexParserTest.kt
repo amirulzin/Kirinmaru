@@ -20,24 +20,24 @@ class WuxiaWorldIndexParserTest {
     val key = "Completed"
     val client = TestHelper.okHttpClient(HttpLoggingInterceptor.Level.BASIC)
     val api = Providers.retrofitBuilder()
-        .baseUrl(WUXIAWORLD_HOME)
-        .client(client)
-        .build()
-        .create(WuxiaWorldApi::class.java)
+      .baseUrl(WUXIAWORLD_HOME)
+      .client(client)
+      .build()
+      .create(WuxiaWorldApi::class.java)
 
     api.novelsByTag(key)
-        .map { flattenResponse(it) }
-        .map {
-          it.byteStream().use {
-            Jsoup.parse(it, "UTF-8", WUXIAWORLD_HOME)
-          }
-        }.map {
-          WuxiaWorldIndexParserV2(key).parse(it)
+      .map { flattenResponse(it) }
+      .map {
+        it.byteStream().use {
+          Jsoup.parse(it, "UTF-8", WUXIAWORLD_HOME)
         }
-        .map {
-          assertTrue("Novel list is empty", it.isNotEmpty())
-          it.forEach(::println)
-        }.blockingGet()
+      }.map {
+        WuxiaWorldIndexParserV2(key).parse(it)
+      }
+      .map {
+        assertTrue("Novel list is empty", it.isNotEmpty())
+        it.forEach(::println)
+      }.blockingGet()
   }
 
 }
