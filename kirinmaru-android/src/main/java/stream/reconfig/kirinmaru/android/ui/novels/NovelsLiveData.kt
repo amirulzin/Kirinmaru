@@ -52,7 +52,7 @@ class NovelsLiveData @Inject constructor(
       }
 
       override fun remote(): Single<List<NovelDetail>> {
-        return pluginMap.getPlugin(origin()).obtainNovels()
+        return pluginMap.getPlugin(origin()).obtainPreliminaryNovels()
       }
 
       override fun persist(data: List<NovelDetail>) {
