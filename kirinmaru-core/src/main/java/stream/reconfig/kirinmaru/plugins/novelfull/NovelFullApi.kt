@@ -16,7 +16,10 @@ interface NovelFullApi {
   fun getNovels(@Query("keyword") keyword: String?, @Query("page") page: Int = 1): Single<Response<ResponseBody>>
 
   @GET
-  fun getChapterList(@Url novelUrl: String, @Query("page") page: Int = 1): Single<Response<ResponseBody>>
+  fun getChapterListPaged(@Url novelUrl: String, @Query("page") page: Int = 1): Single<Response<ResponseBody>>
+
+  @GET("ajax-chapter-option")
+  fun getChapterListAll(@Query("novelId") novelId: Long): Single<Response<ResponseBody>>
 
   @GET
   fun getChapterDetail(@Url chapterUrl: String): Single<Response<ResponseBody>>

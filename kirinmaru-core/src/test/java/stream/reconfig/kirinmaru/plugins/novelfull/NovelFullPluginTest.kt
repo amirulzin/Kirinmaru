@@ -1,6 +1,7 @@
 package stream.reconfig.kirinmaru.plugins.novelfull
 
 import okhttp3.CookieJar
+import okhttp3.logging.HttpLoggingInterceptor
 import org.junit.Test
 import stream.reconfig.kirinmaru.TestHelper
 import stream.reconfig.kirinmaru.core.SearchOptionsBuilder
@@ -11,7 +12,7 @@ import stream.reconfig.kirinmaru.plugins.PluginTestHelper
 
 class NovelFullPluginTest {
 
-  val plugin = NovelFullPlugin(TestHelper.okHttpClient(), CookieJar.NO_COOKIES)
+  val plugin = NovelFullPlugin(TestHelper.okHttpClient(HttpLoggingInterceptor.Level.HEADERS), CookieJar.NO_COOKIES)
 
   val testNovel = CoreNovelDetail(
     novelTitle = "Seeking the Flying Sword Path",
@@ -23,7 +24,7 @@ class NovelFullPluginTest {
 
   val testChapter = CoreChapterId("/seeking-the-flying-sword-path/chapter-46.html", "Chapter 46")
 
-  private val helper = PluginTestHelper(plugin)
+  private val helper = PluginTestHelper(plugin, logging = true)
 
   @Test
   fun obtainPreliminaryNovels() {

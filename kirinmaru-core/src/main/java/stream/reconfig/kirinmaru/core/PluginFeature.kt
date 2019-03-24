@@ -8,6 +8,7 @@ enum class PluginFeature {
   CAN_SEARCH_NOVEL,
   PAGED_NOVEL_IDS,
   PAGED_CHAPTER_IDS,
+  ALL_CHAPTER_IDS,
 }
 
 fun Plugin.can(feature: PluginFeature): Boolean = this.feature.contains(feature)

@@ -26,7 +26,8 @@ class NovelFullPlugin @Inject constructor(override val client: OkHttpClient, ove
     COVER_IMAGE,
     CAN_SEARCH_NOVEL,
     PAGED_NOVEL_IDS,
-    PAGED_CHAPTER_IDS
+    PAGED_CHAPTER_IDS,
+    ALL_CHAPTER_IDS
   )
 
   override val origin: String = NOVELFULL_ORIGIN
@@ -44,14 +45,11 @@ class NovelFullPlugin @Inject constructor(override val client: OkHttpClient, ove
   }
 
   override fun obtainChapters(novelDetail: NovelDetail, searchOptions: SearchOptions): Single<List<ChapterId>> {
-    var page = searchOptions.getSearchPageOrDefault(1)
-    when {
-      searchOptions.containsKey(SearchKeys.Direction.NEXT) -> page += 1
-      searchOptions.containsKey(SearchKeys.Direction.PREVIOUS) -> page -= 1
+    return if (searchOptions.isPaged()) {
+      searchChaptersPaged(novelDetail, searchOptions)
+    } else {
+      searchChaptersAll(novelDetail, searchOptions)
     }
-    return api.getChapterList(novelDetail.url, page)
-      .mapDocument(NOVELFULL_HOME)
-      .map(NovelFullChapterIdParser::parse)
   }
 
   override fun obtainDetail(novelDetail: NovelDetail, chapterId: ChapterId): Single<ChapterDetail> {
@@ -64,4 +62,28 @@ class NovelFullPlugin @Inject constructor(override val client: OkHttpClient, ove
     return NovelFullLinkTransformer.toSanitizedAbsolute(chapterId.url)
   }
 
+  private fun searchChaptersAll(novelDetail: NovelDetail, searchOptions: SearchOptions): Single<List<ChapterId>> {
+    return api.getChapterListPaged(novelDetail.url)
+      .mapDocument(NOVELFULL_HOME)
+      .map(NovelFullChapterIdParser::parse) //get some chapters
+      .map { list -> list.random() }
+      .flatMap { chapterId -> api.getChapterDetail(chapterId.url) } //get chapter detail
+      .mapDocument(NOVELFULL_HOME)
+      .map(NovelFullNovelIdParser::parse) //parse novel id (since it's only available in the chapter texts)
+      .map(NovelFullNovelIdParser::validateId)
+      .flatMap(api::getChapterListAll)
+      .mapDocument(NOVELFULL_HOME)
+      .map(NovelFullAllChapterIdParser::parse) // parse to actual chapterId
+  }
+
+  private fun searchChaptersPaged(novelDetail: NovelDetail, searchOptions: SearchOptions): Single<List<ChapterId>> {
+    var page = searchOptions.getSearchPageOrDefault(1)
+    when {
+      searchOptions.containsKey(SearchKeys.Direction.NEXT) -> page += 1
+      searchOptions.containsKey(SearchKeys.Direction.PREVIOUS) -> page -= 1
+    }
+    return api.getChapterListPaged(novelDetail.url, page)
+      .mapDocument(NOVELFULL_HOME)
+      .map(NovelFullChapterIdParser::parse)
+  }
 }

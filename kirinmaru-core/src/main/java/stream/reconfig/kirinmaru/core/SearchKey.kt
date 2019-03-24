@@ -23,3 +23,5 @@ enum class SearchKeys : SearchKey {
     PREVIOUS
   }
 }
+
+const val VALUE_PRESENT = "true"

@@ -17,6 +17,10 @@ fun MutableSearchOptions.setTerm(searchTerm: String) = apply {
   this[SearchKeys.TERM] = searchTerm
 }
 
+fun MutableSearchOptions.setPaged() = apply {
+  this[SearchKeys.PAGED_LIST] = VALUE_PRESENT
+}
+
 fun SearchOptions.getSearchPageOrDefault(page: Int): Int {
   return get(SearchKeys.PAGE)?.toInt() ?: page
 }
