@@ -5,10 +5,7 @@ import okhttp3.Request
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import stream.reconfig.kirinmaru.TestHelper
-import stream.reconfig.kirinmaru.core.ChapterDetail
-import stream.reconfig.kirinmaru.core.ChapterId
-import stream.reconfig.kirinmaru.core.NovelDetail
-import stream.reconfig.kirinmaru.core.Plugin
+import stream.reconfig.kirinmaru.core.*
 import stream.reconfig.kirinmaru.core.domain.CoreChapterId
 import java.util.*
 import java.util.concurrent.CountDownLatch
@@ -18,7 +15,25 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
 
   val logger = SimpleLogger(logging)
 
-  inline fun verifyObtainNovels(
+  inline fun verifyObtainPreliminaryNovels(
+    crossinline assertBlock: (List<NovelDetail>) -> Unit = {
+      assertTrue("NovelIds is empty", it.isNotEmpty())
+      logger.log(it.size)
+
+      it.forEach {
+        logger.log(it)
+        verifyNovelId(it)
+      }
+    }
+  ) {
+    plugin.obtainPreliminaryNovels()
+      .map { assertBlock(it) }
+      .doOnError { it.printStackTrace() }
+      .test().assertNoErrors().assertComplete()
+    logger.printlog()
+  }
+
+  inline fun verifyObtainNovels(searchOptions: SearchOptions = emptyMap(),
       crossinline assertBlock: (List<NovelDetail>) -> Unit = {
         assertTrue("NovelIds is empty", it.isNotEmpty())
         logger.log(it.size)
@@ -29,7 +44,7 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
         }
       }
   ) {
-    plugin.obtainNovels()
+    plugin.obtainNovels(searchOptions)
         .map { assertBlock(it) }
         .doOnError { it.printStackTrace() }
         .test().assertNoErrors().assertComplete()
@@ -37,8 +52,9 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
   }
 
   inline fun verifyObtainChapterIds(
-      novelDetail: NovelDetail,
-      crossinline assertBlock: (List<ChapterId>) -> Unit = {
+    novelDetail: NovelDetail,
+    searchOptions: SearchOptions = emptyMap(),
+    crossinline assertBlock: (List<ChapterId>) -> Unit = {
         assertTrue("Chapter urls is empty", it.isNotEmpty())
         logger.log(it.size)
         it.forEach {
@@ -47,7 +63,7 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
         }
       }
   ) {
-    plugin.obtainChapters(novelDetail)
+    plugin.obtainChapters(novelDetail, searchOptions)
         .map { assertBlock(it) }
         .test().assertComplete().assertNoErrors()
     logger.printlog()
@@ -85,7 +101,7 @@ class PluginTestHelper(val plugin: Plugin, val logging: Boolean = false) {
     var firstChapterId: ChapterId? = null
     var lastChapterId: ChapterId? = null
     val latch = CountDownLatch(1)
-    plugin.obtainNovels()
+    plugin.obtainPreliminaryNovels()
         .doOnSuccess {
           logger.log("1 Novels: ${it.size}")
           assertTrue("Novels is empty", it.isNotEmpty())

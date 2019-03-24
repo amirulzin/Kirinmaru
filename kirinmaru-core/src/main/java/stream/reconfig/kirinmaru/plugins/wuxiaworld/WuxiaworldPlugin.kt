@@ -37,6 +37,28 @@ class WuxiaworldPlugin @Inject constructor(override val client: OkHttpClient, ov
         .create(WuxiaWorldApi::class.java)
   }
 
+  override fun obtainPreliminaryNovels(searchOptions: SearchOptions): Single<List<NovelDetail>> {
+    val obsCompleted = Observable.fromIterable(tags)
+      .flatMapSingle(::obtainNovelsByTag)
+    val obsLanguage = Observable.fromIterable(language)
+      .flatMapSingle(::obtainNovelsByLanguage)
+
+    return Observable.concat(obsCompleted, obsLanguage)
+      .collectInto(mutableSetOf<NovelDetail>()) { set, input ->
+        for (novel in input) {
+          set.find { cached -> cached.url == novel.url }
+            ?.let {
+              set.remove(it)
+              val tags = mutableSetOf<String>().apply {
+                addAll(novel.tags)
+                addAll(it.tags)
+              }
+              set.add(CoreNovelDetail(WUXIAWORLD_ORIGIN, it.novelTitle, it.url, it.id, tags))
+            } ?: set.add(novel)
+        }
+      }.map { it.toList() }
+  }
+
   override fun obtainNovels(searchOptions: SearchOptions): Single<List<NovelDetail>> {
 
     val obsCompleted = Observable.fromIterable(tags)
