@@ -9,3 +9,5 @@ enum class PluginFeature {
   PAGED_SEARCH,
   PAGED_CHAPTER_IDS,
 }
+
+fun Plugin.can(feature: PluginFeature): Boolean = this.feature.contains(feature)
