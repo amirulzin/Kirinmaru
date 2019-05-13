@@ -8,7 +8,7 @@ ext {
     gsonVer = '2.8.5'; gson = new DString('com.google.code.gson', 'gson', gsonVer).toString()
     jsoupVer = '1.11.3'; jsoup = new DString('org.jsoup', 'jsoup', jsoupVer).toString()
     jUnitVer = '4.12'; jUnit = new DString('junit', 'junit', jUnitVer).toString()
-    rxJavaVer = '2.2.7'; rxJava = new DString('io.reactivex.rxjava2', 'rxjava', rxJavaVer).toString()
+    rxJavaVer = '2.2.8'; rxJava = new DString('io.reactivex.rxjava2', 'rxjava', rxJavaVer).toString()
     rxAndroidVer = '2.1.1'; rxAndroid = new DString('io.reactivex.rxjava2', 'rxandroid', rxAndroidVer).toString()
     rxKotlinVer = '2.3.0'; rxKotlin = new DString('io.reactivex.rxjava2', 'rxkotlin', rxKotlinVer).toString()
 
