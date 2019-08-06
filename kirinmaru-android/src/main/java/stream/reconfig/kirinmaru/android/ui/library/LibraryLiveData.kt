@@ -1,7 +1,8 @@
 package stream.reconfig.kirinmaru.android.ui.library
 
 import android.arch.lifecycle.Observer
-import commons.android.arch.offline.RxResourceLiveData
+import commons.android.arch.AutoRemoteLiveData
+import commons.android.arch.RetrofitRxErrorHandler
 import commons.android.arch.offline.State
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -26,7 +27,7 @@ class LibraryLiveData @Inject constructor(
   private val currentReadPref: CurrentReadPref,
   private val novelDao: NovelDao,
   private val chapterDao: ChapterDao
-) : RxResourceLiveData<List<LibraryItem>>() {
+) : AutoRemoteLiveData<List<LibraryItem>>(RetrofitRxErrorHandler()) {
 
   private val favorites by lazy { favoritePref.loadNonNull() }
 
@@ -44,7 +45,6 @@ class LibraryLiveData @Inject constructor(
   override fun onActive() {
     super.onActive()
     cache.observeForever(cacheObserver)
-    refresh()
   }
 
   override fun onInactive() {
@@ -53,6 +53,7 @@ class LibraryLiveData @Inject constructor(
   }
 
   override fun refresh() {
+    super.refresh()
     if (resourceState.value?.state != State.LOADING) {
       postLoading()
       disposables.clear()
@@ -82,8 +83,8 @@ class LibraryLiveData @Inject constructor(
   /**
    * Sort before any actual posting done
    */
-  override fun postValue(value: List<LibraryItem>?) {
-    super.postValue(value?.let {
+  override fun postValue(value: List<LibraryItem>) {
+    super.postValue(value.let {
       it.sortedBy { it.novel.novelTitle }
     })
   }
